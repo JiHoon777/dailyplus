@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { Circle, Crown, Grid2X2, Quote } from 'lucide-react'
+import { Circle, Crown, FileQuestion, Grid2X2, Quote } from 'lucide-react'
 
 export interface QuickStartItem {
   color: string
@@ -38,6 +38,34 @@ export const quickStartItems: QuickStartItem[] = [
     icon: <Crown className="h-6 w-6" />,
     isAI: true,
     label: '체스 배틀',
+  },
+  {
+    color: 'bg-amber-700',
+    href: '/chess',
+    icon: <FileQuestion className="h-6 w-6" />,
+    isAI: true,
+    label: '만다라트',
+  },
+  {
+    color: 'bg-amber-700',
+    href: '/chess',
+    icon: <FileQuestion className="h-6 w-6" />,
+    isAI: true,
+    label: '마인드맵',
+  },
+  {
+    color: 'bg-amber-700',
+    href: '/chess',
+    icon: <FileQuestion className="h-6 w-6" />,
+    isAI: true,
+    label: '로직트리',
+  },
+  {
+    color: 'bg-amber-700',
+    href: '/chess',
+    icon: <FileQuestion className="h-6 w-6" />,
+    isAI: true,
+    label: '블로그',
   },
   // {
   //   color: 'bg-blue-500',
