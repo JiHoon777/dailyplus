@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 import localFont from 'next/font/local'
+import { Toaster } from 'sonner'
 
 import { UiProvider } from '@/app/providers/ui-provider'
 
@@ -36,6 +37,7 @@ export default function RootLayout({
       >
         <UiProvider>
           <main className={'h-screen w-full overflow-hidden'}>{children}</main>
+          <Toaster />
         </UiProvider>
       </body>
     </html>

@@ -1,4 +1,4 @@
-import { AiSentenceGeneratorSidebar } from '@/features/aiSentenceGenerator'
+import { AiSentenceGeneratorSidebar } from '@/pages/ai-sentenc-generator'
 
 export default function AiSentenceGeneratorLayout({
   children,
