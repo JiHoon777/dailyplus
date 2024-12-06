@@ -5,17 +5,13 @@ import Link from 'next/link'
 import { Badge } from '@/shared/ui/badge'
 import { Card, CardContent } from '@/shared/ui/card'
 
-interface QuickStartProps {
-  items: QuickStartItem[]
-}
-
-export const QuickStart = ({ items }: QuickStartProps) => {
+export const QuickStart = ({ items }: { items: QuickStartItem[] }) => {
   return (
-    <div className={'flex flex-col gap-6'}>
+    <div className={'flex w-full flex-col gap-6'}>
       <div className="flex items-center justify-between">
         <h3 className="text-xl font-semibold">빠른 실행</h3>
       </div>
-      <div className="grid grid-cols-3 gap-4 lg:grid-cols-6">
+      <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-6">
         {items.map((item, index) => (
           <Card
             key={index}

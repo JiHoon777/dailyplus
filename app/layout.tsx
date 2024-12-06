@@ -6,6 +6,7 @@ import localFont from 'next/font/local'
 import { Toaster } from 'sonner'
 
 import { UiProvider } from '@/app/providers/ui-provider'
+import { AppHomeHeaderBase } from '@/shared/ui/appLayout/headerBase'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -33,10 +34,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} h-screen w-screen overflow-hidden bg-background text-foreground antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} h-screen w-screen overflow-y-auto overflow-x-hidden bg-background text-foreground antialiased`}
       >
         <UiProvider>
-          <main className={'h-screen w-full overflow-hidden'}>{children}</main>
+          <main className={'flex min-h-screen w-screen flex-col items-center'}>
+            <AppHomeHeaderBase />
+            {children}
+          </main>
           <Toaster />
         </UiProvider>
       </body>

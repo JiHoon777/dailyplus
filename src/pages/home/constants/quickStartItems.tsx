@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { Grid2X2, Quote } from 'lucide-react'
+import { Circle, Crown, Grid2X2, Quote } from 'lucide-react'
 
 export interface QuickStartItem {
   color: string
@@ -13,7 +13,7 @@ export interface QuickStartItem {
 export const quickStartItems: QuickStartItem[] = [
   {
     color: 'bg-purple-500',
-    href: '/daily-quote',
+    href: '/dailyQuote',
     icon: <Quote className="h-6 w-6" />,
     isAI: true,
     label: '오늘의 문장',
@@ -24,6 +24,20 @@ export const quickStartItems: QuickStartItem[] = [
     icon: <Grid2X2 className="h-6 w-6" />,
     isAI: true,
     label: '오목 배틀',
+  },
+  {
+    color: 'bg-slate-600',
+    href: '/baduk',
+    icon: <Circle className="h-6 w-6" />,
+    isAI: true,
+    label: '바둑 배틀',
+  },
+  {
+    color: 'bg-amber-700',
+    href: '/chess',
+    icon: <Crown className="h-6 w-6" />,
+    isAI: true,
+    label: '체스 배틀',
   },
   // {
   //   color: 'bg-blue-500',
