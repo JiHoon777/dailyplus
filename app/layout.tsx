@@ -5,8 +5,8 @@ import './globals.css'
 import localFont from 'next/font/local'
 import { Toaster } from 'sonner'
 
-import { UiProvider } from '@/app/providers/ui-provider'
-import { AppHomeHeaderBase } from '@/shared/ui/appLayout/headerBase'
+import { UiProvider } from '@/app/providers'
+import { AppHomeHeaderBase } from '@/widgets/layout'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',

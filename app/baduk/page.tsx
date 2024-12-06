@@ -1,5 +1,3 @@
-import { BadukPage } from '@/pages/baduk/badukPage'
-
 export default function Baduk() {
-  return <BadukPage />
+  return <>바둑바둑</>
 }

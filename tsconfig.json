@@ -25,7 +25,7 @@
       "@processes/*": ["./src/processes/*"],
       "@pages/*": ["./src/pages/*"],
       "@widgets/*": ["./src/widgets/*"],
-      "@features/*": ["./src/features/*"],
+      "@features/*": ["src/pages/*"],
       "@entities/*": ["./src/entities/*"],
       "@shared/*": ["./src/shared/*"]
     }

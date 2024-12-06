@@ -1,18 +1,19 @@
-import type { QuickStartItem } from '../constants/quickStartItems'
-
+'use client'
 import Link from 'next/link'
 
 import { Badge } from '@/shared/ui/badge'
 import { Card, CardContent } from '@/shared/ui/card'
 
-export const QuickStart = ({ items }: { items: QuickStartItem[] }) => {
+import { quickStartItems } from '../config/consts'
+
+export const QuickStart = () => {
   return (
     <div className={'flex w-full flex-col gap-6'}>
       <div className="flex items-center justify-between">
         <h3 className="text-xl font-semibold">빠른 실행</h3>
       </div>
       <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-6">
-        {items.map((item, index) => (
+        {quickStartItems.map((item, index) => (
           <Card
             key={index}
             className="group cursor-pointer overflow-hidden transition-all hover:-translate-y-1 hover:shadow-md"

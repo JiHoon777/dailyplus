@@ -1,5 +1,3 @@
-import { OmokPage } from '@/pages/omok/omokPage'
-
 export default function Omok() {
-  return <OmokPage />
+  return <>오목오목</>
 }

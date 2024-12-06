@@ -1,5 +1,3 @@
-import { DailyQuotePage } from '@/pages/dailyQuote/dailyQuotePage'
-
 export default function DailyQuote() {
-  return <DailyQuotePage />
+  return <>코트코트</>
 }

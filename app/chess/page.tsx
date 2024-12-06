@@ -1,5 +1,3 @@
-import { ChessPage } from '@/pages/chess/chessPage'
-
 export default function Chess() {
-  return <ChessPage />
+  return <>체스체스</>
 }
