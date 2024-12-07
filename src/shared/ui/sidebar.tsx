@@ -3,7 +3,6 @@
 import type { VariantProps } from 'class-variance-authority'
 
 import { Slot } from '@radix-ui/react-slot'
-import { useIsMobile } from '@/shared/hooks/useMobile'
 import { Button } from '@shared/ui/button'
 import { Input } from '@shared/ui/input'
 import { Separator } from '@shared/ui/separator'
@@ -19,6 +18,8 @@ import { cn } from '@shared/utils'
 import { cva } from 'class-variance-authority'
 import { PanelLeft } from 'lucide-react'
 import * as React from 'react'
+
+import { useIsMobile } from '@/shared/hooks/useMobile'
 
 const SIDEBAR_COOKIE_NAME = 'sidebar:state'
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7

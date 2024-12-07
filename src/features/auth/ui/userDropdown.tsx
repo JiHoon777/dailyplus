@@ -1,50 +1,50 @@
 'use client'
 
+import { LogOut, Settings } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import { useLogout, useUserStore } from '@/entities/user'
-import { Badge, Button } from '@/shared/ui'
+import { Button } from '@/shared/ui'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/shared/ui/dropdown-menu'
+import { getUsernameFromEmail } from '@/shared/utils'
 
 export function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false)
   const user = useUserStore((state) => state.user)
   const logout = useLogout()
+  const router = useRouter()
 
+  const handleLogout = () => logout.mutate()
+  const handleAdmin = () => router.push('/admin/posts')
   if (!user) {
     return null
   }
 
-  const handleLogout = () => logout.mutate()
-
   return (
-    <div className="relative">
-      <Button
-        variant="ghost"
-        className="h-8 w-8 rounded-full"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <Badge variant={'outline'}>
-          {user.name ?? user.email?.slice(0, 3)}
-        </Badge>
-      </Button>
-
-      {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5">
-          <div className="px-4 py-2">
-            <p className="text-sm font-medium">{user.name}</p>
-            <p className="text-xs text-gray-500">{user.email}</p>
-          </div>
-          <div className="border-t border-gray-100">
-            <button
-              onClick={handleLogout}
-              // disabled={logout.isPending}
-              className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50"
-            >
-              로그아웃
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" onClick={() => setIsOpen(!isOpen)}>
+          {user.name ?? getUsernameFromEmail(user.email)}
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem onClick={handleLogout}>
+          <LogOut />
+          <span>로그아웃</span>
+        </DropdownMenuItem>
+        {user.role === 'admin' && (
+          <DropdownMenuItem onClick={handleAdmin}>
+            <Settings />
+            <span>어드민</span>
+          </DropdownMenuItem>
+        )}
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

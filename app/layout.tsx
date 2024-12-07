@@ -3,10 +3,11 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 import localFont from 'next/font/local'
+import { Suspense } from 'react'
 import { Toaster } from 'sonner'
 
 import { AuthProvider, QueryProvider, UiProvider } from '@/app/providers'
-import { Suspense } from 'react'
+import { AppHomeHeaderBase } from '@/widgets/layout'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',

@@ -1,9 +1,10 @@
+'use client'
 import type { VariantProps } from 'class-variance-authority'
 import type { JSX, PropsWithChildren } from 'react'
 
 import { cva } from 'class-variance-authority'
 import { AnimatePresence, motion as m } from 'framer-motion'
-import { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 
 import { useOutsideClick } from '@/shared/hooks'
 import { Portal } from '@/shared/ui'
