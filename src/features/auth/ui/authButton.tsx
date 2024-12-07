@@ -1,30 +1,27 @@
 'use client'
 
-import { useState } from 'react'
-
 import { useUserStore } from '@/entities/user'
 import { useOverlay } from '@/shared/lib/overlay'
 import { Button } from '@/shared/ui'
 
 import { LoginModal } from './loginModal'
+import { UserDropdown } from './userDropdown'
 
-export function LoginButton() {
-  const isAuthenticated = useUserStore((state) => state.isAuthenticated)
+export function AuthButton() {
+  const user = useUserStore((state) => state.user)
   const { open } = useOverlay()
 
   const handleLogin = () => {
     open(({ isOpen, close }) => <LoginModal isOpen={isOpen} onClose={close} />)
   }
 
-  if (isAuthenticated) {
-    return null
+  if (user) {
+    return <UserDropdown />
   }
 
   return (
-    <>
-      <Button variant="outline" onClick={handleLogin}>
-        로그인
-      </Button>
-    </>
+    <Button variant="ghost" onClick={handleLogin}>
+      로그인
+    </Button>
   )
 }

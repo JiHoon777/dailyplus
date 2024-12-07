@@ -1,1 +1,1 @@
-export * from './ui/loginButton'
+export * from './ui/authButton'

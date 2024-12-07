@@ -5,8 +5,7 @@ import './globals.css'
 import localFont from 'next/font/local'
 import { Toaster } from 'sonner'
 
-import { UiProvider } from '@/app/providers'
-import { AppHomeHeaderBase } from '@/widgets/layout'
+import { AuthProvider, QueryProvider, UiProvider } from '@/app/providers'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -36,12 +35,18 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} h-screen w-screen overflow-y-auto overflow-x-hidden bg-background text-foreground antialiased`}
       >
-        <UiProvider>
-          <main className={'flex min-h-screen w-screen flex-col items-center'}>
-            {children}
-          </main>
-          <Toaster />
-        </UiProvider>
+        <QueryProvider>
+          <UiProvider>
+            <AuthProvider>
+              <main
+                className={'flex min-h-screen w-screen flex-col items-center'}
+              >
+                {children}
+              </main>
+              <Toaster />
+            </AuthProvider>
+          </UiProvider>
+        </QueryProvider>
       </body>
     </html>
   )

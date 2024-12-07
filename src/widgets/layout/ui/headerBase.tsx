@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { LoginButton } from '@/features/auth'
+import { AuthButton } from '@/features/auth'
 
 export const AppHomeHeaderBase = () => {
   return (
@@ -12,7 +12,7 @@ export const AppHomeHeaderBase = () => {
           </h1>
         </Link>
         <div>
-          <LoginButton />
+          <AuthButton />
         </div>
       </div>
     </div>

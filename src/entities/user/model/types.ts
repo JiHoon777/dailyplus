@@ -1,12 +1,11 @@
 export interface User {
   id: string
+  name: string | null
   email: string
-  name: string
-  profileImage?: string
+  created_at: string
+  updated_at: string
 }
 
 export interface UserState {
-  data: User | null
-  isAuthenticated: boolean
-  isLoading: boolean
+  user: User | null
 }

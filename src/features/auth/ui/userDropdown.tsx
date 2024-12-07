@@ -1,16 +1,15 @@
 'use client'
 
-import Image from 'next/image'
 import { useState } from 'react'
 
 import { useUserStore } from '@/entities/user'
-import { Button } from '@/shared/ui'
+import { Badge, Button } from '@/shared/ui'
 
-export function ProfileDropdown() {
+export function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false)
-  const { data: user, isAuthenticated } = useUserStore()
+  const user = useUserStore((state) => state.user)
 
-  if (!isAuthenticated || !user) {
+  if (!user) {
     return null
   }
 
@@ -23,17 +22,9 @@ export function ProfileDropdown() {
         className="h-8 w-8 rounded-full"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {user.profileImage ? (
-          <Image
-            src={user.profileImage}
-            alt={user.name}
-            className="h-8 w-8 rounded-full"
-          />
-        ) : (
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-100 text-sm font-medium text-purple-700">
-            {user.name[0]}
-          </div>
-        )}
+        <Badge variant={'outline'}>
+          {user.name ?? user.email?.slice(0, 3)}
+        </Badge>
       </Button>
 
       {isOpen && (
