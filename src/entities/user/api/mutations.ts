@@ -5,7 +5,6 @@ import type { AuthError, AuthResponse } from '@supabase/supabase-js'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { userQueryKeys } from '@/entities/user/api/consts'
-import { handleSupabaseRes } from '@/shared/lib/supabase-common'
 import { createApiClientCSR } from '@/shared/lib/supabase-csr/index'
 
 export const useSignInWithEmail = () => {
@@ -18,9 +17,16 @@ export const useSignInWithEmail = () => {
         email: formData.get('email') as string,
         password: formData.get('password') as string,
       }
-      const res = await apiClient.loginWithEmail(input.email, input.password)
+      const { data, error } = await apiClient.loginWithEmail(
+        input.email,
+        input.password,
+      )
 
-      return handleSupabaseRes(res)
+      if (error) {
+        throw error
+      }
+
+      return data
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -44,7 +50,11 @@ export const useSignUpWithEmail = () => {
         input.password,
       )
 
-      return handleSupabaseRes({ data: null, error })
+      if (error) {
+        throw error
+      }
+
+      return null
     },
   })
 }
@@ -57,7 +67,11 @@ export const useLogout = () => {
     mutationFn: async () => {
       const { error } = await apiClient.logout()
 
-      return handleSupabaseRes({ data: null, error })
+      if (error) {
+        throw error
+      }
+
+      return null
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
