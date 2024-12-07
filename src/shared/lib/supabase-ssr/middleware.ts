@@ -4,7 +4,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 import {
   PUBLIC_SUPABASE_ANON_KEY,
   PUBLIC_SUPABASE_URL,
-} from '@/shared/lib/supabase-const'
+} from '@/shared/lib/supabase-common/consts'
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({

@@ -1,30 +1,26 @@
 'use client'
 
+import type { AuthError, AuthResponse } from '@supabase/supabase-js'
+
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { createApiClientCSR } from '@/shared/lib/supabase-csr/index'
 import { userQueryKeys } from '@/entities/user/api/consts'
+import { handleSupabaseRes } from '@/shared/lib/supabase-common'
+import { createApiClientCSR } from '@/shared/lib/supabase-csr/index'
 
 export const useSignInWithEmail = () => {
   const queryClient = useQueryClient()
   const apiClient = createApiClientCSR()
 
-  return useMutation<any, any, FormData>({
+  return useMutation<AuthResponse['data'], AuthError, FormData>({
     mutationFn: async (formData) => {
       const input = {
         email: formData.get('email') as string,
         password: formData.get('password') as string,
       }
-      const { data, error } = await apiClient.loginWithEmail(
-        input.email,
-        input.password,
-      )
+      const res = await apiClient.loginWithEmail(input.email, input.password)
 
-      if (error) {
-        throw error
-      }
-
-      return data
+      return handleSupabaseRes(res)
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -37,22 +33,18 @@ export const useSignInWithEmail = () => {
 export const useSignUpWithEmail = () => {
   const apiClient = createApiClientCSR()
 
-  return useMutation<any, any, FormData>({
+  return useMutation<null, AuthError, FormData>({
     mutationFn: async (formData) => {
       const input = {
         email: formData.get('email') as string,
         password: formData.get('password') as string,
       }
-      const { data, error } = await apiClient.signUpWithEmail(
+      const { error } = await apiClient.signUpWithEmail(
         input.email,
         input.password,
       )
 
-      if (error) {
-        throw error
-      }
-
-      return data
+      return handleSupabaseRes({ data: null, error })
     },
   })
 }
@@ -61,13 +53,11 @@ export const useLogout = () => {
   const queryClient = useQueryClient()
   const apiClient = createApiClientCSR()
 
-  return useMutation({
+  return useMutation<null, AuthError, void>({
     mutationFn: async () => {
       const { error } = await apiClient.logout()
 
-      if (error) {
-        throw error
-      }
+      return handleSupabaseRes({ data: null, error })
     },
     onSuccess: () => {
       queryClient.invalidateQueries({

@@ -5,7 +5,7 @@ import { ApiClient } from '@/shared/api'
 import {
   PUBLIC_SUPABASE_ANON_KEY,
   PUBLIC_SUPABASE_URL,
-} from '@/shared/lib/supabase-const'
+} from '@/shared/lib/supabase-common/consts'
 
 async function createClientSSR() {
   const cookieStore = await cookies()
