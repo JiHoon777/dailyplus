@@ -1,7 +1,10 @@
 import { createServerClient } from '@supabase/ssr'
 import { type NextRequest, NextResponse } from 'next/server'
 
-import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from './const'
+import {
+  PUBLIC_SUPABASE_ANON_KEY,
+  PUBLIC_SUPABASE_URL,
+} from '@/shared/lib/supabase-const'
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({

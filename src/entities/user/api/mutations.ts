@@ -2,11 +2,10 @@
 
 import { useMutation } from '@tanstack/react-query'
 
-import { ApiClient } from '@/shared/api'
-import { createClientCSR } from '@/shared/lib/supabase/createClientCSR'
+import { createApiClientCSR } from '@/shared/lib/supabase-csr/index'
 
 export const useSignUpWithEmail = () => {
-  const apiClient = new ApiClient(createClientCSR())
+  const apiClient = createApiClientCSR()
 
   return useMutation<any, any, FormData>({
     mutationFn: async (formData) => {
@@ -27,6 +26,8 @@ export const useSignUpWithEmail = () => {
     },
   })
 }
+
+export const useLogout = () => {}
 
 // export const useLogout = () => {
 //   const queryClient = useQueryClient()

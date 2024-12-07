@@ -1,9 +1,13 @@
 import { type CookieOptions, createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 
-import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from './const'
+import { ApiClient } from '@/shared/api'
+import {
+  PUBLIC_SUPABASE_ANON_KEY,
+  PUBLIC_SUPABASE_URL,
+} from '@/shared/lib/supabase-const'
 
-export async function createClientSSR() {
+async function createClientSSR() {
   const cookieStore = await cookies()
 
   return createServerClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
@@ -24,3 +28,6 @@ export async function createClientSSR() {
     },
   })
 }
+
+export const createApiClientSSR = async () =>
+  new ApiClient(await createClientSSR())

@@ -11,7 +11,7 @@ export class ApiClient {
   readonly admin = new ApiClientAdmin(this)
   readonly app = new ApiClientApp(this)
 
-  constructor(private readonly _supabaseClient: SupabaseClient) {}
+  constructor(readonly _supabaseClient: SupabaseClient) {}
 
   get supabaseClient() {
     return this._supabaseClient
@@ -44,6 +44,10 @@ export class ApiClient {
       email,
       password,
     })
+  }
+
+  logout() {
+    return this._supabaseClient.auth.signOut()
   }
   //   socialLogin(provider: 'google' | 'github') {
   //     return this._supabaseClient.auth.signInWithOAuth({

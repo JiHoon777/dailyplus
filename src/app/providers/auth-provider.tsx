@@ -4,8 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 
 import { useUserStore } from '@/entities/user'
-import { ApiClient } from '@/shared/api'
-import { createClientCSR } from '@/shared/lib/supabase/createClientCSR'
+import { createApiClientCSR } from '@/shared/lib/supabase-csr/index'
 
 // Auth 관련 쿼리 키
 const authKeys = {
@@ -15,7 +14,7 @@ const authKeys = {
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const setUser = useUserStore((state) => state.setUser)
-  const apiClient = new ApiClient(createClientCSR())
+  const apiClient = createApiClientCSR()
 
   // 1. Auth 세션 정보 가져오기
   const { data: authUser } = useQuery({
