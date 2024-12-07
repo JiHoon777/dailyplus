@@ -1,7 +1,7 @@
 import { type CookieOptions, createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 
-import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '../const'
+import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from './const'
 
 export async function createClientSSR() {
   const cookieStore = await cookies()
@@ -17,9 +17,8 @@ export async function createClientSSR() {
             cookieStore.set(name, value, options),
           )
         } catch {
-          // The `setAll` method was called from a Server Component.
-          // This can be ignored if you have middleware refreshing
-          // user sessions.
+          // setAll 메서드가 서버 컴포넌트에서 호출되었습니다.
+          // 미들웨어에서 사용자 세션을 새로고침하는 경우 이 오류는 무시해도 됩니다.
         }
       },
     },

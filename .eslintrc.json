@@ -74,7 +74,8 @@
         "groups": [["^.*\\u0000$"], ["^\\u0000"], ["^@?\\w"], ["^"], ["^\\."]]
       }
     ],
-    "sort-keys-fix/sort-keys-fix": 2
+    "sort-keys-fix/sort-keys-fix": 2,
+    "jsx-a11y/label-has-associated-control": "off"
   },
   "settings": {
     "react": {
