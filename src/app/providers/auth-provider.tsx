@@ -1,12 +1,15 @@
 'use client'
+
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 import { useGetAuthUser, useGetUser, useUserStore } from '@/entities/user'
 import { ScreenLoading } from '@/shared/ui'
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const router = useRouter()
   const setUser = useUserStore((state) => state.setUser)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoaded, setIsLoaded] = useState(false)
 
   // 1. Auth 세션 정보 가져오기
   const {
@@ -14,35 +17,50 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     error: authError,
     isLoading: isAuthLoading,
   } = useGetAuthUser()
+
   // 2. Auth ID로 User 엔티티 가져오기
-  const {
-    data: userEntity,
-    error: userError,
-    isLoading: isUserLoading,
-  } = useGetUser(authUser?.id)
+  const { refetch: refetchUser } = useGetUser(authUser?.id)
 
-  console.group('AuthProvider')
-  console.log('authUser: ', authUser)
-  console.log('userEntity: ', userEntity)
-  console.groupEnd()
-
-  // User 엔티티 정보가 변경될 때마다 store 업데이트
+  // Auth 상태 변경 감지 및 처리
   useEffect(() => {
-    if (!isAuthLoading && !isUserLoading) {
-      setIsLoading(false)
-      setUser(userEntity)
-    }
-  }, [userEntity, isAuthLoading, isUserLoading, setUser])
+    if (isAuthLoading) return
 
-  useEffect(() => {
-    if (authError || userError) {
-      setIsLoading(false)
+    // 1. 인증 에러가 있는 경우
+    if (authError) {
+      // AuthSessionMissingError는 정상적인 로그아웃 상태
+      if (authError.message === 'Auth session missing!') {
+        setUser(null)
+        setIsLoaded(true)
+        return
+      }
+
+      // 다른 인증 에러의 경우 로그아웃 처리
       setUser(null)
+      router.push('/auth/logout')
+      return
     }
-  }, [authError, userError, setUser])
 
-  if (isLoading) {
-    return <ScreenLoading /> // 또는 로딩 컴포넌트
+    // 2. 인증된 유저가 없는 경우 (로그아웃 상태)
+    if (!authUser) {
+      setUser(null)
+      setIsLoaded(true)
+      return
+    }
+
+    // 3. 인증된 유저가 있는 경우
+    refetchUser().then(({ data, error }) => {
+      if (error) {
+        setUser(null)
+        router.push('/auth/logout')
+        return
+      }
+      setUser(data)
+      setIsLoaded(true)
+    })
+  }, [authUser, authError, isAuthLoading, router, setUser, refetchUser])
+
+  if (!isLoaded) {
+    return <ScreenLoading />
   }
 
   return children

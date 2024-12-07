@@ -1,11 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { createApiClientCSR } from '@/shared/lib/supabase-csr'
-
-export const userQueryKeys = {
-  session: () => ['auth', 'session'] as const,
-  user: (authId: string) => ['users', authId] as const,
-}
+import { userQueryKeys } from '@entities/user/api/consts'
 
 export const useGetAuthUser = () => {
   const apiClient = createApiClientCSR()
@@ -28,7 +24,7 @@ export const useGetUser = (authUserid: undefined | string) => {
   const apiClient = createApiClientCSR()
 
   return useQuery({
-    enabled: !!authUserid,
+    enabled: false,
     queryFn: async () => {
       if (!authUserid) return null
 

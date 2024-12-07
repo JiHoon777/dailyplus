@@ -2,18 +2,19 @@
 
 import { useState } from 'react'
 
-import { useUserStore } from '@/entities/user'
+import { useLogout, useUserStore } from '@/entities/user'
 import { Badge, Button } from '@/shared/ui'
 
 export function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false)
   const user = useUserStore((state) => state.user)
+  const logout = useLogout()
 
   if (!user) {
     return null
   }
 
-  const handleLogout = () => {}
+  const handleLogout = () => logout.mutate()
 
   return (
     <div className="relative">
@@ -39,7 +40,7 @@ export function UserDropdown() {
               // disabled={logout.isPending}
               className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50"
             >
-              {/* {logout.isPending ? '로그아웃 중...' : '로그아웃'} */}
+              로그아웃
             </button>
           </div>
         </div>
