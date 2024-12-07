@@ -1,5 +1,6 @@
 'use client'
 import { useUserStore } from '@/entities/user'
+import { getUsernameFromEmail } from '@/shared/utils'
 
 import { getGreetingByTime } from '../lib/getGreetingByTime'
 
@@ -9,7 +10,8 @@ export const HomeGreeting = () => {
   return (
     <div className={'w-full'}>
       <h2 className="mb-3 text-3xl font-bold">
-        {user?.name ?? user?.email?.split('@')[0] ?? '유저'}님, 안녕하세요 👋
+        {user?.name ?? getUsernameFromEmail(user?.email) ?? '유저'}님,
+        안녕하세요 👋
       </h2>
       <p className="text-lg font-semibold text-gray-600">
         {getGreetingByTime()}

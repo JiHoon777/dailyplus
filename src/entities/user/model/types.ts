@@ -1,11 +1,8 @@
-export interface User {
-  id: string
-  name: string | null
-  email: string
-  created_at: string
-  updated_at: string
-}
+import type { Database } from 'database.types'
+
+type _USER = Database['public']['Tables']['users']['Row']
+export interface IUser extends _USER {}
 
 export interface UserState {
-  user: User | null
+  user: IUser | null
 }

@@ -3,6 +3,7 @@
  * 관리자용과 일반 사용자용 작업에 대한 접근을 제공
  */
 import type { SupabaseClient } from '@supabase/supabase-js'
+import type { Database } from 'database.types'
 
 import { ApiClientAdmin } from './apiClientAdmin'
 import { ApiClientApp } from './apiClientApp'
@@ -11,7 +12,7 @@ export class ApiClient {
   readonly admin = new ApiClientAdmin(this)
   readonly app = new ApiClientApp(this)
 
-  constructor(readonly _supabaseClient: SupabaseClient) {}
+  constructor(readonly _supabaseClient: SupabaseClient<Database>) {}
 
   get supabaseClient() {
     return this._supabaseClient
