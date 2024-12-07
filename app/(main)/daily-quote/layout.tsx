@@ -1,4 +1,4 @@
-export default function OmokLayout({
+export default function DailyQuoteLayout({
   children,
 }: {
   children: React.ReactNode

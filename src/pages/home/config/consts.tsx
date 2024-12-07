@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { Circle, Crown, FileQuestion, Grid2X2, Quote } from 'lucide-react'
+import { FileQuestion, Quote } from 'lucide-react'
 
 export interface QuickStartItem {
   color: string
@@ -8,65 +8,80 @@ export interface QuickStartItem {
   icon: ReactNode
   label: string
   isAI?: boolean
+  todo?: boolean
 }
 
 export const quickStartItems: QuickStartItem[] = [
   {
-    color: 'bg-purple-500',
-    href: '/dailyQuote',
+    color: 'bg-emerald-500',
+    href: '/daily-quote',
     icon: <Quote className="h-6 w-6" />,
     isAI: true,
     label: '오늘의 문장',
-  },
-  {
-    color: 'bg-indigo-500',
-    href: '/omok',
-    icon: <Grid2X2 className="h-6 w-6" />,
-    isAI: true,
-    label: '오목 배틀',
-  },
-  {
-    color: 'bg-slate-600',
-    href: '/baduk',
-    icon: <Circle className="h-6 w-6" />,
-    isAI: true,
-    label: '바둑 배틀',
+    todo: true,
   },
   {
     color: 'bg-amber-700',
-    href: '/chess',
-    icon: <Crown className="h-6 w-6" />,
+    href: '/daily-english-quote',
+    icon: <FileQuestion className="h-6 w-6" />,
     isAI: true,
-    label: '체스 배틀',
+    label: '오늘의 영어 문장',
+    todo: true,
   },
+
   {
     color: 'bg-amber-700',
     href: '/chess',
     icon: <FileQuestion className="h-6 w-6" />,
     isAI: true,
     label: '만다라트',
+    todo: true,
   },
-  {
-    color: 'bg-amber-700',
-    href: '/chess',
-    icon: <FileQuestion className="h-6 w-6" />,
-    isAI: true,
-    label: '마인드맵',
-  },
-  {
-    color: 'bg-amber-700',
-    href: '/chess',
-    icon: <FileQuestion className="h-6 w-6" />,
-    isAI: true,
-    label: '로직트리',
-  },
-  {
-    color: 'bg-amber-700',
-    href: '/chess',
-    icon: <FileQuestion className="h-6 w-6" />,
-    isAI: true,
-    label: '블로그',
-  },
+  // {
+  //   color: 'bg-amber-700',
+  //   href: '/chess',
+  //   icon: <FileQuestion className="h-6 w-6" />,
+  //   isAI: true,
+  //   label: '마인드맵',
+  //   todo: true,
+  // },
+  // {
+  //   color: 'bg-amber-700',
+  //   href: '/chess',
+  //   icon: <FileQuestion className="h-6 w-6" />,
+  //   isAI: true,
+  //   label: '로직트리',
+  //   todo: true,
+  // },
+  // {
+  //   color: 'bg-amber-700',
+  //   href: '/chess',
+  //   icon: <FileQuestion className="h-6 w-6" />,
+  //   isAI: true,
+  //   label: '블로그',
+  //   todo: true,
+  // },
+  // {
+  //   color: 'bg-indigo-500',
+  //   href: '/omok',
+  //   icon: <Grid2X2 className="h-6 w-6" />,
+  //   isAI: true,
+  //   label: '오목 배틀',
+  // },
+  // {
+  //   color: 'bg-slate-600',
+  //   href: '/baduk',
+  //   icon: <Circle className="h-6 w-6" />,
+  //   isAI: true,
+  //   label: '바둑 배틀',
+  // },
+  // {
+  //   color: 'bg-amber-700',
+  //   href: '/chess',
+  //   icon: <Crown className="h-6 w-6" />,
+  //   isAI: true,
+  //   label: '체스 배틀',
+  // },
   // {
   //   color: 'bg-blue-500',
   //   icon: <MessageSquare className="h-6 w-6" />,

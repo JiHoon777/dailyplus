@@ -9,8 +9,9 @@ import { quickStartItems } from '../config/consts'
 export const QuickStart = () => {
   return (
     <div className={'flex w-full flex-col gap-6'}>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center gap-4">
         <h3 className="text-xl font-semibold">빠른 실행</h3>
+        <p className="text-sm text-gray-600">Ai와 함께 진행해 보세요.</p>
       </div>
       <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-6">
         {quickStartItems.map((item, index) => (
@@ -24,12 +25,20 @@ export const QuickStart = () => {
                   <div className={`rounded-lg p-2 ${item.color} text-white`}>
                     {item.icon}
                   </div>
-                  {item.isAI && (
+                  {/* {item.isAI && (
                     <Badge
                       variant={'outline'}
                       className="absolute -right-2.5 -top-2.5 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 px-1.5 py-0.5 text-[10px] font-semibold text-white shadow-sm"
                     >
                       Ai
+                    </Badge>
+                  )} */}
+                  {item.todo && (
+                    <Badge
+                      variant={'outline'}
+                      className="absolute -right-2.5 -top-2.5 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 px-1.5 py-0.5 text-[10px] font-semibold text-white shadow-sm"
+                    >
+                      Todo
                     </Badge>
                   )}
                 </div>

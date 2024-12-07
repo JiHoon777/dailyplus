@@ -1,3 +1,3 @@
 export default function DailyQuote() {
-  return <>코트코트</>
+  return <>오늘의 문장</>
 }
