@@ -27,7 +27,16 @@ export const useSignUpWithEmail = () => {
   })
 }
 
-export const useLogout = () => {}
+export const useLogout = () => {
+  const apiClient = createApiClientCSR()
+
+  return useMutation({
+    mutationFn: async () => {
+      const { error } = await apiClient.logout()
+      if (error) throw error
+    },
+  })
+}
 
 // export const useLogout = () => {
 //   const queryClient = useQueryClient()

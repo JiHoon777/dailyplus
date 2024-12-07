@@ -6,6 +6,7 @@ import localFont from 'next/font/local'
 import { Toaster } from 'sonner'
 
 import { AuthProvider, QueryProvider, UiProvider } from '@/app/providers'
+import { Suspense } from 'react'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -25,6 +26,10 @@ export const metadata: Metadata = {
   title: 'Create Next App',
 }
 
+const LoadingFallback = () => {
+  return <div>Loading...</div>
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -37,14 +42,16 @@ export default function RootLayout({
       >
         <QueryProvider>
           <UiProvider>
-            <AuthProvider>
-              <main
-                className={'flex min-h-screen w-screen flex-col items-center'}
-              >
-                {children}
-              </main>
-              <Toaster />
-            </AuthProvider>
+            <Suspense fallback={<LoadingFallback />}>
+              <AuthProvider>
+                <main
+                  className={'flex min-h-screen w-screen flex-col items-center'}
+                >
+                  {children}
+                </main>
+                <Toaster />
+              </AuthProvider>
+            </Suspense>
           </UiProvider>
         </QueryProvider>
       </body>
