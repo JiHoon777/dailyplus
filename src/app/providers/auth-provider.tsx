@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 import { useGetAuthUser, useGetUser, useUserStore } from '@/entities/user'
 import { ScreenLoading } from '@/shared/ui'
@@ -54,7 +54,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         router.push('/auth/logout')
         return
       }
-      setUser(data)
+      setUser(data ?? null)
       setIsLoaded(true)
     })
   }, [authUser, authError, isAuthLoading, router, setUser, refetchUser])
