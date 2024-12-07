@@ -1,5 +1,5 @@
-import { SidebarTrigger } from '@/shared/ui'
+import { PageBase } from '@/widgets/layout'
 
 export default function PostsPage() {
-  return <main className="flex w-full flex-col"></main>
+  return <PageBase className="gap-6">dd</PageBase>
 }
