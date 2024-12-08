@@ -1,9 +1,37 @@
 'use client'
-import { ArticleType } from '@/shared/types'
+import { createApiClientCSR } from '@/shared/lib/supabase-csr'
+import { ArticleType, IArticle } from '@/shared/types'
 import { Button, Label, ModalOverlay } from '@/shared/ui'
 import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group'
+import { useState } from 'react'
+import { toast } from 'sonner'
+import { z } from 'zod'
 
-// Todo: Form Type Check, like zod
+const ArticleSchema = z.object({
+  title: z.string().min(1),
+  summary: z.string().min(1),
+  published_at: z.string().regex(/^\d{4}(-\d{2}(-\d{2})?)?$/),
+  reference_name: z.string().min(1),
+  reference_url: z.string().url(),
+})
+
+const extractJsonFromText = (text: string): string => {
+  // JSON 블록 찾기
+  const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/)
+  if (jsonMatch) {
+    return jsonMatch[1].trim()
+  }
+
+  // JSON 블록이 없으면 전체 텍스트에서 [] 블록 찾기
+  const arrayMatch = text.match(/\[\s*{[\s\S]*}\s*\]/)
+  if (arrayMatch) {
+    return arrayMatch[0].trim()
+  }
+
+  return text.trim()
+}
+
+// Todo: Form Type Check, like zod, Refactor
 export const CreateArticleWithAiModal = ({
   isOpen,
   onClose,
@@ -11,7 +39,64 @@ export const CreateArticleWithAiModal = ({
   isOpen: boolean
   onClose: () => void
 }) => {
-  const handleCreate = () => {}
+  const [isLoading, setIsLoading] = useState(false)
+  const [articleType, setArticleType] = useState<ArticleType>('trend')
+  const handleCreate = async () => {
+    const api = createApiClientCSR()
+    setIsLoading(true)
+    try {
+      const res = await api.admin.getArticlesByPerplexity(articleType)
+      const answer = res.choices?.[0]?.message?.content ?? null
+
+      if (answer) {
+        const jsonString = extractJsonFromText(answer)
+        const parsedData = JSON.parse(jsonString)
+
+        if (!Array.isArray(parsedData)) {
+          console.error('Data is not an array', parsedData)
+          return []
+        }
+
+        const validatedArticles = parsedData.reduce<
+          Pick<
+            IArticle,
+            | 'title'
+            | 'summary'
+            | 'published_at'
+            | 'reference_name'
+            | 'reference_url'
+          >[]
+        >((acc, item) => {
+          try {
+            const validatedItem = ArticleSchema.parse(item)
+            acc.push(validatedItem)
+          } catch (error) {
+            console.error('Validation error for item:', item, error)
+          }
+          return acc
+        }, [])
+
+        console.log(6555, validatedArticles)
+        const { error } = await api.admin.createBulkArticles(
+          validatedArticles.map((item) => ({
+            ...item,
+            type: articleType,
+            unique_id: `${item.title}-${item.reference_url}`,
+          })),
+        )
+
+        if (error) {
+          throw error
+        }
+        toast('Successfully created articles')
+      }
+    } catch (ex) {
+      console.log(ex)
+      toast(JSON.stringify(ex))
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   const articleTypes: ArticleType[] = [
     'trend',
@@ -35,7 +120,11 @@ export const CreateArticleWithAiModal = ({
         </h3>
       </header>
       <div>
-        <RadioGroup defaultValue="trend" className="gap-2">
+        <RadioGroup
+          defaultValue="trend"
+          className="gap-2"
+          onValueChange={(v) => setArticleType(v as ArticleType)}
+        >
           {articleTypes.map((articleType) => (
             <div key={articleType} className="flex items-center space-x-2">
               <RadioGroupItem value={articleType} id={articleType} />
@@ -45,10 +134,12 @@ export const CreateArticleWithAiModal = ({
         </RadioGroup>
       </div>
       <footer className="flex w-full justify-end gap-4">
-        <Button variant="ghost" onClick={onClose}>
+        <Button variant="ghost" onClick={onClose} disabled={isLoading}>
           Close
         </Button>
-        <Button onClick={handleCreate}>Submit</Button>
+        <Button onClick={handleCreate} disabled={isLoading}>
+          Submit
+        </Button>
       </footer>
     </ModalOverlay>
   )

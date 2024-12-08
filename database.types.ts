@@ -15,7 +15,7 @@ export type Database = {
           id: number
           published_at: string | null
           reference_name: string | null
-          reference_url: string | null
+          reference_url: string
           summary: string | null
           title: string | null
           type: Database["public"]["Enums"]["article_type"]
@@ -26,7 +26,7 @@ export type Database = {
           id?: number
           published_at?: string | null
           reference_name?: string | null
-          reference_url?: string | null
+          reference_url: string
           summary?: string | null
           title?: string | null
           type: Database["public"]["Enums"]["article_type"]
@@ -37,7 +37,7 @@ export type Database = {
           id?: number
           published_at?: string | null
           reference_name?: string | null
-          reference_url?: string | null
+          reference_url?: string
           summary?: string | null
           title?: string | null
           type?: Database["public"]["Enums"]["article_type"]
