@@ -25,27 +25,31 @@ import {
 import { PageBase } from '@/widgets/layout'
 import { useOverlay } from '@/shared/lib/overlay'
 import { CreateArticleWithAiModal } from '@/pages/admin/posts'
+import { format } from 'date-fns'
 
 const columns: ColumnDef<IArticle>[] = [
+  {
+    id: 'index',
+    cell: ({ row }) => <div>No. {row.index + 1}</div>,
+    header: 'No.',
+  },
   {
     accessorKey: 'id',
     cell: ({ row }) => <div>{row.getValue('id')}</div>,
     header: 'ID',
   },
   {
-    accessorKey: 'unique_id',
-    cell: ({ row }) => <div>{row.getValue('unique_id')}</div>,
-    header: 'Unique Id',
-  },
-  {
     accessorKey: 'title',
-    cell: ({ row }) => <div>{row.getValue('title')}</div>,
+    cell: ({ row }) => <div className="break-all">{row.getValue('title')}</div>,
     header: 'Title',
   },
   {
     accessorKey: 'summary',
-    cell: ({ row }) => <div>{row.getValue('summary')}</div>,
+    cell: ({ row }) => (
+      <div className="break-all">{row.getValue('summary')}</div>
+    ),
     header: 'Summary',
+    minSize: 1000,
   },
   {
     accessorKey: 'reference_name',
@@ -54,7 +58,11 @@ const columns: ColumnDef<IArticle>[] = [
   },
   {
     accessorKey: 'reference_url',
-    cell: ({ row }) => <div>{row.getValue('reference_url')}</div>,
+    cell: ({ row }) => (
+      <div className="max-w-[150px] break-all">
+        {row.getValue('reference_url')}
+      </div>
+    ),
     header: 'Reference Url',
   },
   {
@@ -64,7 +72,11 @@ const columns: ColumnDef<IArticle>[] = [
   },
   {
     accessorKey: 'published_at',
-    cell: ({ row }) => <div>{row.getValue('published_at')}</div>,
+    cell: ({ row }) => {
+      const dateText = row.getValue('published_at')
+      if (!dateText) return <div>No data</div>
+      return <div>{format(dateText as string, 'yyyy-MM-dd')}</div>
+    },
     header: 'Published At',
   },
 ]
@@ -79,7 +91,7 @@ export default function ArticlesPage() {
     columns,
     data: data ?? [],
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    columnResizeMode: 'onChange',
   })
 
   const handleCreateArticle = () => {
@@ -93,8 +105,6 @@ export default function ArticlesPage() {
       toast(JSON.stringify(error))
     }
   }, [error])
-
-  console.log(17, data)
 
   if (isLoading) {
     return <ScreenLoading />
@@ -113,7 +123,10 @@ export default function ArticlesPage() {
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      style={{ width: header.getSize() }}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -134,7 +147,10 @@ export default function ArticlesPage() {
                   data-state={row.getIsSelected() && 'selected'}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell
+                      key={cell.id}
+                      style={{ width: cell.column.getSize() }}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),

@@ -100,7 +100,6 @@ export const CreateArticleWithAiModal = ({
           return acc
         }, [])
 
-        console.log(6555, validatedArticles)
         const { error } = await api.admin.createBulkArticles(
           validatedArticles.map((item) => ({
             ...item,
