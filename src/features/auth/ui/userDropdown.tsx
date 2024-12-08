@@ -4,7 +4,7 @@ import { Home, LogOut, Settings } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-import { useLogout } from '@/entities/users'
+import { useMutations } from '@/shared/api'
 import { useStore } from '@/shared/store'
 import { Button } from '@/shared/ui'
 import {
@@ -19,7 +19,7 @@ import { getUsernameFromEmail } from '@/shared/utils'
 export function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false)
   const user = useStore((state) => state.auth.user)
-  const logout = useLogout()
+  const { logout } = useMutations()
   const router = useRouter()
   const pathname = usePathname()
 

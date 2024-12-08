@@ -1,17 +1,20 @@
-'use client'
-
 import type { AuthError, AuthResponse } from '@supabase/supabase-js'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { userQueryKeys } from '@/entities/users/api/consts'
-import { createApiClientCSR } from '@/shared/lib/supabase-csr/index'
+import { createApiClientCSR } from '@/shared/lib/supabase-csr'
 
-export const useSignInWithEmail = () => {
+import { userQueryKeys } from './consts'
+
+export const useMutations = () => {
   const queryClient = useQueryClient()
   const apiClient = createApiClientCSR()
 
-  return useMutation<AuthResponse['data'], AuthError, FormData>({
+  const signInWithEmail = useMutation<
+    AuthResponse['data'],
+    AuthError,
+    FormData
+  >({
     mutationFn: async (formData) => {
       const input = {
         email: formData.get('email') as string,
@@ -34,12 +37,8 @@ export const useSignInWithEmail = () => {
       })
     },
   })
-}
 
-export const useSignUpWithEmail = () => {
-  const apiClient = createApiClientCSR()
-
-  return useMutation<null, AuthError, FormData>({
+  const signUpWithEmail = useMutation<null, AuthError, FormData>({
     mutationFn: async (formData) => {
       const input = {
         email: formData.get('email') as string,
@@ -57,21 +56,14 @@ export const useSignUpWithEmail = () => {
       return null
     },
   })
-}
 
-export const useLogout = () => {
-  const queryClient = useQueryClient()
-  const apiClient = createApiClientCSR()
-
-  return useMutation<null, AuthError, void>({
+  const logout = useMutation({
     mutationFn: async () => {
       const { error } = await apiClient.logout()
 
       if (error) {
         throw error
       }
-
-      return null
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -79,4 +71,6 @@ export const useLogout = () => {
       })
     },
   })
+
+  return { logout, signInWithEmail, signUpWithEmail }
 }

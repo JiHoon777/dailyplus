@@ -2,7 +2,8 @@
 
 import type { FormEvent } from 'react'
 
-import { useSignInWithEmail } from '@/entities/users'
+import { useMutations } from '@/shared/api'
+import { useOverlay } from '@/shared/lib/overlay'
 import { Button, Input, Label, ModalOverlay, Spinner } from '@/shared/ui'
 
 export function LoginModal({
@@ -12,12 +13,14 @@ export function LoginModal({
   isOpen: boolean
   onClose: () => void
 }) {
-  const signIn = useSignInWithEmail()
+  const { signInWithEmail } = useMutations()
+  const { close } = useOverlay()
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
-    signIn.mutate(formData)
+    signInWithEmail.mutate(formData)
+    close()
   }
 
   return (

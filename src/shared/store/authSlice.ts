@@ -1,4 +1,4 @@
-import type { IUser } from '@/shared/model/entity.types'
+import type { IUser } from '@/shared/types/entity.types'
 import type { StateCreator } from 'zustand'
 
 export interface AuthSlice {

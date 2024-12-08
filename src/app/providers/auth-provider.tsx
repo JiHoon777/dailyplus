@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-import { useGetAuthUser, useGetUser } from '@/entities/users'
+import { useGetAuthUser, useGetUser } from '@/shared/api/hooks/useQueries'
 import { useStore } from '@/shared/store'
 import { ScreenLoading } from '@/shared/ui'
 

@@ -1,9 +1,10 @@
-import type { IUser } from '@/shared/model/entity.types'
+import type { IUser } from '@/shared/types/entity.types'
 
 import { useQuery } from '@tanstack/react-query'
 
-import { userQueryKeys } from '@/entities/users/api/consts'
 import { createApiClientCSR } from '@/shared/lib/supabase-csr'
+
+import { userQueryKeys } from './consts'
 
 export const useGetAuthUser = () => {
   const apiClient = createApiClientCSR()
@@ -26,7 +27,7 @@ export const useGetUser = (authUserid: undefined | string) => {
   const apiClient = createApiClientCSR()
 
   return useQuery<IUser | null>({
-    enabled: false,
+    enabled: !!authUserid,
     queryFn: async () => {
       if (!authUserid) return null
 
@@ -38,6 +39,6 @@ export const useGetUser = (authUserid: undefined | string) => {
 
       return data
     },
-    queryKey: userQueryKeys.user(authUserid ?? ''),
+    queryKey: userQueryKeys.me(),
   })
 }
