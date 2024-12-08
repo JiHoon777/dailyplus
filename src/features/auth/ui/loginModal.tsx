@@ -5,7 +5,6 @@ import type { FormEvent } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 
 import { queryKeys, useMutations } from '@/shared/api'
-import { useOverlay } from '@/shared/lib/overlay'
 import { Button, Input, Label, ModalOverlay, Spinner } from '@/shared/ui'
 
 export function LoginModal({
@@ -17,14 +16,13 @@ export function LoginModal({
 }) {
   const queryClient = useQueryClient()
   const { signInWithEmail } = useMutations()
-  const { close } = useOverlay()
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
     signInWithEmail.mutate(formData, {
       onSuccess: () => {
-        close()
+        onClose()
         queryClient.invalidateQueries({
           queryKey: queryKeys.getAuthUser(),
         })

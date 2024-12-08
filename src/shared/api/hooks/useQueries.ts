@@ -51,7 +51,6 @@ export const useGetArticles = (page: number) => {
   const apiClient = createApiClientCSR()
 
   return useQuery({
-    gcTime: 0,
     queryFn: async () => {
       const { data, error } = await apiClient.admin.getArticles({ page })
 
@@ -62,6 +61,7 @@ export const useGetArticles = (page: number) => {
       return data
     },
     queryKey: queryKeys.adminArticles(page),
-    staleTime: 0, // Remove data from cache immediately when unused
+    // gcTime: 0,
+    // staleTime: 0, // Remove data from cache immediately when unused
   })
 }
