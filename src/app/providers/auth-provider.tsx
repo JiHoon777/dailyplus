@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-import { useGetAuthUser, useGetUser } from '@/shared/api/hooks/useQueries'
+import { useGetAuthUser, useGetMe } from '@/shared/api/hooks/useQueries'
 import { useStore } from '@/shared/store'
 import { ScreenLoading } from '@/shared/ui'
 
@@ -20,7 +20,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   } = useGetAuthUser()
 
   // 2. Auth ID로 User 엔티티 가져오기
-  const { refetch: refetchUser } = useGetUser(authUser?.id)
+  const { refetch: refetchUser } = useGetMe(authUser?.id)
 
   // Auth 상태 변경 감지 및 처리
   useEffect(() => {

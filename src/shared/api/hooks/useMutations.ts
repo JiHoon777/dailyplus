@@ -1,13 +1,11 @@
 import type { AuthError, AuthResponse } from '@supabase/supabase-js'
 
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 
 import { createApiClientCSR } from '@/shared/lib/supabase-csr'
 
-import { userQueryKeys } from './consts'
-
+// Todo: FormData Type Check
 export const useMutations = () => {
-  const queryClient = useQueryClient()
   const apiClient = createApiClientCSR()
 
   const signInWithEmail = useMutation<
@@ -30,11 +28,6 @@ export const useMutations = () => {
       }
 
       return data
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: userQueryKeys.session(),
-      })
     },
   })
 
@@ -64,11 +57,6 @@ export const useMutations = () => {
       if (error) {
         throw error
       }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: userQueryKeys.session(),
-      })
     },
   })
 

@@ -4,7 +4,10 @@ import { useQuery } from '@tanstack/react-query'
 
 import { createApiClientCSR } from '@/shared/lib/supabase-csr'
 
-import { userQueryKeys } from './consts'
+export const queryKeys = {
+  getAuthUser: () => ['auth', 'session'] as const,
+  getMe: () => ['users', 'me'] as const,
+}
 
 export const useGetAuthUser = () => {
   const apiClient = createApiClientCSR()
@@ -19,11 +22,11 @@ export const useGetAuthUser = () => {
 
       return data.user
     },
-    queryKey: userQueryKeys.session(),
+    queryKey: queryKeys.getAuthUser(),
   })
 }
 
-export const useGetUser = (authUserid: undefined | string) => {
+export const useGetMe = (authUserid: undefined | string) => {
   const apiClient = createApiClientCSR()
 
   return useQuery<IUser | null>({
@@ -39,6 +42,6 @@ export const useGetUser = (authUserid: undefined | string) => {
 
       return data
     },
-    queryKey: userQueryKeys.me(),
+    queryKey: queryKeys.getMe(),
   })
 }

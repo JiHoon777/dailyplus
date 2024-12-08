@@ -1,10 +1,11 @@
 'use client'
 
+import { useQueryClient } from '@tanstack/react-query'
 import { Home, LogOut, Settings } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-import { useMutations } from '@/shared/api'
+import { queryKeys, useMutations } from '@/shared/api'
 import { useStore } from '@/shared/store'
 import { Button } from '@/shared/ui'
 import {
@@ -22,8 +23,17 @@ export function UserDropdown() {
   const { logout } = useMutations()
   const router = useRouter()
   const pathname = usePathname()
+  const queryClient = useQueryClient()
 
-  const handleLogout = () => logout.mutate()
+  const handleLogout = () => {
+    logout.mutate(undefined, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.getAuthUser(),
+        })
+      },
+    })
+  }
   const handlePushAdmin = () => router.push('/admin/posts')
   const handlePushHome = () => router.push('/')
 
