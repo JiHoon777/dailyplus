@@ -12,7 +12,7 @@ export class ApiClient {
   readonly admin = new ApiClientAdmin(this)
   readonly app = new ApiClientApp(this)
 
-  constructor(readonly _supabaseClient: SupabaseClient<Database>) {}
+  constructor(private readonly _supabaseClient: SupabaseClient<Database>) {}
 
   get supabaseClient() {
     return this._supabaseClient

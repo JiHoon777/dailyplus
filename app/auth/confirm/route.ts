@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
   if (token_hash && type) {
     const apiClient = await createApiClientSSR()
 
-    const { error } = await apiClient._supabaseClient.auth.verifyOtp({
+    const { error } = await apiClient.supabaseClient.auth.verifyOtp({
       token_hash,
       type,
     })
