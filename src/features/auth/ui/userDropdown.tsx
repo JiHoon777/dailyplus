@@ -19,7 +19,7 @@ import { getUsernameFromEmail } from '@/shared/utils'
 
 export function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false)
-  const user = useStore((state) => state.auth.user)
+  const me = useStore((state) => state.auth.me)
   const { logout } = useMutations()
   const router = useRouter()
   const pathname = usePathname()
@@ -38,7 +38,7 @@ export function UserDropdown() {
   const handlePushHome = () => router.push('/')
 
   const isAdminPage = pathname?.startsWith('/admin')
-  if (!user) {
+  if (!me) {
     return null
   }
 
@@ -46,11 +46,11 @@ export function UserDropdown() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" onClick={() => setIsOpen(!isOpen)}>
-          {user.name ?? getUsernameFromEmail(user.email)}
+          {me.name ?? getUsernameFromEmail(me.email)}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        {user.role === 'admin' && (
+        {me.role === 'admin' && (
           <>
             {isAdminPage ? (
               <DropdownMenuItem onClick={handlePushHome}>

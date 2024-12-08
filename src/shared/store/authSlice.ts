@@ -3,9 +3,9 @@ import type { StateCreator } from 'zustand'
 
 export interface AuthSlice {
   auth: {
-    user: IUser | null
+    me: IUser | null
 
-    setUser: (user: IUser | null) => void
+    setMe: (user: IUser | null) => void
   }
 }
 
@@ -15,11 +15,11 @@ export const createAuthSlice: StateCreator<
   []
 > = (set) => ({
   auth: {
-    setUser: (user) =>
-      set((state) => {
-        state.auth.user = user
-      }),
+    me: null,
 
-    user: null,
+    setMe: (user) =>
+      set((state) => {
+        state.auth.me = user
+      }),
   },
 })

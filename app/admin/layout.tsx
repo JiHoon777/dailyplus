@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation'
 
-import { useUserStore } from '@/entities/users'
+import { useStore } from '@/shared/store'
 import { SidebarInset } from '@/shared/ui'
 import { AdminHeaderBase } from '@/widgets/layout/ui/adminHeaderBase'
 import { AdminSidebar } from '@/widgets/layout/ui/adminSidebar'
@@ -12,7 +12,7 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
-  const user = useUserStore((state) => state.user)
+  const user = useStore((state) => state.auth.me)
 
   if (!user || user.role !== 'admin') {
     redirect('/')

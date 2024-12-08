@@ -5,7 +5,7 @@ import { getUsernameFromEmail } from '@/shared/utils'
 import { getGreetingByTime } from '../lib/getGreetingByTime'
 
 export const HomeGreeting = () => {
-  const user = useStore((state) => state.auth.user)
+  const user = useStore((state) => state.auth.me)
 
   return (
     <div className={'w-full'}>
