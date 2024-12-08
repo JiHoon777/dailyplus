@@ -11,7 +11,4 @@ export interface IUser extends _USER {}
  */
 type _ARTICLES = Database['public']['Tables']['articles']['Row']
 export interface IArticle extends _ARTICLES {}
-
-export interface UserState {
-  user: IUser | null
-}
+export type ArticleType = Database['public']['Enums']['article_type']
