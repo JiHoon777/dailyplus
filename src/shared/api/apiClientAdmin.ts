@@ -74,37 +74,43 @@ export class ApiClientAdmin {
     endDate?: string, // YYYY-MM-DD
   ): Promise<PerplexityResponse> {
     const frontBackendSources = [
-      'AWS Blog',
-      'Google Cloud Blog',
-      'Microsoft Azure Blog',
-      'GitHub Blog',
-      'Node.js Blog',
-      'Docker Blog',
+      'AWS',
+      'Google Cloud',
+      'Google',
+      'Microsoft Azure',
+      'Microsoft',
+      'IBM',
+      'Oracle',
+      'GitHub',
+      'Node.js',
+      'Docker',
       'Toast UI Tech',
-      'React Blog',
-      'Next.js Blog',
-      'Vue Blog',
-      'Angular Blog',
-      'Chrome Developers Blog',
-      'MDN Web Docs',
-      '카카오 기술 블로그',
+      'Toast',
+      'React',
+      'Next.js',
+      'Vue',
+      'Angular',
+      'Chrome Developers',
+      'MDN Web',
+      '카카오',
       '네이버 D2',
-      '라인 기술 블로그',
-      '우아한형제들 기술 블로그',
-      '당근마켓 기술 블로그',
-      '쏘카 기술 블로그',
-      '리디 기술 블로그',
-      '뱅크샐러드 기술 블로그',
-      'NHN Cloud 기술 블로그',
-      '쿠팡 기술 블로그',
-      '마켓컬리 기술 블로그',
-      '토스 기술 블로그',
-      '왓챠 기술 블로그',
-      '야놀자 기술 블로그',
-      '직방 기술 블로그',
+      '네이버',
+      '라인',
+      '우아한형제들',
+      '당근마켓',
+      '쏘카',
+      '리디',
+      '뱅크샐러드',
+      'NHN Cloud',
+      '쿠팡',
+      '마켓컬리',
+      '토스',
+      '왓챠',
+      '야놀자',
+      '직방',
     ]
     const trustedSources = {
-      ai: 'Google AI Blog, OpenAI Blog, DeepMind Blog, Microsoft AI Blog, MIT AI Lab, Stanford AI Lab',
+      ai: 'Google AI, OpenAI, DeepMind, Microsoft AI, MIT AI, Stanford AI, MIT, Stanford, UC Berkeley',
       'back-end': frontBackendSources.join(', '),
       'front-end': frontBackendSources.join(', '),
       it: 'TechCrunch, The Verge, Wired, VentureBeat, CNET, ZDNet, Reuters Technology, Bloomberg Technology',
@@ -119,28 +125,36 @@ export class ApiClientAdmin {
     const dateRangeText = (() => {
       const now = new Date().toISOString()
       if (startDate && endDate) {
-        return `${startDate} ~ ${endDate} 사이에`
+        return `${startDate} ~ ${endDate}`
       }
       if (startDate) {
-        return `${startDate} ~ ${now} 사이에`
+        return `${startDate} ~ ${now}`
       }
 
-      return `${now} 에`
+      return `${now}`
     })()
 
     const systemContent =
-      `${dateRangeText}에 작성된 article을 찾아주세요. 해당 날짜에 출간된 게시글이 없다면, 1주일 이내, 1개월 이내, 3개월 이내 순서로 가장 가까운 시기의 article을 5개 보여주세요.` +
-      `유명한, 영향력있는 공식/신뢰할 수 있는 출처의 정보만 선택해주세요: ${trustedSources[type]}. ` +
-      `한국, 외국(미국) 출처를 반절씩 선택해주세요.`
+      `Only find the most recent articles published ${dateRangeText}. ` +
+      `STRICT REQUIREMENTS:` +
+      `1. MUST return exactly 5 articles` +
+      `2. All dates MUST be in YYYY-MM-DD format or null if exact date is uncertain` +
+      `3. ONLY use articles from these trusted sources: ${trustedSources[type]}` +
+      `4. Results MUST be balanced:` +
+      `- 2-3 Korean sources with original Korean content` +
+      `- 2-3 International sources` +
+      `5. For international articles:` +
+      `- title: Keep original title in English (DO NOT translate)` +
+      `- summary: MUST be translated to Korean` +
+      `6. Keep original reference_name and reference_url unchanged`
 
     const content = (() => {
       // analyze news
       if (type === 'korea-news' || type === 'world-news' || type === 'it') {
         return (
-          `당신은 ${type} 뉴스 분석 전문가입니다. ` +
-          `최신 ${type} 뉴스 중 중요도와 영향력이 큰 뉴스들을 알려주세요., ` +
-          `각 뉴스는 서로 다른 주제를 다뤄야 합니다. ` +
-          `정확히 다음 JSON 형식으로 응답해주세요: ` +
+          `You are a search expert specializing in finding important ${type} news within the specified timeframe. ` +
+          `Please identify the most impactful and significant ${type} news articles from the specified period. ` +
+          `Return the response in exactly this JSON format: ` +
           `[ { "title": "뉴스 제목", "summary": "뉴스 요약 (200자 이내)", "published_at": "YYYY-MM-DD", ` +
           `"reference_name": "위에 명시된 매체 중 하나", "reference_url": "원본 기사 URL" } ]`
         )
@@ -149,9 +163,9 @@ export class ApiClientAdmin {
       // analyze tech blog articles
       if (type === 'ai' || type === 'front-end' || type === 'back-end') {
         return (
-          `당신은 ${type} 개발 전문가입니다. ` +
-          `최신 ${type} IT 회사, 공신력(유명한) 있는 블로그의 기술 블로그 및 논문 article 중 중요도와 영향력이 article 들을 알려주세요., ` +
-          `정확히 다음 JSON 형식으로 응답해주세요: ` +
+          `You are a search expert specializing in finding ${type} development articles within the specified timeframe. ` +
+          `Please identify articles from authoritative tech blogs of prominent Korean and international IT companies matching our trusted sources for this period. ` +
+          `Respond in exactly this JSON format: ` +
           `[ { "title": "제목", "summary": "주요 내용 및 영향도 요약 (200자 이내)", ` +
           `"published_at": "YYYY-MM-DD", "reference_name": "위에 명시된 출처 중 하나", ` +
           `"reference_url": "원본 URL" } ]`
@@ -160,10 +174,10 @@ export class ApiClientAdmin {
 
       // analyze trend
       return (
-        `당신은 디지털 트렌드 분석가입니다. ` +
-        `소셜 미디어, 기술, 문화 전반에 걸친 최신 트렌드 중 ` +
-        `서로 다른 분야의 가장 영향력 있는 trend 를 알려주세요. ` +
-        `정확히 다음 JSON 형식으로 응답해주세요: ` +
+        `You are a trend analyst specializing in finding trends within the specified timeframe. ` +
+        `Please highlight the most significant trends emerging across social media, technology, and cultural domains. ` +
+        `Select diverse and impactful trends from different sectors. ` +
+        `Respond in exactly this JSON format: ` +
         `[ { "title": "트렌드 제목", "summary": "트렌드 설명 및 영향력 분석 (200자 이내)", ` +
         `"published_at": "YYYY-MM-DD", "reference_name": "주요 참고 출처", ` +
         `"reference_url": "참고 URL" } ]`
@@ -173,7 +187,7 @@ export class ApiClientAdmin {
     const body = JSON.stringify({
       messages: [
         {
-          content: systemContent + '최대한 공유한 출처 위주로 찾아주세요.',
+          content: systemContent,
           role: 'system',
         },
         {
