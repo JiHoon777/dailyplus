@@ -2,15 +2,11 @@ import type { IUser } from '@/shared/model/entity.types'
 import type { StateCreator } from 'zustand'
 
 export interface AuthSlice {
-  //
-  // states
-  //
-  authUser: IUser | null
+  auth: {
+    user: IUser | null
 
-  //
-  // actions
-  //
-  setAuthUser: (user: IUser | null) => void
+    setUser: (user: IUser | null) => void
+  }
 }
 
 export const createAuthSlice: StateCreator<
@@ -18,16 +14,12 @@ export const createAuthSlice: StateCreator<
   [['zustand/immer', never]],
   []
 > = (set) => ({
-  //
-  // states
-  //
-  authUser: null,
+  auth: {
+    setUser: (user) =>
+      set((state) => {
+        state.auth.user = user
+      }),
 
-  //
-  // actions
-  //
-  setAuthUser: (user) =>
-    set((state) => {
-      state.user = user
-    }),
+    user: null,
+  },
 })

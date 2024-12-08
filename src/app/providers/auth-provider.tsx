@@ -9,7 +9,7 @@ import { ScreenLoading } from '@/shared/ui'
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter()
-  const setAuthUser = useStore((state) => state.setAuthUser)
+  const setAuthUser = useStore((state) => state.auth.setUser)
   const [isLoaded, setIsLoaded] = useState(false)
 
   // 1. Auth 세션 정보 가져오기

@@ -18,7 +18,7 @@ import { getUsernameFromEmail } from '@/shared/utils'
 
 export function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false)
-  const user = useStore((state) => state.authUser)
+  const user = useStore((state) => state.auth.user)
   const logout = useLogout()
   const router = useRouter()
   const pathname = usePathname()

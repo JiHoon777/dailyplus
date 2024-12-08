@@ -8,7 +8,7 @@ import { LoginModal } from './loginModal'
 import { UserDropdown } from './userDropdown'
 
 export function AuthButton() {
-  const user = useStore((state) => state.authUser)
+  const user = useStore((state) => state.auth.user)
   const { open } = useOverlay()
 
   const handleLogin = () => {
