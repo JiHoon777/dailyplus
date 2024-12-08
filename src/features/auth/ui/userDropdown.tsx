@@ -34,7 +34,7 @@ export function UserDropdown() {
       },
     })
   }
-  const handlePushAdmin = () => router.push('/admin/posts')
+  const handlePushAdmin = () => router.push('/admin/articles')
   const handlePushHome = () => router.push('/')
 
   const isAdminPage = pathname?.startsWith('/admin')

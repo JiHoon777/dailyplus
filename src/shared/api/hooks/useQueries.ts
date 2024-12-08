@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import { createApiClientCSR } from '@/shared/lib/supabase-csr'
 
 export const queryKeys = {
+  adminArticles: (page: number) => ['admin', 'articles', page] as const,
   getAuthUser: () => ['auth', 'session'] as const,
   getMe: () => ['users', 'me'] as const,
 }
@@ -43,5 +44,24 @@ export const useGetMe = (authUserid: undefined | string) => {
       return data
     },
     queryKey: queryKeys.getMe(),
+  })
+}
+
+export const useGetArticles = (page: number) => {
+  const apiClient = createApiClientCSR()
+
+  return useQuery({
+    gcTime: 0,
+    queryFn: async () => {
+      const { data, error } = await apiClient.admin.getArticles({ page })
+
+      if (error) {
+        throw error
+      }
+
+      return data
+    },
+    queryKey: queryKeys.adminArticles(page),
+    staleTime: 0, // Remove data from cache immediately when unused
   })
 }

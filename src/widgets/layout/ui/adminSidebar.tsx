@@ -20,8 +20,8 @@ const items = [
   },
   {
     icon: NewspaperIcon,
-    title: 'Posts',
-    url: '/admin/posts',
+    title: 'Articles',
+    url: '/admin/articles',
   },
 ]
 

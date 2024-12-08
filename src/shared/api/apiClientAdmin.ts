@@ -14,7 +14,7 @@ export class ApiClientAdmin {
     return this._apiClient.supabaseClient
   }
 
-  getUsers({ page = 1, limit = 10 }: { page: number; limit: number }) {
+  getUsers({ page = 1, limit = 10 }: { page: number; limit?: number }) {
     const from = (page - 1) * limit
     const to = from + limit - 1
 
@@ -24,7 +24,7 @@ export class ApiClientAdmin {
       .range(from, to)
   }
 
-  getArticles({ page = 1, limit = 10 }: { page: number; limit: number }) {
+  getArticles({ page = 1, limit = 10 }: { page: number; limit?: number }) {
     const from = (page - 1) * limit
     const to = from + limit - 1
 
