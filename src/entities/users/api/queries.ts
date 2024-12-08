@@ -1,8 +1,8 @@
-import type { IUser } from '../model/types'
+import type { IUser } from '@/shared/model/entity.types'
 
-import { userQueryKeys } from '@entities/user/api/consts'
 import { useQuery } from '@tanstack/react-query'
 
+import { userQueryKeys } from '@/entities/users/api/consts'
 import { createApiClientCSR } from '@/shared/lib/supabase-csr'
 
 export const useGetAuthUser = () => {

@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation'
 
-import { useUserStore } from '@/entities/user'
+import { useUserStore } from '@/entities/users'
 import { SidebarInset } from '@/shared/ui'
 import { AdminHeaderBase } from '@/widgets/layout/ui/adminHeaderBase'
 import { AdminSidebar } from '@/widgets/layout/ui/adminSidebar'

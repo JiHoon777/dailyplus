@@ -9,6 +9,36 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      articles: {
+        Row: {
+          author_name: string
+          created_at: string | null
+          id: number
+          published_at: string
+          summary: string
+          title: string
+          type: Database['public']['Enums']['article_type']
+        }
+        Insert: {
+          author_name: string
+          created_at?: string | null
+          id?: number
+          published_at: string
+          summary: string
+          title: string
+          type: Database['public']['Enums']['article_type']
+        }
+        Update: {
+          author_name?: string
+          created_at?: string | null
+          id?: number
+          published_at?: string
+          summary?: string
+          title?: string
+          type?: Database['public']['Enums']['article_type']
+        }
+        Relationships: []
+      }
       users: {
         Row: {
           avatar_url: string | null
@@ -47,6 +77,14 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      article_type:
+        | 'trend'
+        | 'it'
+        | 'ai'
+        | 'front-end'
+        | 'back-end'
+        | 'korea-news'
+        | 'world-news'
       user_role: 'user' | 'admin'
     }
     CompositeTypes: {

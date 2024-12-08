@@ -4,7 +4,7 @@ import type { AuthError, AuthResponse } from '@supabase/supabase-js'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { userQueryKeys } from '@/entities/user/api/consts'
+import { userQueryKeys } from '@/entities/users/api/consts'
 import { createApiClientCSR } from '@/shared/lib/supabase-csr/index'
 
 export const useSignInWithEmail = () => {

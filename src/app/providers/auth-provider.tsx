@@ -3,12 +3,13 @@
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-import { useGetAuthUser, useGetUser, useUserStore } from '@/entities/user'
+import { useGetAuthUser, useGetUser } from '@/entities/users'
+import { useStore } from '@/shared/store'
 import { ScreenLoading } from '@/shared/ui'
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter()
-  const setUser = useUserStore((state) => state.setUser)
+  const setAuthUser = useStore((state) => state.setAuthUser)
   const [isLoaded, setIsLoaded] = useState(false)
 
   // 1. Auth 세션 정보 가져오기
@@ -29,20 +30,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (authError) {
       // AuthSessionMissingError는 정상적인 로그아웃 상태
       if (authError.message === 'Auth session missing!') {
-        setUser(null)
+        setAuthUser(null)
         setIsLoaded(true)
         return
       }
 
       // 다른 인증 에러의 경우 로그아웃 처리
-      setUser(null)
+      setAuthUser(null)
       router.push('/auth/logout')
       return
     }
 
     // 2. 인증된 유저가 없는 경우 (로그아웃 상태)
     if (!authUser) {
-      setUser(null)
+      setAuthUser(null)
       setIsLoaded(true)
       return
     }
@@ -50,14 +51,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // 3. 인증된 유저가 있는 경우
     refetchUser().then(({ data, error }) => {
       if (error) {
-        setUser(null)
+        setAuthUser(null)
         router.push('/auth/logout')
         return
       }
-      setUser(data ?? null)
+      setAuthUser(data ?? null)
       setIsLoaded(true)
     })
-  }, [authUser, authError, isAuthLoading, router, setUser, refetchUser])
+  }, [authUser, authError, isAuthLoading, router, setAuthUser, refetchUser])
 
   if (!isLoaded) {
     return <ScreenLoading />

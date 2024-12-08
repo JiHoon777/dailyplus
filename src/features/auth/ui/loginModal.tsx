@@ -2,7 +2,7 @@
 
 import type { FormEvent } from 'react'
 
-import { useSignInWithEmail } from '@/entities/user'
+import { useSignInWithEmail } from '@/entities/users'
 import { Button, Input, Label, ModalOverlay, Spinner } from '@/shared/ui'
 
 export function LoginModal({

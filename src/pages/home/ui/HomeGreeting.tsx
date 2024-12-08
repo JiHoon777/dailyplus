@@ -1,11 +1,11 @@
 'use client'
-import { useUserStore } from '@/entities/user'
+import { useStore } from '@/shared/store'
 import { getUsernameFromEmail } from '@/shared/utils'
 
 import { getGreetingByTime } from '../lib/getGreetingByTime'
 
 export const HomeGreeting = () => {
-  const user = useUserStore((state) => state.user)
+  const user = useStore((state) => state.authUser)
 
   return (
     <div className={'w-full'}>
