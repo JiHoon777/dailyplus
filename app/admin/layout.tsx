@@ -12,9 +12,9 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
-  const user = useStore((state) => state.auth.me)
+  const me = useStore((state) => state.auth.me)
 
-  if (!user || user.role !== 'admin') {
+  if (!me || me.role !== 'admin') {
     redirect('/')
     return null
   }
