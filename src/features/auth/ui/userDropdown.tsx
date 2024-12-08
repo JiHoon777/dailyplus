@@ -1,7 +1,7 @@
 'use client'
 
-import { LogOut, Settings } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { Home, LogOut, Settings } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import { useLogout, useUserStore } from '@/entities/user'
@@ -10,6 +10,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu'
 import { getUsernameFromEmail } from '@/shared/utils'
@@ -19,9 +20,14 @@ export function UserDropdown() {
   const user = useUserStore((state) => state.user)
   const logout = useLogout()
   const router = useRouter()
+  const pathname = usePathname()
 
+  console.log(25, pathname)
   const handleLogout = () => logout.mutate()
-  const handleAdmin = () => router.push('/admin/posts')
+  const handlePushAdmin = () => router.push('/admin/posts')
+  const handlePushHome = () => router.push('/')
+
+  const isAdminPage = pathname?.startsWith('/admin')
   if (!user) {
     return null
   }
@@ -34,16 +40,26 @@ export function UserDropdown() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
+        {user.role === 'admin' && (
+          <>
+            {isAdminPage ? (
+              <DropdownMenuItem onClick={handlePushHome}>
+                <Home />
+                <span>홈</span>
+              </DropdownMenuItem>
+            ) : (
+              <DropdownMenuItem onClick={handlePushAdmin}>
+                <Settings />
+                <span>어드민</span>
+              </DropdownMenuItem>
+            )}
+            <DropdownMenuSeparator />
+          </>
+        )}
         <DropdownMenuItem onClick={handleLogout}>
           <LogOut />
           <span>로그아웃</span>
         </DropdownMenuItem>
-        {user.role === 'admin' && (
-          <DropdownMenuItem onClick={handleAdmin}>
-            <Settings />
-            <span>어드민</span>
-          </DropdownMenuItem>
-        )}
       </DropdownMenuContent>
     </DropdownMenu>
   )
