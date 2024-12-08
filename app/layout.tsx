@@ -7,7 +7,6 @@ import { Suspense } from 'react'
 import { Toaster } from 'sonner'
 
 import { AuthProvider, QueryProvider, UiProvider } from '@/app/providers'
-import { AppHomeHeaderBase } from '@/widgets/layout'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',

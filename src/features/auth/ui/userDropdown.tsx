@@ -22,7 +22,6 @@ export function UserDropdown() {
   const router = useRouter()
   const pathname = usePathname()
 
-  console.log(25, pathname)
   const handleLogout = () => logout.mutate()
   const handlePushAdmin = () => router.push('/admin/posts')
   const handlePushHome = () => router.push('/')

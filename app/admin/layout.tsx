@@ -3,9 +3,9 @@
 import { redirect } from 'next/navigation'
 
 import { useUserStore } from '@/entities/user'
-import { AdminSidebar } from '@/pages/admin/ui/adminSidebar'
 import { SidebarInset } from '@/shared/ui'
 import { AdminHeaderBase } from '@/widgets/layout/ui/adminHeaderBase'
+import { AdminSidebar } from '@/widgets/layout/ui/adminSidebar'
 
 export default function AdminLayout({
   children,

@@ -5,6 +5,7 @@ import React, { createContext, useCallback, useMemo, useState } from 'react'
 
 import { OverlayError } from './types'
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const OverlayContext = createContext<OverlayContextType | null>(null)
 
 export function OverlayProvider({ children }: PropsWithChildren) {
