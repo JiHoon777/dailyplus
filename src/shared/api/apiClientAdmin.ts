@@ -67,7 +67,9 @@ export class ApiClientAdmin {
     }
   }
 
-  // Todo: 분리
+  // Todo: Refactor
+  // Todo: type 세분화 kr_, en_ ,
+  // -> 영어로 프롬프트를 짜면 해외 사이트에서만 가져오고, 한국어로 짜면 한국 사이트에서만 가져옴, 골고루 못 가져옴
   async getArticlesByPerplexity(
     type: ArticleType,
     startDate?: string, // YYYY-MM-DD
@@ -141,8 +143,8 @@ export class ApiClientAdmin {
       `2. All dates MUST be in YYYY-MM-DD format or null if exact date is uncertain` +
       `3. ONLY use articles from these trusted sources: ${trustedSources[type]}` +
       `4. Results MUST be balanced:` +
-      `- 2-3 Korean sources with original Korean content` +
-      `- 2-3 International sources` +
+      `- 2-3 articles from Korean websites/companies (카카오, 네이버, 라인, 토스, 쿠팡 etc.)` +
+      `- 2-3 articles from International websites/companies` +
       `5. For international articles:` +
       `- title: Keep original title in English (DO NOT translate)` +
       `- summary: MUST be translated to Korean` +
