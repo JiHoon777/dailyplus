@@ -1,4 +1,4 @@
-import { HomeGreeting, QuickStart, TodayNews } from '@/pages/home'
+import { HomeGreeting, QuickStart, TodayNews } from '@/_pages/home'
 import { AppHomeHeaderBase, PageBase } from '@/widgets/layout'
 
 export default function Home() {

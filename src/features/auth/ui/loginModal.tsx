@@ -64,8 +64,8 @@ export function LoginModal({
           </div>
         </div>
         <div className="flex w-full justify-end">
-          <Button type="submit" disabled={signIn.isPending}>
-            {signIn.isPending ? (
+          <Button type="submit" disabled={signInWithEmail.isPending}>
+            {signInWithEmail.isPending ? (
               <div className="flex items-center gap-2">
                 <Spinner size="sm" />
                 <span>처리중...</span>

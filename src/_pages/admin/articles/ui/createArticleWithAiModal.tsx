@@ -1,11 +1,13 @@
 'use client'
-import { createApiClientCSR } from '@/shared/lib/supabase-csr'
-import { ArticleType, IArticle } from '@/shared/types'
-import { Button, Label, ModalOverlay } from '@/shared/ui'
-import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group'
+import type { ArticleType, IArticle } from '@/shared/types'
+
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { z } from 'zod'
+
+import { createApiClientCSR } from '@/shared/lib/supabase-csr'
+import { Button, Label, ModalOverlay } from '@/shared/ui'
+import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group'
 
 // 날짜 형식 검증 및 정제를 위한 유틸리티 함수
 const sanitizePublishedDate = (
@@ -29,14 +31,14 @@ const sanitizePublishedDate = (
 }
 
 const ArticleSchema = z.object({
-  title: z.string().min(1),
-  summary: z.string().min(1),
   published_at: z
     .string()
     .nullable()
     .transform((val) => sanitizePublishedDate(val)),
   reference_name: z.string().min(1),
   reference_url: z.string().url(),
+  summary: z.string().min(1),
+  title: z.string().min(1),
 })
 
 const extractJsonFromText = (text: string): string => {
