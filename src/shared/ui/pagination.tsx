@@ -170,7 +170,10 @@ const Pagination = ({
         <PaginationItem>
           <PaginationPrevious
             onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
-            className={currentPage <= 1 ? 'pointer-events-none opacity-50' : ''}
+            className={cn(
+              'cursor-pointer',
+              currentPage <= 1 && 'pointer-events-none opacity-50',
+            )}
           />
         </PaginationItem>
 
@@ -182,6 +185,7 @@ const Pagination = ({
               <PaginationLink
                 onClick={() => onPageChange(pageNum as number)}
                 isActive={pageNum === currentPage}
+                className={'cursor-pointer'}
               >
                 {pageNum}
               </PaginationLink>
@@ -194,9 +198,10 @@ const Pagination = ({
             onClick={() =>
               currentPage < totalPages && onPageChange(currentPage + 1)
             }
-            className={
-              currentPage >= totalPages ? 'pointer-events-none opacity-50' : ''
-            }
+            className={cn(
+              'cursor-pointer',
+              currentPage >= totalPages && 'pointer-events-none opacity-50',
+            )}
           />
         </PaginationItem>
       </PaginationContent>

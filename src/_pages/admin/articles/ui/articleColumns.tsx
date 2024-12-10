@@ -18,6 +18,7 @@ export const ArticleColumns: ColumnDef<IArticle>[] = [
     accessorKey: 'title',
     cell: ({ row }) => <div className="break-all">{row.getValue('title')}</div>,
     header: 'Title',
+    minSize: 1000,
   },
   {
     accessorKey: 'summary',
@@ -36,7 +37,14 @@ export const ArticleColumns: ColumnDef<IArticle>[] = [
     accessorKey: 'reference_url',
     cell: ({ row }) => (
       <div className="max-w-[150px] break-all">
-        {row.getValue('reference_url')}
+        <a
+          href={row.getValue('reference_url')}
+          target={'_blank'}
+          rel="noreferrer noopener"
+          className={'text-blue-700 hover:underline'}
+        >
+          바로 가기
+        </a>
       </div>
     ),
     header: 'Reference Url',

@@ -67,10 +67,10 @@ export const PaginationLoaderWith = <
   const totalPages = Math.ceil(totalCount / limit)
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col gap-4">
       {children(list, isLoading)}
       {totalPages > 1 && (
-        <div className="mt-4 flex justify-start">
+        <div className="self-start">
           <Pagination
             currentPage={page}
             totalPages={totalPages}
