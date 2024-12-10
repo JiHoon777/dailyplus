@@ -1,23 +1,19 @@
 'use client'
 
-import { useState } from 'react'
-import { toast } from 'sonner'
+import { useCallback } from 'react'
 
 import {
   ArticleColumns,
   CreateArticleWithAiModal,
 } from '@/_pages/admin/articles'
-import { useGetArticles } from '@/shared/api'
 import { useOverlay } from '@/shared/lib/overlay'
-import { Button, Pagination, ScreenLoading } from '@/shared/ui'
+import { createApiClientCSR } from '@/shared/lib/supabase-csr'
+import { Button } from '@/shared/ui'
 import { PageBase } from '@/widgets/layout'
+import { PaginationLoaderWith } from '@/widgets/loader'
 import { DataTableRenderer } from '@/widgets/table'
 
-const Limit = 6
-
 export default function ArticlesPage() {
-  const [page, setPage] = useState(1)
-  const { data, isLoading, error } = useGetArticles({ limit: Limit, page })
   const { open } = useOverlay()
 
   const handleCreateArticle = () => {
@@ -26,15 +22,19 @@ export default function ArticlesPage() {
     ))
   }
 
-  if (isLoading) {
-    return <ScreenLoading />
-  }
-  if (error) {
-    toast.error('Failed to load articles')
-    return null
-  }
+  const loadList = useCallback(
+    async (input: { page: number; limit: number }) => {
+      const apiClient = createApiClientCSR()
+      const res = await apiClient.admin.getArticles(input)
 
-  const totalPages = Math.ceil((data?.count || 0) / Limit) // 한 페이지당 10개 항목 기준
+      return {
+        list: res.data ?? [],
+        totalCount: res.count ?? 0,
+      }
+    },
+    [],
+  )
+
   return (
     <PageBase>
       <div className="mb-4 flex items-center justify-between">
@@ -42,17 +42,9 @@ export default function ArticlesPage() {
         <Button onClick={handleCreateArticle}>Create Article with AI</Button>
       </div>
 
-      <div className="space-y-4">
-        <DataTableRenderer columns={ArticleColumns} data={data?.data ?? []} />
-
-        <div className="mt-4 flex justify-center">
-          <Pagination
-            currentPage={page}
-            totalPages={totalPages}
-            onPageChange={setPage}
-          />
-        </div>
-      </div>
+      <PaginationLoaderWith fetchData={loadList} limit={5}>
+        {(list) => <DataTableRenderer columns={ArticleColumns} data={list} />}
+      </PaginationLoaderWith>
     </PageBase>
   )
 }
