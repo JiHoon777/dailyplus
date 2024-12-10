@@ -47,18 +47,27 @@ export const useGetMe = (authUserid: undefined | string) => {
   })
 }
 
-export const useGetArticles = (page: number) => {
+export const useGetArticles = ({
+  page,
+  limit = 6,
+}: {
+  page: number
+  limit?: number
+}) => {
   const apiClient = createApiClientCSR()
 
   return useQuery({
     queryFn: async () => {
-      const { data, error } = await apiClient.admin.getArticles({ page })
+      const { data, error, count } = await apiClient.admin.getArticles({
+        limit,
+        page,
+      })
 
       if (error) {
         throw error
       }
 
-      return data
+      return { count, data }
     },
     queryKey: queryKeys.adminArticles(page),
     // gcTime: 0,

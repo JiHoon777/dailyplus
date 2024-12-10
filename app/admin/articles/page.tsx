@@ -9,13 +9,15 @@ import {
 } from '@/_pages/admin/articles'
 import { useGetArticles } from '@/shared/api'
 import { useOverlay } from '@/shared/lib/overlay'
-import { Button, PaginationWithState, ScreenLoading } from '@/shared/ui'
+import { Button, Pagination, ScreenLoading } from '@/shared/ui'
 import { PageBase } from '@/widgets/layout'
 import { DataTableRenderer } from '@/widgets/table'
 
+const Limit = 6
+
 export default function ArticlesPage() {
   const [page, setPage] = useState(1)
-  const { data, isLoading, error } = useGetArticles(page)
+  const { data, isLoading, error } = useGetArticles({ limit: Limit, page })
   const { open } = useOverlay()
 
   const handleCreateArticle = () => {
@@ -24,16 +26,15 @@ export default function ArticlesPage() {
     ))
   }
 
-  if (isLoading) return <ScreenLoading />
+  if (isLoading) {
+    return <ScreenLoading />
+  }
   if (error) {
     toast.error('Failed to load articles')
     return null
   }
 
-  console.log(33, data)
-
-  const totalPages = Math.ceil((data?.length || 0) / 10) // 한 페이지당 10개 항목 기준
-
+  const totalPages = Math.ceil((data?.count || 0) / Limit) // 한 페이지당 10개 항목 기준
   return (
     <PageBase>
       <div className="mb-4 flex items-center justify-between">
@@ -42,10 +43,10 @@ export default function ArticlesPage() {
       </div>
 
       <div className="space-y-4">
-        <DataTableRenderer columns={ArticleColumns} data={data ?? []} />
+        <DataTableRenderer columns={ArticleColumns} data={data?.data ?? []} />
 
         <div className="mt-4 flex justify-center">
-          <PaginationWithState
+          <Pagination
             currentPage={page}
             totalPages={totalPages}
             onPageChange={setPage}

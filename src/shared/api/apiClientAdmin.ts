@@ -24,13 +24,22 @@ export class ApiClientAdmin {
       .range(from, to)
   }
 
-  getArticles({ page = 1, limit = 10 }: { page: number; limit?: number }) {
+  getArticles({
+    page = 1,
+    limit = 10,
+    orderBy = 'created_at',
+  }: {
+    page: number
+    limit?: number
+    orderBy?: 'created_at' | 'published_at'
+  }) {
     const from = (page - 1) * limit
     const to = from + limit - 1
 
     return this.supabaseClient
       .from('articles')
       .select('*', { count: 'exact' })
+      .order(orderBy, { ascending: false })
       .range(from, to)
   }
 
@@ -62,8 +71,8 @@ export class ApiClientAdmin {
     ).length
 
     return {
+      data: { failed, succeeded },
       error: failed > 0 ? `Failed to insert ${failed} articles` : null,
-      data: { succeeded, failed },
     }
   }
 
@@ -118,10 +127,10 @@ export class ApiClientAdmin {
       it: 'TechCrunch, The Verge, Wired, VentureBeat, CNET, ZDNet, Reuters Technology, Bloomberg Technology',
       'korea-news':
         '연합뉴스, 한국경제, 조선일보, 중앙일보, 매일경제, KBS, MBC, SBS',
-      'world-news':
-        'Reuters, Bloomberg, AP News, Financial Times, Wall Street Journal, BBC, CNN',
       trend:
         'Google Trends, Twitter Trends, Naver Trends, Daum Trends, Kakao Trends, Yahoo Trends, Naver Blog Trends, Daum Blog Trends, Kakao Blog Trends, Yahoo Blog Trends, Naver News Trends, Daum News Trends, Kakao News Trends, Yahoo News Trends 등',
+      'world-news':
+        'Reuters, Bloomberg, AP News, Financial Times, Wall Street Journal, BBC, CNN',
     }
 
     const dateRangeText = (() => {

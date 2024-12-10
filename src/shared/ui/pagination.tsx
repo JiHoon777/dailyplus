@@ -5,7 +5,7 @@ import { cn } from '@shared/utils'
 import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react'
 import * as React from 'react'
 
-const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
+const _Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
   <nav
     role="navigation"
     aria-label="pagination"
@@ -13,7 +13,7 @@ const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
     {...props}
   />
 )
-Pagination.displayName = 'Pagination'
+_Pagination.displayName = 'Pagination'
 
 const PaginationContent = React.forwardRef<
   HTMLUListElement,
@@ -108,7 +108,7 @@ const PaginationEllipsis = ({
 )
 PaginationEllipsis.displayName = 'PaginationEllipsis'
 
-const PaginationWithState = ({
+const Pagination = ({
   currentPage,
   totalPages,
   onPageChange,
@@ -121,30 +121,81 @@ const PaginationWithState = ({
 }) => {
   if (totalPages <= 1) return null
 
+  const getVisiblePages = () => {
+    const delta = 2 // 현재 페이지 양쪽에 보여줄 페이지 수
+    const rangeWithDots = []
+
+    // 시작 페이지와 끝 페이지 계산
+    let start = Math.max(2, currentPage - delta)
+    let end = Math.min(totalPages - 1, currentPage + delta)
+
+    // 현재 페이지가 끝에 가까울 때 조정
+    if (currentPage > totalPages - delta) {
+      start = Math.max(2, totalPages - 2 * delta)
+    }
+    // 현재 페이지가 시작에 가까울 때 조정
+    if (currentPage < delta + 1) {
+      end = Math.min(totalPages - 1, 2 * delta + 1)
+    }
+
+    // 항상 첫 페이지는 표시
+    rangeWithDots.push(1)
+
+    // 첫 페이지와 시작 페이지 사이에 간격이 있으면 ... 추가
+    if (start > 2) {
+      rangeWithDots.push('...')
+    }
+
+    // 중간 페이지들 추가
+    for (let i = start; i <= end; i++) {
+      rangeWithDots.push(i)
+    }
+
+    // 끝 페이지와 마지막으로 표시된 페이지 사이에 간격이 있으면 ... 추가
+    if (end < totalPages - 1) {
+      rangeWithDots.push('...')
+    }
+
+    // 항상 마지막 페이지는 표시
+    if (totalPages > 1) {
+      rangeWithDots.push(totalPages)
+    }
+
+    return rangeWithDots
+  }
+
   return (
     <nav className={cn('mx-auto flex w-full justify-center', className)}>
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            onClick={() => currentPage !== 1 && onPageChange(currentPage - 1)}
+            onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
+            className={currentPage <= 1 ? 'pointer-events-none opacity-50' : ''}
           />
         </PaginationItem>
 
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-          <PaginationItem key={pageNum}>
-            <PaginationLink
-              onClick={() => onPageChange(pageNum)}
-              isActive={pageNum === currentPage}
-            >
-              {pageNum}
-            </PaginationLink>
+        {getVisiblePages().map((pageNum, idx) => (
+          <PaginationItem key={idx}>
+            {pageNum === '...' ? (
+              <PaginationEllipsis />
+            ) : (
+              <PaginationLink
+                onClick={() => onPageChange(pageNum as number)}
+                isActive={pageNum === currentPage}
+              >
+                {pageNum}
+              </PaginationLink>
+            )}
           </PaginationItem>
         ))}
 
         <PaginationItem>
           <PaginationNext
             onClick={() =>
-              currentPage !== totalPages && onPageChange(currentPage + 1)
+              currentPage < totalPages && onPageChange(currentPage + 1)
+            }
+            className={
+              currentPage >= totalPages ? 'pointer-events-none opacity-50' : ''
             }
           />
         </PaginationItem>
@@ -152,15 +203,6 @@ const PaginationWithState = ({
     </nav>
   )
 }
-PaginationWithState.displayName = 'PaginationWithState'
+Pagination.displayName = 'Pagination'
 
-export {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-  PaginationWithState,
-}
+export { Pagination }
