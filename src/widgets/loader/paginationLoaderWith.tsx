@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Pagination } from '@/shared/ui'
 import { showToast } from '@/shared/utils/showToast'
 
+// Todo: useQuery 로 캐싱
 export const PaginationLoaderWith = <
   TData,
   TParams extends Record<string, any>,
