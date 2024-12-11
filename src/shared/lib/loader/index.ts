@@ -1,1 +1,1 @@
-export { PaginationLoaderWith } from './paginationLoaderWith'
+export { PaginationLoader } from './paginationLoader'

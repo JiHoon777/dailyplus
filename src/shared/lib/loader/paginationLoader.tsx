@@ -3,34 +3,32 @@ import type { QueryKey } from '@tanstack/react-query'
 
 import { useQuery } from '@tanstack/react-query'
 import { isEqual } from 'lodash-es'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Pagination } from '@/shared/ui'
 import { showToast } from '@/shared/utils'
 
-type PaginationParams = {
+export type PaginationParams<TParams extends Record<string, unknown>> = {
   page: number
   limit: number
-}
+} & TParams
 
-export const PaginationLoaderWith = <
+export const PaginationLoader = <
   TData,
-  TParams extends Record<string, any>,
+  TParams extends Record<string, unknown>,
 >({
   fetchData,
-  limit = 10,
-  params = {} as TParams,
+  params,
   queryKey,
   children,
 }: {
-  fetchData: (options: PaginationParams & TParams) => Promise<{
+  fetchData: (options: PaginationParams<TParams>) => Promise<{
     list: TData[]
     totalCount: number
     error: Error | null
   }>
-  limit?: number
-  params?: TParams
-  queryKey: (options: PaginationParams & TParams) => QueryKey
+  params: Omit<PaginationParams<TParams>, 'page'>
+  queryKey: (options: PaginationParams<TParams>) => QueryKey
   children: (list: TData[], isLoading: boolean) => React.ReactNode
 }) => {
   const [page, setPage] = useState(1)
@@ -43,9 +41,13 @@ export const PaginationLoaderWith = <
     }
   }, [params, cachedParams])
 
+  const queryParams = {
+    page,
+    ...cachedParams,
+  } as PaginationParams<TParams>
   const { data, isLoading, error } = useQuery({
-    queryFn: () => fetchData({ limit, page, ...cachedParams }),
-    queryKey: queryKey({ limit, page, ...cachedParams }),
+    queryFn: () => fetchData(queryParams),
+    queryKey: queryKey(queryParams),
   })
 
   useEffect(() => {
@@ -54,7 +56,7 @@ export const PaginationLoaderWith = <
     }
   }, [error])
 
-  const totalPages = Math.ceil((data?.totalCount ?? 0) / limit)
+  const totalPages = Math.ceil((data?.totalCount ?? 0) / params.limit)
 
   return (
     <div className="flex flex-col gap-4">
