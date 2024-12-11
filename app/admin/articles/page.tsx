@@ -6,12 +6,13 @@ import {
   ArticleColumns,
   CreateArticleWithAiModal,
 } from '@/_pages/admin/articles'
+import { PaginationLoaderWith } from '@/shared/lib/loader'
 import { useOverlay } from '@/shared/lib/overlay'
 import { createApiClientCSR } from '@/shared/lib/supabase-csr'
 import { Button } from '@/shared/ui'
 import { PageBase } from '@/widgets/layout'
-import { PaginationLoaderWith } from '@/widgets/loader'
 import { DataTableRenderer } from '@/widgets/table'
+import { queryKeys } from '@/shared/api'
 
 export default function ArticlesPage() {
   const { open } = useOverlay()
@@ -28,6 +29,7 @@ export default function ArticlesPage() {
       const res = await apiClient.admin.getArticles(input)
 
       return {
+        error: res.error,
         list: res.data ?? [],
         totalCount: res.count ?? 0,
       }
@@ -42,7 +44,11 @@ export default function ArticlesPage() {
         <Button onClick={handleCreateArticle}>Create Article with AI</Button>
       </div>
 
-      <PaginationLoaderWith fetchData={loadList} limit={5}>
+      <PaginationLoaderWith
+        fetchData={loadList}
+        queryKey={(page) => queryKeys.adminArticles(page)}
+        limit={5}
+      >
         {(list) => <DataTableRenderer columns={ArticleColumns} data={list} />}
       </PaginationLoaderWith>
     </PageBase>
