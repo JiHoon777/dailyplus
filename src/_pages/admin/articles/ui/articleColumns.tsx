@@ -4,11 +4,11 @@ import type { ColumnDef } from '@tanstack/react-table'
 import { format } from 'date-fns'
 
 export const ArticleColumns: ColumnDef<IArticle>[] = [
-  {
-    cell: ({ row }) => <div>No. {row.index + 1}</div>,
-    header: 'No.',
-    id: 'index',
-  },
+  // {
+  //   cell: ({ row }) => <div>No. {row.index + 1}</div>,
+  //   header: 'No.',
+  //   id: 'index',
+  // },
   {
     accessorKey: 'id',
     cell: ({ row }) => <div>{row.getValue('id')}</div>,
