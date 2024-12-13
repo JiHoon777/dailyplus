@@ -143,7 +143,6 @@ const PROMPTS = {
   },
 }
 
-// Utility functions
 export const getDateRangeText = (startDate?: string, endDate?: string) => {
   const now = new Date().toISOString()
   if (startDate && endDate) {
@@ -155,7 +154,6 @@ export const getDateRangeText = (startDate?: string, endDate?: string) => {
   return `${now}`
 }
 
-// Main functions
 export const getSystemContentByLanguage = (
   type: ArticleType,
   language: SupportedLanguagesType,
