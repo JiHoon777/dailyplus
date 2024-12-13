@@ -4,7 +4,7 @@ import type { FormEvent } from 'react'
 
 import { useQueryClient } from '@tanstack/react-query'
 
-import { queryKeys, useMutations } from '@/shared/api'
+import { useAppMutations, useAppQueries } from '@/shared/api'
 import { Button, Input, Label, ModalOverlay, Spinner } from '@/shared/ui'
 
 export function LoginModal({
@@ -15,7 +15,8 @@ export function LoginModal({
   onClose: () => void
 }) {
   const queryClient = useQueryClient()
-  const { signInWithEmail } = useMutations()
+  const queryKeys = useAppQueries.queryKeys
+  const signInWithEmail = useAppMutations.signInWithEmail()
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()

@@ -6,11 +6,13 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Database } from 'database.types'
 
 import { ApiClientAdmin } from './apiClientAdmin'
+import { ApiClientAi } from './apiClientAi'
 import { ApiClientApp } from './apiClientApp'
 
 export class ApiClient {
   readonly admin = new ApiClientAdmin(this)
   readonly app = new ApiClientApp(this)
+  readonly ai = new ApiClientAi(this)
 
   constructor(private readonly _supabaseClient: SupabaseClient<Database>) {}
 
