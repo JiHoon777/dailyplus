@@ -5,7 +5,7 @@ import { Home, LogOut, Settings } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-import { queryKeys, useMutations } from '@/shared/api'
+import { useAppMutations, useAppQueries } from '@/shared/api'
 import { useStore } from '@/shared/store'
 import { Button } from '@/shared/ui'
 import {
@@ -20,10 +20,11 @@ import { getUsernameFromEmail } from '@/shared/utils'
 export function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false)
   const me = useStore((state) => state.auth.me)
-  const { logout } = useMutations()
   const router = useRouter()
   const pathname = usePathname()
   const queryClient = useQueryClient()
+  const logout = useAppMutations.logout()
+  const queryKeys = useAppQueries.queryKeys
 
   const handleLogout = () => {
     logout.mutate(undefined, {

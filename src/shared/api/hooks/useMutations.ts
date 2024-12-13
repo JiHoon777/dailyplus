@@ -1,19 +1,23 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import type { AuthError, AuthResponse } from '@supabase/supabase-js'
 
 import { useMutation } from '@tanstack/react-query'
 
 import { createApiClientCSR } from '@/shared/lib/supabase-csr'
 
-// Todo: FormData Type Check
-export const useMutations = () => {
-  const apiClient = createApiClientCSR()
+export const useAppMutations = Object.assign(
+  {},
+  {
+    logout,
+    signInWithEmail,
+    signUpWithEmail,
+  },
+)
 
-  const signInWithEmail = useMutation<
-    AuthResponse['data'],
-    AuthError,
-    FormData
-  >({
+function signInWithEmail() {
+  return useMutation<AuthResponse['data'], AuthError, FormData>({
     mutationFn: async (formData) => {
+      const apiClient = createApiClientCSR()
       const input = {
         email: formData.get('email') as string,
         password: formData.get('password') as string,
@@ -30,9 +34,12 @@ export const useMutations = () => {
       return data
     },
   })
+}
 
-  const signUpWithEmail = useMutation<null, AuthError, FormData>({
+function signUpWithEmail() {
+  return useMutation<null, AuthError, FormData>({
     mutationFn: async (formData) => {
+      const apiClient = createApiClientCSR()
       const input = {
         email: formData.get('email') as string,
         password: formData.get('password') as string,
@@ -49,9 +56,12 @@ export const useMutations = () => {
       return null
     },
   })
+}
 
-  const logout = useMutation({
+function logout() {
+  return useMutation({
     mutationFn: async () => {
+      const apiClient = createApiClientCSR()
       const { error } = await apiClient.logout()
 
       if (error) {
@@ -59,6 +69,4 @@ export const useMutations = () => {
       }
     },
   })
-
-  return { logout, signInWithEmail, signUpWithEmail }
 }

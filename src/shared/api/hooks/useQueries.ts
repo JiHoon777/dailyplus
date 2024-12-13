@@ -1,18 +1,29 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import type { IUser } from '@/shared/types/entity.types'
 
 import { useQuery } from '@tanstack/react-query'
 
 import { createApiClientCSR } from '@/shared/lib/supabase-csr'
 
-export const queryKeys = {
+const queryKeys = {
   adminArticles: (page: number) => ['admin', 'articles', page] as const,
   getAuthUser: () => ['auth', 'session'] as const,
   getMe: () => ['users', 'me'] as const,
 }
 
-export const useGetAuthUser = () => {
-  const apiClient = createApiClientCSR()
+export const useAppQueries = Object.assign(
+  {},
+  {
+    getArticles,
+    getAuthUser,
+    getMe,
+    queryKeys,
+  },
+)
 
+const apiClient = createApiClientCSR()
+
+function getAuthUser() {
   return useQuery({
     queryFn: async () => {
       const { data, error } = await apiClient.getAuthUser()
@@ -27,9 +38,7 @@ export const useGetAuthUser = () => {
   })
 }
 
-export const useGetMe = (authUserid: undefined | string) => {
-  const apiClient = createApiClientCSR()
-
+function getMe(authUserid: undefined | string) {
   return useQuery<IUser | null>({
     enabled: !!authUserid,
     queryFn: async () => {
@@ -47,15 +56,7 @@ export const useGetMe = (authUserid: undefined | string) => {
   })
 }
 
-export const useGetArticles = ({
-  page,
-  limit = 6,
-}: {
-  page: number
-  limit?: number
-}) => {
-  const apiClient = createApiClientCSR()
-
+function getArticles({ page, limit = 6 }: { page: number; limit?: number }) {
   return useQuery({
     queryFn: async () => {
       const { data, error, count } = await apiClient.admin.getArticles({
@@ -70,7 +71,5 @@ export const useGetArticles = ({
       return { count, data }
     },
     queryKey: queryKeys.adminArticles(page),
-    // gcTime: 0,
-    // staleTime: 0, // Remove data from cache immediately when unused
   })
 }

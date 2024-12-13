@@ -2,11 +2,9 @@
 
 import { useCallback } from 'react'
 
-import {
-  ArticleColumns,
-  CreateArticleWithAiModal,
-} from '@/_pages/admin/articles'
-import { queryKeys } from '@/shared/api'
+import { ArticleColumns } from '@/_pages/admin/articles'
+import { CreateArticleWithAiModal } from '@/features/articleGeneration'
+import { useAppQueries } from '@/shared/api'
 import { PaginationLoader } from '@/shared/lib/loader'
 import { useOverlay } from '@/shared/lib/overlay'
 import { createApiClientCSR } from '@/shared/lib/supabase-csr'
@@ -16,6 +14,7 @@ import { DataTableRenderer } from '@/widgets/table'
 
 export default function ArticlesPage() {
   const { open } = useOverlay()
+  const queryKeys = useAppQueries.queryKeys
 
   const handleCreateArticle = () => {
     open(({ isOpen, close }) => (
