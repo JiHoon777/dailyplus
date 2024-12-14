@@ -4,7 +4,7 @@ import type { ArticleType, IArticle } from '@/shared/types'
 import { format } from 'date-fns'
 import Link from 'next/link'
 
-import { ARTICLE_TYPE_OPTIONS } from '@/shared/config'
+import { ARTICLE_TYPE_OPTIONS, ARTICLE_TYPE_TO_LABEL } from '@/shared/config'
 import { Card, CardContent, CardHeader, Label } from '@/shared/ui'
 import { cn } from '@/shared/utils'
 import { AutoPlayCarousel } from '@/widgets/carousel'
@@ -18,24 +18,24 @@ export const HomeArticles = ({
 }) => {
   return (
     <section className={'flex w-full flex-col gap-6'}>
-      <header>
+      <header className="flex gap-4">
         <Label className={'text-xl font-semibold'}>Articles</Label>
-      </header>
-      <div className="relative flex w-full flex-col gap-3 overflow-hidden">
-        <div className="flex items-center gap-4 text-sm">
+        <div className="flex items-center gap-4">
           {ARTICLE_TYPE_OPTIONS.map((item) => {
             const isActive = item === currentArticleType
             return (
               <Link
                 href={`/home?articleType=${item}`}
-                className={cn(isActive && 'underline')}
+                className={cn(isActive && 'font-bold underline')}
                 key={item}
               >
-                {item}
+                {ARTICLE_TYPE_TO_LABEL[item]}
               </Link>
             )
           })}
         </div>
+      </header>
+      <div className="w-full overflow-hidden">
         <AutoPlayCarousel slides={list}>
           {(item: IArticle) => <HomeArticleCard article={item} />}
         </AutoPlayCarousel>
