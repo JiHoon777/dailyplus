@@ -3,9 +3,10 @@ import type { ArticleType, IArticle } from '@/shared/types'
 
 import { format } from 'date-fns'
 import Link from 'next/link'
+import { Fragment } from 'react'
 
 import { ARTICLE_TYPE_OPTIONS, ARTICLE_TYPE_TO_LABEL } from '@/shared/config'
-import { Card, CardContent, CardHeader, Label } from '@/shared/ui'
+import { Card, CardContent, CardHeader, Label, Separator } from '@/shared/ui'
 import { cn } from '@/shared/utils'
 import { AutoPlayCarousel } from '@/widgets/carousel'
 
@@ -21,30 +22,19 @@ export const HomeArticles = ({
       <header className="flex gap-4">
         <Label className={'text-xl font-semibold'}>Articles</Label>
         <div className="flex items-center gap-4">
-          {ARTICLE_TYPE_OPTIONS.map((item) => {
-            const isActive = item === currentArticleType
-            return (
-              <Link
-                href={`/home?articleType=${item}`}
-                className={cn(isActive && 'font-bold underline')}
-                key={item}
-              >
-                {ARTICLE_TYPE_TO_LABEL[item]}
-              </Link>
-            )
-          })}
+          <ArticleTypeCategory currentArticleType={currentArticleType} />
         </div>
       </header>
       <div className="w-full overflow-hidden">
         <AutoPlayCarousel slides={list}>
-          {(item: IArticle) => <HomeArticleCard article={item} />}
+          {(item: IArticle) => <ArticleCard article={item} />}
         </AutoPlayCarousel>
       </div>
     </section>
   )
 }
 
-const HomeArticleCard = ({ article }: { article: IArticle }) => {
+const ArticleCard = ({ article }: { article: IArticle }) => {
   return (
     <Card className="h-fit w-full shrink-0">
       <CardHeader>
@@ -68,5 +58,33 @@ const HomeArticleCard = ({ article }: { article: IArticle }) => {
         </Label>
       </CardContent>
     </Card>
+  )
+}
+
+const ArticleTypeCategory = ({
+  currentArticleType,
+}: {
+  currentArticleType: ArticleType
+}) => {
+  return (
+    <>
+      {ARTICLE_TYPE_OPTIONS.map((item, index) => {
+        const isActive = item === currentArticleType
+        const isLast = index === ARTICLE_TYPE_OPTIONS.length - 1
+        return (
+          <Fragment key={item}>
+            <Link
+              href={`/home?articleType=${item}`}
+              className={cn(isActive && 'font-bold underline')}
+            >
+              {ARTICLE_TYPE_TO_LABEL[item]}
+            </Link>
+            {!isLast && (
+              <Separator orientation="vertical" className="h-3 bg-gray-400" />
+            )}
+          </Fragment>
+        )
+      })}
+    </>
   )
 }

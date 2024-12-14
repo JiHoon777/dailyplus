@@ -1,7 +1,5 @@
-import type { ArticleType, IApiClientResponse, IArticle } from '../types'
+import type { ArticleType, IApiClientResponse } from '../types'
 import type { ApiClient } from './apiClient'
-
-import { ARTICLE_TYPE_OPTIONS } from '../config'
 
 type IApiClientApp = typeof ApiClientApp.prototype
 /**
