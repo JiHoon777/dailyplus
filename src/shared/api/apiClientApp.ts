@@ -24,31 +24,12 @@ export class ApiClientApp {
     return this._apiClient.supabaseClient
   }
 
-  async getHomeArticles() {
-    const results = await Promise.all(
-      ARTICLE_TYPE_OPTIONS.map((type) =>
-        this._apiClient.getArticles({
-          limit: 5,
-          orderBy: 'published_at',
-          page: 1,
-          type,
-        }),
-      ),
-    )
-
-    const articles = Object.fromEntries(
-      ARTICLE_TYPE_OPTIONS.map((type, index) => [
-        type,
-        results[index].data ?? [],
-      ]),
-    ) as Record<ArticleType, IArticle[]>
-
-    // Todo: 타입에 따른 에러 처리
-    const hasError = results.some((result) => result.error)
-
-    return {
-      data: articles,
-      error: hasError ? 'Failed to fetch some articles' : null,
-    }
+  async getHomeArticles(type: ArticleType) {
+    return this._apiClient.getArticles({
+      limit: 10,
+      orderBy: 'published_at',
+      page: 1,
+      type,
+    })
   }
 }

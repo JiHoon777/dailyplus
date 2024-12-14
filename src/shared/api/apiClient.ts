@@ -47,6 +47,8 @@ export class ApiClient {
       query.eq('type', type)
     }
 
+    query.not('published_at', 'is', null)
+
     return query
   }
 }
