@@ -21,8 +21,13 @@ export const HomeArticles = ({
     <section className={'flex w-full flex-col gap-6'}>
       <header className="flex gap-4">
         <Label className={'text-xl font-semibold'}>Articles</Label>
-        <div className="flex items-center gap-4">
-          <ArticleTypeCategory currentArticleType={currentArticleType} />
+        <div className="flex w-full items-center justify-between">
+          <div className="flex items-center gap-4">
+            <ArticleTypeCategory currentArticleType={currentArticleType} />
+          </div>
+          <Link href={'/articles'} className="">
+            more
+          </Link>
         </div>
       </header>
       <div className="w-full overflow-hidden">
