@@ -1,8 +1,10 @@
+'use client'
 import type { IArticle } from '@/shared/types'
 
 import { format } from 'date-fns'
 
 import { Card, CardContent, CardHeader, Label } from '@/shared/ui'
+import { AutoPlayCarousel } from '@/widgets/carousel'
 
 export const HomeArticles = ({ list }: { list: IArticle[] }) => {
   return (
@@ -11,16 +13,9 @@ export const HomeArticles = ({ list }: { list: IArticle[] }) => {
         <Label className={'text-xl font-semibold'}>Articles</Label>
       </header>
       <div className="relative w-full overflow-hidden">
-        <div className="animate-infinite-scroll flex gap-6 p-2">
-          {/* 첫 번째 리스트 */}
-          {list.map((article) => (
-            <HomeArticleCard key={article.id} article={article} />
-          ))}
-          {/* 두 번째 리스트 (무한 스크롤을 위한 복제) */}
-          {list.map((article) => (
-            <HomeArticleCard key={`${article.id}-clone`} article={article} />
-          ))}
-        </div>
+        <AutoPlayCarousel slides={list}>
+          {(item: IArticle) => <HomeArticleCard article={item} />}
+        </AutoPlayCarousel>
       </div>
     </section>
   )
@@ -28,7 +23,7 @@ export const HomeArticles = ({ list }: { list: IArticle[] }) => {
 
 const HomeArticleCard = ({ article }: { article: IArticle }) => {
   return (
-    <Card className="h-fit w-[300px] shrink-0">
+    <Card className="h-fit w-full shrink-0">
       <CardHeader>
         <Label className="text-lg font-medium text-gray-700">
           <a

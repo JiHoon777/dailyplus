@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 
 import './globals.css'
+import '@app/css/emblaCarousel.css'
 
 import localFont from 'next/font/local'
 import { Suspense } from 'react'
