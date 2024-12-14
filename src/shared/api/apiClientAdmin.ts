@@ -1,4 +1,4 @@
-import type { IArticle } from '../types/entity.types'
+import type { ArticleType, IArticle } from '../types/entity.types'
 import type { ApiClient } from './apiClient'
 
 /**
@@ -20,25 +20,6 @@ export class ApiClientAdmin {
     return this.supabaseClient
       .from('users')
       .select('*', { count: 'exact' })
-      .range(from, to)
-  }
-
-  getArticles({
-    page = 1,
-    limit = 10,
-    orderBy = 'created_at',
-  }: {
-    page: number
-    limit?: number
-    orderBy?: 'created_at' | 'published_at'
-  }) {
-    const from = (page - 1) * limit
-    const to = from + limit - 1
-
-    return this.supabaseClient
-      .from('articles')
-      .select('*', { count: 'exact' })
-      .order(orderBy, { ascending: false })
       .range(from, to)
   }
 

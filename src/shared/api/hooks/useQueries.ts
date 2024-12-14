@@ -14,7 +14,6 @@ const queryKeys = {
 export const useAppQueries = Object.assign(
   {},
   {
-    getArticles,
     getAuthUser,
     getMe,
     queryKeys,
@@ -26,7 +25,7 @@ const apiClient = createApiClientCSR()
 function getAuthUser() {
   return useQuery({
     queryFn: async () => {
-      const { data, error } = await apiClient.getAuthUser()
+      const { data, error } = await apiClient.auth.getAuthUser()
 
       if (error) {
         throw error
@@ -44,7 +43,7 @@ function getMe(authUserid: undefined | string) {
     queryFn: async () => {
       if (!authUserid) return null
 
-      const { data, error } = await apiClient.getUserEntity(authUserid)
+      const { data, error } = await apiClient.auth.getUserEntity(authUserid)
 
       if (error) {
         throw error
@@ -53,23 +52,5 @@ function getMe(authUserid: undefined | string) {
       return data
     },
     queryKey: queryKeys.getMe(),
-  })
-}
-
-function getArticles({ page, limit = 6 }: { page: number; limit?: number }) {
-  return useQuery({
-    queryFn: async () => {
-      const { data, error, count } = await apiClient.admin.getArticles({
-        limit,
-        page,
-      })
-
-      if (error) {
-        throw error
-      }
-
-      return { count, data }
-    },
-    queryKey: queryKeys.adminArticles(page),
   })
 }

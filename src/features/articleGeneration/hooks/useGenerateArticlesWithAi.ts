@@ -1,12 +1,13 @@
 // hooks/useGenerateArticlesWithAi.ts
 
 import type { GetArticlesByPerplexityInputs } from '../api/getArticlesByPerplexity'
-import type { ArticleCreationInput } from '@/shared/types'
+import type { IArticleCreationInput } from '@/shared/types'
 
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
+import { useAppQueries } from '@/shared/api'
 import { createApiClientCSR } from '@/shared/lib/supabase-csr'
 import { showToast } from '@/shared/utils'
 
@@ -26,6 +27,9 @@ const ArticleSchema = z.object({
 })
 
 export function useGenerateArticlesWithAi() {
+  const queryClient = useQueryClient()
+  const queryKeys = useAppQueries.queryKeys
+
   return useMutation({
     mutationFn: async (inputs: GetArticlesByPerplexityInputs) => {
       const { type: articleType } = inputs
@@ -44,7 +48,7 @@ export function useGenerateArticlesWithAi() {
       }
 
       const validatedArticles = parsedData.reduce<
-        Omit<ArticleCreationInput, 'type' | 'unique_id'>[]
+        Omit<IArticleCreationInput, 'type' | 'unique_id'>[]
       >((acc, item) => {
         try {
           const validatedItem = ArticleSchema.parse(item)
@@ -73,6 +77,7 @@ export function useGenerateArticlesWithAi() {
       showToast.error(error)
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.adminArticles(1) })
       toast('Successfully created articles')
     },
   })

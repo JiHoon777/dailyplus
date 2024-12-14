@@ -1,3 +1,3 @@
 export { HomeGreeting } from './ui/homeGreeting'
 export { QuickStart } from './ui/quickStart'
-export { TodayNews } from './ui/todayNews'
+export { HomeArticles as TodayNews } from './ui/HomeArticles'

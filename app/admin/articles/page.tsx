@@ -25,7 +25,7 @@ export default function ArticlesPage() {
   const loadList = useCallback(
     async (input: { page: number; limit: number }) => {
       const apiClient = createApiClientCSR()
-      const res = await apiClient.admin.getArticles(input)
+      const res = await apiClient.getArticles(input)
 
       return {
         error: res.error,

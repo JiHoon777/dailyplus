@@ -22,7 +22,7 @@ function signInWithEmail() {
         email: formData.get('email') as string,
         password: formData.get('password') as string,
       }
-      const { data, error } = await apiClient.loginWithEmail(
+      const { data, error } = await apiClient.auth.loginWithEmail(
         input.email,
         input.password,
       )
@@ -44,7 +44,7 @@ function signUpWithEmail() {
         email: formData.get('email') as string,
         password: formData.get('password') as string,
       }
-      const { error } = await apiClient.signUpWithEmail(
+      const { error } = await apiClient.auth.signUpWithEmail(
         input.email,
         input.password,
       )
@@ -62,7 +62,7 @@ function logout() {
   return useMutation({
     mutationFn: async () => {
       const apiClient = createApiClientCSR()
-      const { error } = await apiClient.logout()
+      const { error } = await apiClient.auth.logout()
 
       if (error) {
         throw error

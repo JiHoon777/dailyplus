@@ -1,13 +1,43 @@
+import type { ArticleType, IArticle } from '../types'
 import type { ApiClient } from './apiClient'
 
+import { ARTICLE_TYPE_OPTIONS } from '../config'
+
 /**
- * 일반 사용자용 API 클라이언트로 일반 사용자 작업을 처리
- * 이 클라이언트는 관리자가 아닌 일반적인 작업에 사용되어야 함
+ * 일반 사용자용 API 클라이언트로 일반적인 작업을 처리
  */
 export class ApiClientApp {
   constructor(private readonly _apiClient: ApiClient) {}
 
   get supabaseClient() {
     return this._apiClient.supabaseClient
+  }
+
+  async getHomeArticles() {
+    const results = await Promise.all(
+      ARTICLE_TYPE_OPTIONS.map((type) =>
+        this._apiClient.getArticles({
+          limit: 5,
+          orderBy: 'published_at',
+          page: 1,
+          type,
+        }),
+      ),
+    )
+
+    const articles = Object.fromEntries(
+      ARTICLE_TYPE_OPTIONS.map((type, index) => [
+        type,
+        results[index].data ?? [],
+      ]),
+    ) as Record<ArticleType, IArticle[]>
+
+    // Todo: 타입에 따른 에러 처리
+    const hasError = results.some((result) => result.error)
+
+    return {
+      data: articles,
+      error: hasError ? 'Failed to fetch some articles' : null,
+    }
   }
 }

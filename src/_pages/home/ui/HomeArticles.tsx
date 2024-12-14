@@ -1,4 +1,10 @@
-export const TodayNews = () => {
+import type { IApiClientAppResponse } from '@/shared/types'
+
+export const HomeArticles = ({
+  articlesMap,
+}: {
+  articlesMap: IApiClientAppResponse<'getHomeArticles'>['data']
+}) => {
   return (
     <div className={'flex w-full flex-col gap-6'}>
       <div className="flex items-center justify-between">
