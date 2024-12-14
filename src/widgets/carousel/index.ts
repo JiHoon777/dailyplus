@@ -1,1 +1,1 @@
-export { AutoPlayCarousel } from './AutoPlayCarousel'
+export { AutoPlayCarousel } from './autoPlayCarousel'

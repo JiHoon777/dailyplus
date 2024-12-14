@@ -28,6 +28,7 @@ export const AutoPlayCarousel = <T,>({
     }),
   ])
 
+  // Todo: 글로벌 css 로 뺄 필요 없음
   return (
     <div className="embla">
       <div className="embla__viewport" ref={emblaRef}>

@@ -1,5 +1,5 @@
 'use client'
-import type { ListableParams } from './types'
+import type { PaginationParams } from './types'
 import type { QueryKey } from '@tanstack/react-query'
 
 import { useQuery } from '@tanstack/react-query'
@@ -40,13 +40,13 @@ export const PaginationLoader = <
   queryKey,
   children,
 }: {
-  fetchData: (options: ListableParams<TParams>) => Promise<{
+  fetchData: (options: PaginationParams<TParams>) => Promise<{
     list: TData[]
     totalCount: number
     error: Error | null
   }>
-  params: Omit<ListableParams<TParams>, 'page'>
-  queryKey: (options: ListableParams<TParams>) => QueryKey
+  params: Omit<PaginationParams<TParams>, 'page'>
+  queryKey: (options: PaginationParams<TParams>) => QueryKey
   children: (list: TData[], isLoading: boolean) => React.ReactNode
 }) => {
   const [page, setPage] = useState(1)
@@ -62,7 +62,7 @@ export const PaginationLoader = <
   const queryParams = {
     page,
     ...cachedParams,
-  } as ListableParams<TParams>
+  } as PaginationParams<TParams>
   const { data, isLoading, error } = useQuery({
     queryFn: () => fetchData(queryParams),
     queryKey: queryKey(queryParams),
