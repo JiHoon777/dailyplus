@@ -1,18 +1,41 @@
 'use client'
-import type { IArticle } from '@/shared/types'
+import type { ArticleType, IArticle } from '@/shared/types'
 
 import { format } from 'date-fns'
+import Link from 'next/link'
 
+import { ARTICLE_TYPE_OPTIONS } from '@/shared/config'
 import { Card, CardContent, CardHeader, Label } from '@/shared/ui'
+import { cn } from '@/shared/utils'
 import { AutoPlayCarousel } from '@/widgets/carousel'
 
-export const HomeArticles = ({ list }: { list: IArticle[] }) => {
+export const HomeArticles = ({
+  list,
+  currentArticleType,
+}: {
+  list: IArticle[]
+  currentArticleType: ArticleType
+}) => {
   return (
-    <section className={'flex w-full flex-col gap-2'}>
+    <section className={'flex w-full flex-col gap-6'}>
       <header>
         <Label className={'text-xl font-semibold'}>Articles</Label>
       </header>
-      <div className="relative w-full overflow-hidden">
+      <div className="relative flex w-full flex-col gap-3 overflow-hidden">
+        <div className="flex items-center gap-4 text-sm">
+          {ARTICLE_TYPE_OPTIONS.map((item) => {
+            const isActive = item === currentArticleType
+            return (
+              <Link
+                href={`/home?articleType=${item}`}
+                className={cn(isActive && 'underline')}
+                key={item}
+              >
+                {item}
+              </Link>
+            )
+          })}
+        </div>
         <AutoPlayCarousel slides={list}>
           {(item: IArticle) => <HomeArticleCard article={item} />}
         </AutoPlayCarousel>

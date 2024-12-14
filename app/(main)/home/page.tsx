@@ -33,7 +33,10 @@ export default async function Home({
   return (
     <PageBase className={'gap-6'}>
       <HomeGreeting />
-      <HomeArticles list={homeArticles.data ?? []} />
+      <HomeArticles
+        list={homeArticles.data ?? []}
+        currentArticleType={verifiedArticleTypeParam}
+      />
       <QuickStart />
     </PageBase>
   )
