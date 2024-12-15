@@ -19,30 +19,7 @@ export const HomeArticles = ({
 }) => {
   return (
     <section className={'flex w-full flex-col gap-6'}>
-      <header className="flex flex-col gap-4 md:flex-row">
-        <Label className={'text-xl font-semibold'}>
-          Articles
-          <Link
-            href={'/articles'}
-            className={cn('ml-6 text-base font-normal', 'inline md:hidden')}
-          >
-            more
-          </Link>
-        </Label>
-        <div
-          className={cn(
-            'flex w-full max-w-full items-center justify-between',
-            'overflow-x-auto md:overflow-x-visible',
-          )}
-        >
-          <div className="flex shrink-0 items-center gap-4">
-            <ArticleTypeCategory currentArticleType={currentArticleType} />
-          </div>
-          <Link href={'/articles'} className="hidden md:inline">
-            more
-          </Link>
-        </div>
-      </header>
+      <HomeArticlesHeader currentArticleType={currentArticleType} />
       <div className="w-full overflow-hidden">
         <AutoPlayCarousel slides={list}>
           {(item: IArticle) => <ArticleCard article={item} />}
@@ -52,30 +29,36 @@ export const HomeArticles = ({
   )
 }
 
-const ArticleCard = ({ article }: { article: IArticle }) => {
+const HomeArticlesHeader = ({
+  currentArticleType,
+}: {
+  currentArticleType: ArticleType
+}) => {
   return (
-    <Card className="h-fit w-full shrink-0">
-      <CardHeader>
-        <Label className="text-lg font-medium text-gray-700">
-          <a
-            href={article.reference_url}
-            target="_blank"
-            rel="noreferrer noopener"
-            className="hover:text-blue-500 hover:underline"
-          >
-            {article.title}
-          </a>
-        </Label>
-      </CardHeader>
-      <CardContent className={'flex flex-col gap-4'}>
-        <div>{article.summary}</div>
-        <Label>
-          {article.reference_name}{' '}
-          {article.published_at &&
-            `• ${format(article.published_at, 'yyyy-MM-dd')}`}
-        </Label>
-      </CardContent>
-    </Card>
+    <header className="flex flex-col gap-4 md:flex-row">
+      <Label className={'text-xl font-semibold'}>
+        Articles
+        <Link
+          href={'/articles'}
+          className={cn('ml-6 text-base font-normal', 'inline md:hidden')}
+        >
+          more
+        </Link>
+      </Label>
+      <div
+        className={cn(
+          'flex w-full max-w-full items-center justify-between',
+          'overflow-x-auto md:overflow-x-visible',
+        )}
+      >
+        <div className="flex shrink-0 items-center gap-4">
+          <ArticleTypeCategory currentArticleType={currentArticleType} />
+        </div>
+        <Link href={'/articles'} className="hidden md:inline">
+          more
+        </Link>
+      </div>
+    </header>
   )
 }
 
@@ -104,5 +87,32 @@ const ArticleTypeCategory = ({
         )
       })}
     </>
+  )
+}
+
+const ArticleCard = ({ article }: { article: IArticle }) => {
+  return (
+    <Card className="h-fit w-full shrink-0">
+      <CardHeader>
+        <Label className="text-lg font-medium text-gray-700">
+          <a
+            href={article.reference_url}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="hover:text-blue-500 hover:underline"
+          >
+            {article.title}
+          </a>
+        </Label>
+      </CardHeader>
+      <CardContent className={'flex flex-col gap-4'}>
+        <div>{article.summary}</div>
+        <Label>
+          {article.reference_name}{' '}
+          {article.published_at &&
+            `• ${format(article.published_at, 'yyyy-MM-dd')}`}
+        </Label>
+      </CardContent>
+    </Card>
   )
 }
