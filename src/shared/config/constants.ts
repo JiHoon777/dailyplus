@@ -2,23 +2,19 @@ import type { ArticleType, SupportedLanguagesType } from '@/shared/types'
 
 export const ARTICLE_TYPE_OPTIONS: ArticleType[] = [
   'trend',
-  'it',
-  'ai',
   'lifeStyle',
+  'ai',
   'frontEnd',
   'backEnd',
-  'economy',
-  'bitcoin',
+  'it',
 ] as const
 
 export const ARTICLE_TYPE_TO_LABEL: Record<ArticleType, string> = {
-  ai: 'AI',
+  ai: 'Ai',
   backEnd: '백엔드',
-  bitcoin: '비트코인',
-  economy: '경제',
   frontEnd: '프론트엔드',
-  it: 'IT 뉴스',
-  lifeStyle: 'LifeStyle',
+  it: 'IT',
+  lifeStyle: '라이프스타일',
   trend: '트렌드',
 }
 
