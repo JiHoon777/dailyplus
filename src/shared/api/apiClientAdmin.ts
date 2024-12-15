@@ -1,4 +1,4 @@
-import type { ArticleType, IArticle } from '../types/entity.types'
+import type { IArticle } from '../types/entity.types'
 import type { ApiClient } from './apiClient'
 
 /**

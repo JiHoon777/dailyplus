@@ -85,12 +85,13 @@ export type Database = {
     Enums: {
       article_type:
         | 'trend'
-        | 'it'
+        | 'lifeStyle'
+        | 'frontEnd'
+        | 'backEnd'
         | 'ai'
-        | 'front-end'
-        | 'back-end'
-        | 'korea-news'
-        | 'world-news'
+        | 'economy'
+        | 'bitcoin'
+        | 'it'
       user_role: 'user' | 'admin'
     }
     CompositeTypes: {
