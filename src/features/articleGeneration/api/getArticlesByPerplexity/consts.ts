@@ -3,6 +3,17 @@ import type { ArticleType, SupportedLanguagesType } from '@/shared/types'
 // Sources
 const SOURCES = {
   AI: 'Google AI, OpenAI, DeepMind, Microsoft AI, MIT AI, Stanford AI, MIT, Stanford, UC Berkeley',
+  BITCOIN: {
+    GLOBAL:
+      'CoinDesk, Cointelegraph, Bitcoin Magazine, Bloomberg Crypto, CryptoSlate',
+    KOREAN: '업비트, 빗썸, 코인원, 코인데스크코리아, 디센터',
+  },
+  ECONOMY: {
+    GLOBAL:
+      'Bloomberg, Financial Times, Wall Street Journal, Reuters, The Economist, CNBC, Forbes',
+    KOREAN:
+      '한국은행, 금융감독원, 한국경제연구원, 한국금융연구원, KDI, 한국경제, 매일경제, 서울경제',
+  },
   GLOBAL_TECH: [
     'AWS',
     'Google Cloud',
@@ -41,6 +52,12 @@ const SOURCES = {
     '야놀자',
     '직방',
   ],
+  LIFESTYLE: {
+    GLOBAL:
+      "Vogue, GQ, The New York Times Style, Elle, Harper's Bazaar, Refinery29",
+    KOREAN:
+      '네이버 라이프, 카카오 스타일, 마리끌레르, 얼루어, 싱글즈, 여성중앙, 우먼센스',
+  },
   NEWS: {
     GLOBAL:
       'Reuters, Bloomberg, AP News, Financial Times, Wall Street Journal, BBC, CNN',
@@ -53,12 +70,13 @@ const SOURCES = {
 
 const TRUSTED_SOURCES: Record<ArticleType, string> = {
   ai: SOURCES.AI,
-  'back-end': [...SOURCES.KOREAN_TECH, ...SOURCES.GLOBAL_TECH].join(', '),
-  'front-end': [...SOURCES.KOREAN_TECH, ...SOURCES.GLOBAL_TECH].join(', '),
+  backEnd: [...SOURCES.KOREAN_TECH, ...SOURCES.GLOBAL_TECH].join(', '),
+  frontEnd: [...SOURCES.KOREAN_TECH, ...SOURCES.GLOBAL_TECH].join(', '),
   it: SOURCES.NEWS.TECH,
-  'korea-news': SOURCES.NEWS.KOREAN,
+  lifeStyle: [...SOURCES.LIFESTYLE.KOREAN, ...SOURCES.LIFESTYLE.GLOBAL].join(
+    ', ',
+  ),
   trend: SOURCES.TRENDS,
-  'world-news': SOURCES.NEWS.GLOBAL,
 }
 
 // Prompts
@@ -92,18 +110,36 @@ const PROMPTS = {
       `6. 원본 reference_name과 reference_url은 변경하지 않고 유지`,
   },
   USER: {
+    LIFESTYLE: {
+      en: () =>
+        `You are a lifestyle trend analyst specializing in cultural, fashion, and social trends within the specified timeframe. ` +
+        `Please identify the most significant lifestyle trends and developments from trusted sources. ` +
+        `Focus on fashion, wellness, cultural movements, and social phenomena. ` +
+        `Respond in exactly this JSON format: ` +
+        `[ { "title": "글 제목", "summary": "한글로 번역된 글 주요 내용 요약 (200자 이내)", ` +
+        `"published_at": "YYYY-MM-DD", "reference_name": "참고 출처 이름", ` +
+        `"reference_url": "원본 URL" } ]`,
+      ko: () =>
+        `당신은 지정된 기간 내의 문화, 패션, 사회 트렌드를 전문으로 하는 라이프스타일 분석가입니다. ` +
+        `신뢰할 수 있는 매체에서 가장 중요한 라이프스타일 트렌드와 발전 동향을 식별해주세요. ` +
+        `패션, 웰니스, 문화 운동, 사회 현상에 중점을 두어주세요. ` +
+        `다음 JSON 형식으로 정확히 응답해주세요: ` +
+        `[ { "title": "글 제목", "summary": "한글로 번역된 글 주요 내용 요약 (200자 이내)", ` +
+        `"published_at": "YYYY-MM-DD", "reference_name": "참고 출처 이름", ` +
+        `"reference_url": "원본 URL" } ]`,
+    },
     NEWS: {
       en: (type: ArticleType) =>
         `You are a search expert specializing in finding important ${type} news within the specified timeframe. ` +
         `Please identify the most impactful and significant ${type} news articles from the specified period. ` +
         `Return the response in exactly this JSON format: ` +
-        `[ { "title": "뉴스 제목", "summary": "뉴스 요약 (200자 이내)", "published_at": "YYYY-MM-DD", ` +
+        `[ { "title": "글 제목", "summary": "한글로 번역된 글 주요 내용 요약 (200자 이내)", "published_at": "YYYY-MM-DD", ` +
         `"reference_name": "위에 명시된 매체 중 하나", "reference_url": "원본 기사 URL" } ]`,
       ko: (type: ArticleType) =>
         `당신은 지정된 기간 내의 중요한 ${type} 뉴스를 찾는 전문가입니다. ` +
         `해당 기간 동안 가장 영향력 있고 중요한 ${type} 뉴스 기사를 식별해주세요. ` +
         `다음 JSON 형식으로 정확히 응답해주세요: ` +
-        `[ { "title": "뉴스 제목", "summary": "뉴스 요약 (200자 이내)", "published_at": "YYYY-MM-DD", ` +
+        `[ { "title": "글 제목", "summary": "한글로 번역된 글 주요 내용 요약 (200자 이내)", "published_at": "YYYY-MM-DD", ` +
         `"reference_name": "위에 명시된 매체 중 하나", "reference_url": "원본 기사 URL" } ]`,
     },
     TECH: {
@@ -111,14 +147,14 @@ const PROMPTS = {
         `You are a search expert specializing in finding ${type} development articles within the specified timeframe. ` +
         `Please identify articles from authoritative tech blogs of prominent Korean and international IT companies matching our trusted sources for this period. ` +
         `Respond in exactly this JSON format: ` +
-        `[ { "title": "제목", "summary": "주요 내용 및 영향도 요약 (200자 이내)", ` +
+        `[ { "title": "글 제목", "summary": "한글로 번역된 글 주요 내용 요약 (200자 이내)", ` +
         `"published_at": "YYYY-MM-DD", "reference_name": "위에 명시된 출처 중 하나", ` +
         `"reference_url": "원본 URL" } ]`,
       ko: (type: ArticleType) =>
         `당신은 지정된 기간 내의 ${type} 개발 관련 기사를 찾는 전문가입니다. ` +
         `이 기간 동안 신뢰할 수 있는 출처와 일치하는 한국 및 해외 주요 IT 기업의 공식 기술 블로그에서 기사를 식별해주세요. ` +
         `다음 JSON 형식으로 정확히 응답해주세요: ` +
-        `[ { "title": "제목", "summary": "주요 내용 및 영향도 요약 (200자 이내)", ` +
+        `[ { "title": "글 제목", "summary": "한글로 번역된 글 주요 내용 요약 (200자 이내)", ` +
         `"published_at": "YYYY-MM-DD", "reference_name": "위에 명시된 출처 중 하나", ` +
         `"reference_url": "원본 URL" } ]`,
     },
@@ -128,16 +164,16 @@ const PROMPTS = {
         `Please highlight the most significant trends emerging across social media, technology, and cultural domains. ` +
         `Select diverse and impactful trends from different sectors. ` +
         `Respond in exactly this JSON format: ` +
-        `[ { "title": "트렌드 제목", "summary": "트렌드 설명 및 영향력 분석 (200자 이내)", ` +
-        `"published_at": "YYYY-MM-DD", "reference_name": "주요 참고 출처", ` +
+        `[ { "title": "글 제목", "summary": "한글로 번역된 글 주요 내용 요약 (200자 이내)", ` +
+        `"published_at": "YYYY-MM-DD", "reference_name": "참고 출처 이름", ` +
         `"reference_url": "원본 URL" } ]`,
       ko: () =>
         `당신은 지정된 기간 내의 트렌드를 찾는 전문 분석가입니다. ` +
         `소셜 미디어, 기술, 문화 영역에서 나타나는 가장 중요한 트렌드를 강조해주세요. ` +
         `다양한 분야에서 영향력 있는 트렌드를 선별해주세요. ` +
         `다음 JSON 형식으로 정확히 응답해주세요: ` +
-        `[ { "title": "트렌드 제목", "summary": "트렌드 설명 및 영향력 분석 (200자 이내)", ` +
-        `"published_at": "YYYY-MM-DD", "reference_name": "주요 참고 출처", ` +
+        `[ { "title": "글 제목", "summary": "한글로 번역된 글 주요 내용 요약 (200자 이내)", ` +
+        `"published_at": "YYYY-MM-DD", "reference_name": "참고 출처 이름", ` +
         `"reference_url": "원본 URL" } ]`,
     },
   },
@@ -168,16 +204,22 @@ export const getUserContentByLanguage = (
   type: ArticleType,
   language: SupportedLanguagesType,
 ) => {
-  if (type === 'korea-news' || type === 'world-news' || type === 'it') {
+  if (type === 'it') {
     return language === 'en'
       ? PROMPTS.USER.NEWS.en(type)
       : PROMPTS.USER.NEWS.ko(type)
   }
 
-  if (type === 'ai' || type === 'front-end' || type === 'back-end') {
+  if (type === 'ai' || type === 'frontEnd' || type === 'backEnd') {
     return language === 'en'
       ? PROMPTS.USER.TECH.en(type)
       : PROMPTS.USER.TECH.ko(type)
+  }
+
+  if (type === 'lifeStyle') {
+    return language === 'en'
+      ? PROMPTS.USER.LIFESTYLE.en()
+      : PROMPTS.USER.LIFESTYLE.ko()
   }
 
   return language === 'en' ? PROMPTS.USER.TREND.en() : PROMPTS.USER.TREND.ko()

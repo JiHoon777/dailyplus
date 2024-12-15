@@ -83,15 +83,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      article_type:
-        | 'trend'
-        | 'lifeStyle'
-        | 'frontEnd'
-        | 'backEnd'
-        | 'ai'
-        | 'economy'
-        | 'bitcoin'
-        | 'it'
+      article_type: 'ai' | 'backEnd' | 'frontEnd' | 'it' | 'lifeStyle' | 'trend'
       user_role: 'user' | 'admin'
     }
     CompositeTypes: {
