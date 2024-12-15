@@ -19,13 +19,26 @@ export const HomeArticles = ({
 }) => {
   return (
     <section className={'flex w-full flex-col gap-6'}>
-      <header className="flex gap-4">
-        <Label className={'text-xl font-semibold'}>Articles</Label>
-        <div className="flex w-full items-center justify-between">
-          <div className="flex items-center gap-4">
+      <header className="flex flex-col gap-4 md:flex-row">
+        <Label className={'text-xl font-semibold'}>
+          Articles
+          <Link
+            href={'/articles'}
+            className={cn('ml-6 text-base font-normal', 'inline md:hidden')}
+          >
+            more
+          </Link>
+        </Label>
+        <div
+          className={cn(
+            'flex w-full max-w-full items-center justify-between',
+            'overflow-x-auto md:overflow-x-visible',
+          )}
+        >
+          <div className="flex shrink-0 items-center gap-4">
             <ArticleTypeCategory currentArticleType={currentArticleType} />
           </div>
-          <Link href={'/articles'} className="">
+          <Link href={'/articles'} className="hidden md:inline">
             more
           </Link>
         </div>
@@ -80,7 +93,7 @@ const ArticleTypeCategory = ({
           <Fragment key={item}>
             <Link
               href={`/home?articleType=${item}`}
-              className={cn(isActive && 'font-bold underline')}
+              className={cn('shrink-0', isActive && 'font-bold underline')}
             >
               {ARTICLE_TYPE_TO_LABEL[item]}
             </Link>
