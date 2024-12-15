@@ -77,7 +77,9 @@ export function useGenerateArticlesWithAi() {
       showToast.error(error)
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.adminArticles(1) })
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.adminArticles(1).slice(0, 2),
+      })
       toast('Successfully created articles')
     },
   })
