@@ -1,12 +1,12 @@
 'use client'
 import type { ArticleType, IArticle } from '@/shared/types'
 
-import { format } from 'date-fns'
 import Link from 'next/link'
 import { Fragment } from 'react'
 
+import { ArticleCard } from '@/entities/articles'
 import { ARTICLE_TYPE_OPTIONS, ARTICLE_TYPE_TO_LABEL } from '@/shared/config'
-import { Card, CardContent, CardHeader, Label, Separator } from '@/shared/ui'
+import { Label, Separator } from '@/shared/ui'
 import { cn } from '@/shared/utils'
 import { AutoPlayCarousel } from '@/widgets/carousel'
 
@@ -87,32 +87,5 @@ const ArticleTypeCategory = ({
         )
       })}
     </>
-  )
-}
-
-const ArticleCard = ({ article }: { article: IArticle }) => {
-  return (
-    <Card className="h-fit w-full shrink-0">
-      <CardHeader>
-        <Label className="text-lg font-medium text-gray-700">
-          <a
-            href={article.reference_url}
-            target="_blank"
-            rel="noreferrer noopener"
-            className="hover:text-blue-500 hover:underline"
-          >
-            {article.title}
-          </a>
-        </Label>
-      </CardHeader>
-      <CardContent className={'flex flex-col gap-4'}>
-        <div>{article.summary}</div>
-        <Label>
-          {article.reference_name}{' '}
-          {article.published_at &&
-            `• ${format(article.published_at, 'yyyy-MM-dd')}`}
-        </Label>
-      </CardContent>
-    </Card>
   )
 }

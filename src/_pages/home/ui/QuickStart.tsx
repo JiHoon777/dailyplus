@@ -11,7 +11,6 @@ export const QuickStart = () => {
     <div className={'flex w-full flex-col gap-6'}>
       <div className="flex items-center gap-4">
         <h3 className="text-xl font-semibold">빠른 실행</h3>
-        <p className="text-sm text-gray-600">Ai와 함께 진행해 보세요.</p>
       </div>
       <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-6">
         {quickStartItems.map((item, index) => (
