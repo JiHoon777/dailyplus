@@ -15,7 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu'
-import { getUsernameFromEmail } from '@/shared/utils'
+import { getUsernameFromEmail } from '@/shared/lib/utils'
 
 export function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false)

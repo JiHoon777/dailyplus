@@ -9,7 +9,7 @@ import { z } from 'zod'
 
 import { useAppQueries } from '@/shared/api'
 import { createApiClientCSR } from '@/shared/lib/supabase-csr'
-import { showToast } from '@/shared/utils'
+import { showToast } from '@/shared/lib/utils'
 
 import { getArticlesByPerplexity } from '../api/getArticlesByPerplexity'
 import { extractJsonFromText } from '../lib/extractJsonFromText'

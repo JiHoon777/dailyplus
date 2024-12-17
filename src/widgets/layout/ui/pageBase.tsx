@@ -4,7 +4,7 @@ import type {
   PropsWithChildren,
 } from 'react'
 
-import { cn } from '@/shared/utils'
+import { cn } from '@/shared/lib/utils'
 
 export const PageBase = ({
   className,

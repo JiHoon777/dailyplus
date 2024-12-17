@@ -14,7 +14,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@shared/ui/tooltip'
-import { cn } from '@shared/utils'
+import { cn } from '@/shared/lib/utils'
 import { cva } from 'class-variance-authority'
 import { PanelLeft } from 'lucide-react'
 import * as React from 'react'

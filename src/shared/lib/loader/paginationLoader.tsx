@@ -1,13 +1,13 @@
 'use client'
-import type { PaginationParams } from './types'
+import type { ListableParams } from './types'
 import type { QueryKey } from '@tanstack/react-query'
 
 import { useQuery } from '@tanstack/react-query'
 import { isEqual } from 'lodash-es'
 import { useEffect, useState } from 'react'
 
+import { showToast } from '@/shared/lib/utils'
 import { Pagination } from '@/shared/ui'
-import { showToast } from '@/shared/utils'
 
 /**
  * 페이지네이션 데이터 로딩을 처리하는 범용 컴포넌트입니다.
@@ -40,13 +40,13 @@ export const PaginationLoader = <
   queryKey,
   children,
 }: {
-  fetchData: (options: PaginationParams<TParams>) => Promise<{
+  fetchData: (options: ListableParams<TParams>) => Promise<{
     list: TData[]
     totalCount: number
     error: Error | null
   }>
-  params: Omit<PaginationParams<TParams>, 'page'>
-  queryKey: (options: PaginationParams<TParams>) => QueryKey
+  params: Omit<ListableParams<TParams>, 'page'>
+  queryKey: (options: ListableParams<TParams>) => QueryKey
   children: (list: TData[], isLoading: boolean) => React.ReactNode
 }) => {
   const [page, setPage] = useState(1)
@@ -62,7 +62,7 @@ export const PaginationLoader = <
   const queryParams = {
     page,
     ...cachedParams,
-  } as PaginationParams<TParams>
+  } as ListableParams<TParams>
   const { data, isLoading, error } = useQuery({
     queryFn: () => fetchData(queryParams),
     queryKey: queryKey(queryParams),

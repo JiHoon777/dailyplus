@@ -8,7 +8,7 @@ import { useRef } from 'react'
 
 import { useOutsideClick } from '@/shared/hooks'
 import { Portal } from '@/shared/ui'
-import { cn } from '@/shared/utils'
+import { cn } from '@/shared/lib/utils'
 
 const modalVariants = cva('w-full rounded-xl bg-background shadow-lg', {
   defaultVariants: {

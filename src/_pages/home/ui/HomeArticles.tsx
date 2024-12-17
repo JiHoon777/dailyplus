@@ -7,7 +7,7 @@ import { Fragment } from 'react'
 import { ArticleCard } from '@/entities/articles'
 import { ARTICLE_TYPE_OPTIONS, ARTICLE_TYPE_TO_LABEL } from '@/shared/config'
 import { Label, Separator } from '@/shared/ui'
-import { cn } from '@/shared/utils'
+import { cn } from '@/shared/lib/utils'
 import { AutoPlayCarousel } from '@/widgets/carousel'
 
 export const HomeArticles = ({
