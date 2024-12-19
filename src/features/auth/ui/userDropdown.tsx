@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import { useAppMutations, useAppQueries } from '@/shared/api'
+import { getUsernameFromEmail } from '@/shared/lib/utils'
 import { useStore } from '@/shared/store'
 import { Button } from '@/shared/ui'
 import {
@@ -15,7 +16,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu'
-import { getUsernameFromEmail } from '@/shared/lib/utils'
 
 export function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false)
@@ -30,7 +30,7 @@ export function UserDropdown() {
     logout.mutate(undefined, {
       onSuccess: () => {
         queryClient.invalidateQueries({
-          queryKey: queryKeys.getAuthUser(),
+          queryKey: queryKeys.auth.getAuthUser(),
         })
       },
     })

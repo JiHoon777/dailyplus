@@ -1,6 +1,6 @@
 'use client'
-import { useStore } from '@/shared/store'
 import { getUsernameFromEmail } from '@/shared/lib/utils'
+import { useStore } from '@/shared/store'
 
 import { getGreetingByTime } from '../lib/getGreetingByTime'
 

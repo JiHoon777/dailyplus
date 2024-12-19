@@ -78,7 +78,7 @@ export function useGenerateArticlesWithAi() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: queryKeys.adminArticles(1).slice(0, 2),
+        queryKey: queryKeys.admin.articlesPagination(1).slice(0, 2),
       })
       toast('Successfully created articles')
     },

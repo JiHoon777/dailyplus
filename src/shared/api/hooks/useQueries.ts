@@ -1,14 +1,22 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import type { IUser } from '@/shared/types/entity.types'
+import type { ArticleType, IUser } from '@/shared/types/entity.types'
 
 import { useQuery } from '@tanstack/react-query'
 
 import { createApiClientCSR } from '@/shared/lib/supabase-csr'
 
 const queryKeys = {
-  adminArticles: (page: number) => ['admin', 'articles', page] as const,
-  getAuthUser: () => ['auth', 'session'] as const,
-  getMe: () => ['users', 'me'] as const,
+  admin: {
+    articlesPagination: (page: number) => ['admin', 'articles', page] as const,
+  },
+  app: {
+    articlesInfinite: (type?: ArticleType) =>
+      ['articlesInfinite', type ?? 'all'] as const,
+  },
+  auth: {
+    getAuthUser: () => ['auth', 'session'] as const,
+    getMe: () => ['users', 'me'] as const,
+  },
 }
 
 export const useAppQueries = Object.assign(
@@ -33,7 +41,7 @@ function getAuthUser() {
 
       return data.user
     },
-    queryKey: queryKeys.getAuthUser(),
+    queryKey: queryKeys.auth.getAuthUser(),
   })
 }
 
@@ -51,6 +59,6 @@ function getMe(authUserid: undefined | string) {
 
       return data
     },
-    queryKey: queryKeys.getMe(),
+    queryKey: queryKeys.auth.getMe(),
   })
 }

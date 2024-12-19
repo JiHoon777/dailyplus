@@ -1,9 +1,9 @@
-import type { ArticleType, SearchParamsType } from '@/shared/types'
+import type { SearchParamsType } from '@/shared/types'
 
 import { redirect } from 'next/navigation'
 
 import { HomeArticles, HomeGreeting, QuickStart } from '@/_pages/home'
-import { ARTICLE_TYPE_OPTIONS } from '@/shared/config'
+import { verifyArticleType } from '@/entities/articles'
 import { createApiClientSSR } from '@/shared/lib/supabase-ssr'
 import { PageBase } from '@/widgets/layout'
 
@@ -31,8 +31,8 @@ export default async function Home({
 }
 
 function verifyArticleTypeParam(searchParams: SearchParamsType) {
-  const articleType = (searchParams['articleType'] ?? '') as ArticleType
-  const verified = ARTICLE_TYPE_OPTIONS.includes(articleType)
+  const articleType = searchParams['articleType']
+  const verified = verifyArticleType(articleType)
 
   if (!verified) {
     return redirect('/home?articleType=trend')

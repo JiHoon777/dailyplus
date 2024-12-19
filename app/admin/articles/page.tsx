@@ -53,7 +53,7 @@ export default function ArticlesPage() {
 
       <PagedListableQueryLoader
         fetchData={loadList}
-        queryKey={(params) => queryKeys.adminArticles(params.page)}
+        queryKey={(params) => queryKeys.admin.articlesPagination(params.page)}
         params={{ limit: 5 }}
       >
         {({ list, totalPages, currentPage, onPageChange }) => (

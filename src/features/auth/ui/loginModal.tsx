@@ -25,7 +25,7 @@ export function LoginModal({
       onSuccess: () => {
         onClose()
         queryClient.invalidateQueries({
-          queryKey: queryKeys.getAuthUser(),
+          queryKey: queryKeys.auth.getAuthUser(),
         })
       },
     })
