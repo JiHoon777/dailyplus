@@ -1,5 +1,8 @@
 'use client'
 
+import type { IListableResponse } from '@/shared/lib/loader'
+import type { IArticle } from '@/shared/types'
+
 import { useCallback } from 'react'
 
 import { ArticleColumns } from '@/_pages/admin/articles'
@@ -23,13 +26,16 @@ export default function ArticlesPage() {
   }
 
   const loadList = useCallback(
-    async (input: { page: number; limit: number }) => {
+    async (input: {
+      page: number
+      limit: number
+    }): Promise<IListableResponse<IArticle>> => {
       const apiClient = createApiClientCSR()
       const res = await apiClient.getArticles(input)
 
       return {
+        data: res.data ?? [],
         error: res.error,
-        list: res.data ?? [],
         totalCount: res.count ?? 0,
       }
     },

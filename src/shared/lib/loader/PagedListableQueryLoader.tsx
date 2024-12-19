@@ -1,5 +1,5 @@
 'use client'
-import type { ListableParams } from './types'
+import type { IListableParams, IListableResponse } from './types'
 import type { QueryKey } from '@tanstack/react-query'
 
 import { useQuery } from '@tanstack/react-query'
@@ -7,7 +7,6 @@ import { isEqual } from 'lodash-es'
 import { useEffect, useState } from 'react'
 
 import { showToast } from '@/shared/lib/utils'
-import { Pagination } from '@/shared/ui'
 
 /**
  * 페이지네이션 데이터 로딩을 처리하는 범용 컴포넌트입니다.
@@ -20,18 +19,8 @@ import { Pagination } from '@/shared/ui'
  * @param queryKey - React Query 캐싱을 위한 고유 키를 생성하는 함수
  * @param children - 아이템 리스트와 로딩 상태를 전달받는 렌더 함수
  *
- * @example
- * ```tsx
-      <PaginationLoader
-        fetchData={loadList}
-        queryKey={(params) => queryKeys.adminArticles(params.page)}
-        params={{ limit: 5 }}
-      >
-        {(list) => <DataTableRenderer columns={ArticleColumns} data={list} />}
-      </PaginationLoader>
- * ```
  */
-export const PaginationLoader = <
+export const PagedListableQueryLoader = <
   TData,
   TParams extends Record<string, unknown>,
 >({
@@ -40,14 +29,21 @@ export const PaginationLoader = <
   queryKey,
   children,
 }: {
-  fetchData: (options: ListableParams<TParams>) => Promise<{
+  fetchData: (
+    options: IListableParams<TParams>,
+  ) => Promise<IListableResponse<TData>>
+  params: Omit<IListableParams<TParams>, 'page'>
+  queryKey: (options: IListableParams<TParams>) => QueryKey
+  children: ({
+    list,
+    isLoading,
+  }: {
     list: TData[]
-    totalCount: number
-    error: Error | null
-  }>
-  params: Omit<ListableParams<TParams>, 'page'>
-  queryKey: (options: ListableParams<TParams>) => QueryKey
-  children: (list: TData[], isLoading: boolean) => React.ReactNode
+    isLoading: boolean
+    totalPages: number
+    currentPage: number
+    onPageChange: (page: number) => void
+  }) => React.ReactNode
 }) => {
   const [page, setPage] = useState(1)
   const [cachedParams, setCachedParams] = useState(params)
@@ -62,7 +58,7 @@ export const PaginationLoader = <
   const queryParams = {
     page,
     ...cachedParams,
-  } as ListableParams<TParams>
+  } as IListableParams<TParams>
   const { data, isLoading, error } = useQuery({
     queryFn: () => fetchData(queryParams),
     queryKey: queryKey(queryParams),
@@ -77,9 +73,15 @@ export const PaginationLoader = <
 
   const totalPages = Math.ceil((data?.totalCount ?? 0) / params.limit)
   return (
-    <div className="flex flex-col gap-4">
-      {children(data?.list ?? [], isLoading)}
-      {totalPages > 1 && (
+    <>
+      {children({
+        currentPage: page,
+        isLoading,
+        list: data?.data ?? [],
+        onPageChange: setPage,
+        totalPages,
+      })}
+      {/* {totalPages > 1 && (
         <div className="self-start">
           <Pagination
             currentPage={page}
@@ -87,7 +89,7 @@ export const PaginationLoader = <
             onPageChange={setPage}
           />
         </div>
-      )}
-    </div>
+      )} */}
+    </>
   )
 }
