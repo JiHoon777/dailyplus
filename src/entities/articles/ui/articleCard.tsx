@@ -13,14 +13,14 @@ export const ArticleCard = ({ article }: { article: IArticle }) => {
             href={article.reference_url}
             target="_blank"
             rel="noreferrer noopener"
-            className="font-bold hover:text-blue-500 hover:underline"
+            className="text-3xl font-bold hover:text-blue-500 hover:underline"
           >
             {article.title}
           </a>
         </Label>
       </CardHeader>
       <CardContent className={'flex flex-col gap-4'}>
-        <div className={'text-base font-medium'}>{article.summary}</div>
+        <div className={'text-xl font-medium'}>{article.summary}</div>
         <Label>
           {article.reference_name}{' '}
           {article.published_at &&

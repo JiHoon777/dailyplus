@@ -32,7 +32,10 @@ export const ArticleTypeCategory = ({
           <Fragment key={item.value}>
             <Link
               href={`${pathName}?articleType=${item.value}`}
-              className={cn('shrink-0', isActive && 'font-bold underline')}
+              className={cn(
+                'shrink-0 text-sm',
+                isActive && 'font-bold underline',
+              )}
             >
               {item.label}
             </Link>

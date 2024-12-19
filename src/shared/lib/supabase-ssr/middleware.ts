@@ -36,21 +36,24 @@ export async function updateSession(request: NextRequest) {
 
   // 중요: createServerClient와 supabase.auth.getUser() 사이에 어떤 로직도 작성하지 마세요.
   // 사소한 실수로 인해 사용자가 무작위로 로그아웃되는 문제를 디버깅하기 매우 어려울 수 있습니다.
+  // NOTE: Public access is currently allowed for all routes
+  // Authentication check is disabled to allow non-authenticated users to view content
+  // For protected routes, consider implementing route-specific authentication
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  // const {
+  //   data: { user },
+  // } = await supabase.auth.getUser()
 
-  if (
-    !user &&
-    !request.nextUrl.pathname.startsWith('/login') &&
-    !request.nextUrl.pathname.startsWith('/auth')
-  ) {
-    // no user, potentially respond by redirecting the user to the login page
-    const url = request.nextUrl.clone()
-    url.pathname = '/login'
-    return NextResponse.redirect(url)
-  }
+  // if (
+  //   !user &&
+  //   !request.nextUrl.pathname.startsWith('/login') &&
+  //   !request.nextUrl.pathname.startsWith('/auth')
+  // ) {
+  //   // no user, potentially respond by redirecting the user to the login page
+  //   const url = request.nextUrl.clone()
+  //   url.pathname = '/home'
+  //   return NextResponse.redirect(url)
+  // }
 
   // 중요: supabaseResponse 객체를 반드시 있는 그대로 반환해야 합니다.
   // NextResponse.next()로 새로운 응답 객체를 생성하는 경우 다음 사항을 반드시 지켜주세요:

@@ -45,7 +45,7 @@ export default function ArticlesPage() {
           hasNextPage,
           fetchNextPage,
         }) => (
-          <div className="columns-1 gap-4 sm:columns-4">
+          <div className="columns-1 gap-4 sm:columns-3">
             {list.map((item) => (
               <div key={item.id} className={'mb-4 break-inside-avoid'}>
                 <ArticleCard article={item} />
