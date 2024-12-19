@@ -8,6 +8,7 @@ import { Suspense } from 'react'
 import { Toaster } from 'sonner'
 
 import { AuthProvider, QueryProvider, UiProvider } from '@/app/providers'
+import { ScreenLoading } from '@/shared/ui'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -27,10 +28,6 @@ export const metadata: Metadata = {
   title: 'DailyPlus',
 }
 
-const LoadingFallback = () => {
-  return <div>Loading...</div>
-}
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -43,7 +40,7 @@ export default function RootLayout({
       >
         <QueryProvider>
           <UiProvider>
-            <Suspense fallback={<LoadingFallback />}>
+            <Suspense fallback={<ScreenLoading />}>
               <AuthProvider>
                 <main
                   className={'flex min-h-screen w-screen flex-col items-center'}
