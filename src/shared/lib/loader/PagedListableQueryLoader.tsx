@@ -34,10 +34,7 @@ export const PagedListableQueryLoader = <
   ) => Promise<IListableResponse<TData>>
   params: Omit<IListableParams<TParams>, 'page'>
   queryKey: (options: IListableParams<TParams>) => QueryKey
-  children: ({
-    list,
-    isLoading,
-  }: {
+  children: (input: {
     list: TData[]
     isLoading: boolean
     totalPages: number
@@ -81,15 +78,6 @@ export const PagedListableQueryLoader = <
         onPageChange: setPage,
         totalPages,
       })}
-      {/* {totalPages > 1 && (
-        <div className="self-start">
-          <Pagination
-            currentPage={page}
-            totalPages={totalPages}
-            onPageChange={setPage}
-          />
-        </div>
-      )} */}
     </>
   )
 }
