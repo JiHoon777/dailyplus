@@ -1,12 +1,18 @@
 'use client'
-import type { ArticleType, SearchParamsType } from '@/shared/types'
+import type { ArticleType } from '@/shared/types'
 
 import { redirect, useSearchParams } from 'next/navigation'
-import { useCallback } from 'react'
 
-import { ArticleCard, verifyArticleType } from '@/entities/articles'
+import {
+  ArticleCard,
+  ArticleTypeCategory,
+  verifyArticleType,
+} from '@/entities/articles'
 import { useAppQueries } from '@/shared/api'
-import { InfiniteListableQueryLoader } from '@/shared/lib/loader'
+import {
+  InfiniteListableQueryLoader,
+  IntersectionTrigger,
+} from '@/shared/lib/loader'
 import { createApiClientCSR } from '@/shared/lib/supabase-csr'
 import { PageBase } from '@/widgets/layout'
 
@@ -14,31 +20,23 @@ export default function ArticlesPage() {
   const searchParams = useSearchParams()
   const queryKeys = useAppQueries.queryKeys
   const articleType = verifyArticleTypeParam(searchParams.get('articleType'))
-
-  const loadList = useCallback(
-    async (input: { page: number; limit: number; type?: ArticleType }) => {
-      const apiClient = createApiClientCSR()
-      const res = await apiClient.getArticles(input)
-
-      return {
-        data: res.data ?? [],
-        error: res.error,
-        totalCount: res.count ?? 0,
-      }
-    },
-    [],
-  )
+  const apiClient = createApiClientCSR()
+  const getArticles = apiClient.getArticles.bind(apiClient)
 
   return (
     <PageBase className={'gap-6'}>
-      <h1>Articles</h1>
+      <ArticleTypeCategory
+        showAll
+        pathName={'/articles'}
+        currentArticleType={articleType}
+      />
       <InfiniteListableQueryLoader
-        fetchData={loadList}
+        fetchData={getArticles}
         params={{
           limit: 10,
           type: articleType === 'all' ? undefined : articleType,
         }}
-        queryKey={({ type }) => queryKeys.app.articlesInfinite(type)}
+        queryKey={queryKeys.app.articlesInfinite}
       >
         {({
           list,
@@ -47,10 +45,17 @@ export default function ArticlesPage() {
           hasNextPage,
           fetchNextPage,
         }) => (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-4">
+          <div className="columns-1 gap-4 sm:columns-4">
             {list.map((item) => (
-              <ArticleCard key={item.id} article={item} />
+              <div key={item.id} className={'mb-4 break-inside-avoid'}>
+                <ArticleCard article={item} />
+              </div>
             ))}
+            <IntersectionTrigger
+              onIntersect={fetchNextPage}
+              hasNextPage={hasNextPage}
+              isLoading={isFetchingNextPage || isLoading}
+            />
           </div>
         )}
       </InfiniteListableQueryLoader>

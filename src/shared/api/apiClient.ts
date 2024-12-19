@@ -2,7 +2,12 @@
  * 모든 API 작업의 진입점이 되는 메인 API 클라이언트
  * 관리자용과 일반 사용자용 작업에 대한 접근을 제공
  */
-import type { ArticleType } from '../types'
+import type {
+  ArticleType,
+  IArticle,
+  IListableParams,
+  IListableResponse,
+} from '@/shared/types'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Database } from 'database.types'
 
@@ -23,17 +28,14 @@ export class ApiClient {
     return this._supabaseClient
   }
 
-  getArticles({
-    page = 1,
-    limit = 10,
-    orderBy = 'created_at',
-    type,
-  }: {
-    page: number
-    limit?: number
-    orderBy?: 'created_at' | 'published_at'
-    type?: ArticleType
-  }) {
+  async getArticles(
+    input: IListableParams<{
+      orderBy?: 'created_at' | 'published_at'
+      type?: ArticleType
+    }>,
+  ): Promise<IListableResponse<IArticle>> {
+    const { page = 1, limit = 10, orderBy = 'created_at', type } = input
+
     const from = (page - 1) * limit
     const to = from + limit - 1
 
@@ -49,6 +51,12 @@ export class ApiClient {
 
     query.not('published_at', 'is', null)
 
-    return query
+    const { data, count, error } = await query
+
+    return {
+      data: data ?? [],
+      error,
+      totalCount: count ?? 0,
+    }
   }
 }

@@ -2,12 +2,10 @@
 import type { ArticleType, IArticle } from '@/shared/types'
 
 import Link from 'next/link'
-import { Fragment } from 'react'
 
-import { ArticleCard } from '@/entities/articles'
-import { ARTICLE_TYPE_OPTIONS, ARTICLE_TYPE_TO_LABEL } from '@/shared/config'
+import { ArticleCard, ArticleTypeCategory } from '@/entities/articles'
 import { cn } from '@/shared/lib/utils'
-import { Label, Separator } from '@/shared/ui'
+import { Label } from '@/shared/ui'
 import { AutoPlayCarousel } from '@/widgets/carousel'
 
 export const HomeArticles = ({
@@ -51,41 +49,14 @@ const HomeArticlesHeader = ({
           'overflow-x-auto md:overflow-x-visible',
         )}
       >
-        <div className="flex shrink-0 items-center gap-4">
-          <ArticleTypeCategory currentArticleType={currentArticleType} />
-        </div>
+        <ArticleTypeCategory
+          pathName={'/home'}
+          currentArticleType={currentArticleType}
+        />
         <Link href={'/articles'} className="hidden md:inline">
           more
         </Link>
       </div>
     </header>
-  )
-}
-
-const ArticleTypeCategory = ({
-  currentArticleType,
-}: {
-  currentArticleType: ArticleType
-}) => {
-  return (
-    <>
-      {ARTICLE_TYPE_OPTIONS.map((item, index) => {
-        const isActive = item === currentArticleType
-        const isLast = index === ARTICLE_TYPE_OPTIONS.length - 1
-        return (
-          <Fragment key={item}>
-            <Link
-              href={`/home?articleType=${item}`}
-              className={cn('shrink-0', isActive && 'font-bold underline')}
-            >
-              {ARTICLE_TYPE_TO_LABEL[item]}
-            </Link>
-            {!isLast && (
-              <Separator orientation="vertical" className="h-3 bg-gray-400" />
-            )}
-          </Fragment>
-        )
-      })}
-    </>
   )
 }

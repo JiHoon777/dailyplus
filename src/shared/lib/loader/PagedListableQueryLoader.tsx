@@ -1,5 +1,8 @@
 'use client'
-import type { IListableParams, IListableResponse } from './types'
+import type {
+  IListableParams,
+  IListableResponse,
+} from '@/shared/types/base.types'
 import type { QueryKey } from '@tanstack/react-query'
 
 import { useQuery } from '@tanstack/react-query'

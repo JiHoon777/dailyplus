@@ -1,5 +1,5 @@
 import type { IListableParams } from '.'
-import type { IListableResponse } from './types'
+import type { IListableResponse } from '@/shared/types/base.types'
 
 import { type QueryKey, useInfiniteQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'

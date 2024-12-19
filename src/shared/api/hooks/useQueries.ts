@@ -10,7 +10,7 @@ const queryKeys = {
     articlesPagination: (page: number) => ['admin', 'articles', page] as const,
   },
   app: {
-    articlesInfinite: (type?: ArticleType) =>
+    articlesInfinite: ({ type }: { type?: ArticleType }) =>
       ['articlesInfinite', type ?? 'all'] as const,
   },
   auth: {
