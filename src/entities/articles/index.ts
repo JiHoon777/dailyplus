@@ -1,3 +1,3 @@
 export * from './lib/verifyArticleType'
-export * from './ui/articleCard'
+export * from './ui/ArticleCard'
 export * from './ui/ArticleTypeCategory'

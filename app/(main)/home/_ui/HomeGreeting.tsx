@@ -2,7 +2,7 @@
 import { getUsernameFromEmail } from '@/shared/lib/utils'
 import { useStore } from '@/shared/store'
 
-import { getGreetingByTime } from '../lib/getGreetingByTime'
+import { getGreetingByTime } from '../_lib'
 
 export const HomeGreeting = () => {
   const user = useStore((state) => state.auth.me)

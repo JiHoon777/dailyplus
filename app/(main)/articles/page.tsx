@@ -5,6 +5,7 @@ import { redirect, useSearchParams } from 'next/navigation'
 
 import {
   ArticleCard,
+  ArticleCardSkeleton,
   ArticleTypeCategory,
   verifyArticleType,
 } from '@/entities/articles'
@@ -34,6 +35,7 @@ export default function ArticlesPage() {
         fetchData={getArticles}
         params={{
           limit: 10,
+          orderBy: 'published_at',
           type: articleType === 'all' ? undefined : articleType,
         }}
         queryKey={queryKeys.app.articlesInfinite}
@@ -51,6 +53,13 @@ export default function ArticlesPage() {
                 <ArticleCard article={item} />
               </div>
             ))}
+            {(isLoading || isFetchingNextPage) &&
+              Array.from({ length: 10 }).map((_, index) => (
+                <ArticleCardSkeleton
+                  key={index}
+                  className={'mb-4 break-inside-avoid'}
+                />
+              ))}
             <IntersectionTrigger
               onIntersect={fetchNextPage}
               hasNextPage={hasNextPage}

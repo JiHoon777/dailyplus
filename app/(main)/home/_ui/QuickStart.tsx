@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Badge } from '@/shared/ui/badge'
 import { Card, CardContent } from '@/shared/ui/card'
 
-import { quickStartItems } from '../config/consts'
+import { quickStartItems } from '../_config'
 
 export const QuickStart = () => {
   return (

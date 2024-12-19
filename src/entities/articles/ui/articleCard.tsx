@@ -2,7 +2,8 @@ import type { IArticle } from '@/shared/types'
 
 import { format } from 'date-fns'
 
-import { Card, CardContent, CardHeader, Label } from '@/shared/ui'
+import { cn } from '@/shared/lib/utils'
+import { Card, CardContent, CardHeader, Label, Skeleton } from '@/shared/ui'
 
 export const ArticleCard = ({ article }: { article: IArticle }) => {
   return (
@@ -26,6 +27,21 @@ export const ArticleCard = ({ article }: { article: IArticle }) => {
           {article.published_at &&
             `• ${format(article.published_at, 'yyyy-MM-dd')}`}
         </Label>
+      </CardContent>
+    </Card>
+  )
+}
+
+export const ArticleCardSkeleton = ({ className }: { className?: string }) => {
+  return (
+    <Card className={cn('h-fit shrink-0', className)}>
+      <CardHeader className="w-full">
+        <Skeleton className="h-6 w-full rounded-xl" />
+      </CardHeader>
+      <CardContent className={'flex w-full flex-col gap-4'}>
+        <Skeleton className="h-3 w-full" />
+        <Skeleton className="h-3 w-full" />
+        <Skeleton className="h-3 w-full" />
       </CardContent>
     </Card>
   )

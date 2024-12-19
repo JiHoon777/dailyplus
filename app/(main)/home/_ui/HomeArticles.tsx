@@ -1,27 +1,34 @@
-'use client'
-import type { ArticleType, IArticle } from '@/shared/types'
+'use server'
+import type { ArticleType } from '@/shared/types'
 
 import Link from 'next/link'
 
-import { ArticleCard, ArticleTypeCategory } from '@/entities/articles'
+import { ArticleTypeCategory } from '@/entities/articles'
+import { createApiClientSSR } from '@/shared/lib/supabase-ssr'
 import { cn } from '@/shared/lib/utils'
 import { Label } from '@/shared/ui'
-import { AutoPlayCarousel } from '@/widgets/carousel'
 
-export const HomeArticles = ({
-  list,
+import { HomeArticlesCarousel } from './HomeArticlesCarousel'
+
+export const HomeArticles = async ({
   currentArticleType,
 }: {
-  list: IArticle[]
   currentArticleType: ArticleType
 }) => {
+  const apiClient = await createApiClientSSR()
+  const { data, error } =
+    await apiClient.app.getHomeArticles(currentArticleType)
+
+  // Todo: handle error
+  if (error) {
+    return <div>{JSON.stringify(error)}</div>
+  }
+
   return (
     <section className={'flex w-full flex-col gap-6'}>
       <HomeArticlesHeader currentArticleType={currentArticleType} />
       <div className="w-full overflow-hidden">
-        <AutoPlayCarousel slides={list}>
-          {(item: IArticle) => <ArticleCard article={item} />}
-        </AutoPlayCarousel>
+        <HomeArticlesCarousel articles={data ?? []} />
       </div>
     </section>
   )
