@@ -1,16 +1,9 @@
 'use client'
 
-import type { IArticle } from '@/shared/types'
-
-import { useCallback } from 'react'
-
 import { ArticleColumns } from '@/_pages/admin/articles'
 import { CreateArticleWithAiModal } from '@/features/articleGeneration'
 import { useAppQueries } from '@/shared/api'
-import {
-  type IListableResponse,
-  PagedListableQueryLoader,
-} from '@/shared/lib/loader'
+import { PagedListableQueryLoader } from '@/shared/lib/loader'
 import { useOverlay } from '@/shared/lib/overlay'
 import { createApiClientCSR } from '@/shared/lib/supabase-csr'
 import { Button, Pagination } from '@/shared/ui'
@@ -20,29 +13,14 @@ import { DataTableRenderer } from '@/widgets/table'
 export default function ArticlesPage() {
   const { open } = useOverlay()
   const queryKeys = useAppQueries.queryKeys
+  const apiClient = createApiClientCSR()
+  const loadList = apiClient.getArticles.bind(apiClient)
 
   const handleCreateArticle = () => {
     open(({ isOpen, close }) => (
       <CreateArticleWithAiModal isOpen={isOpen} onClose={close} />
     ))
   }
-
-  const loadList = useCallback(
-    async (input: {
-      page: number
-      limit: number
-    }): Promise<IListableResponse<IArticle>> => {
-      const apiClient = createApiClientCSR()
-      const res = await apiClient.getArticles(input)
-
-      return {
-        data: res.data ?? [],
-        error: res.error,
-        totalCount: res.count ?? 0,
-      }
-    },
-    [],
-  )
 
   return (
     <PageBase>
@@ -53,7 +31,7 @@ export default function ArticlesPage() {
 
       <PagedListableQueryLoader
         fetchData={loadList}
-        queryKey={(params) => queryKeys.admin.articlesPagination(params.page)}
+        queryKey={queryKeys.admin.articlesPagination}
         params={{ limit: 5 }}
       >
         {({ list, totalPages, currentPage, onPageChange }) => (

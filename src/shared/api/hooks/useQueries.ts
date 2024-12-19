@@ -7,7 +7,8 @@ import { createApiClientCSR } from '@/shared/lib/supabase-csr'
 
 const queryKeys = {
   admin: {
-    articlesPagination: (page: number) => ['admin', 'articles', page] as const,
+    articlesPagination: ({ page }: { page: number }) =>
+      ['admin', 'articles', page] as const,
   },
   app: {
     articlesInfinite: ({ type }: { type?: ArticleType }) =>
