@@ -46,3 +46,7 @@ export const HomeArticlesSSRFallback = () => {
     </div>
   )
 }
+
+export const HomeArticlesSSRError = () => {
+  return <div>Something went wrong</div>
+}

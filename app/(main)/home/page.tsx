@@ -1,5 +1,6 @@
 import type { SearchParamsType } from '@/shared/types'
 
+import { ErrorBoundary } from 'next/dist/client/components/error-boundary'
 import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
 
@@ -8,6 +9,7 @@ import { PageBase } from '@/widgets/layout'
 
 import {
   HomeArticlesSSR,
+  HomeArticlesSSRError,
   HomeArticlesSSRFallback,
   HomeGreeting,
   QuickStart,
@@ -24,9 +26,11 @@ export default async function Home({
   return (
     <PageBase className={'gap-6'}>
       <HomeGreeting />
-      <Suspense fallback={<HomeArticlesSSRFallback />}>
-        <HomeArticlesSSR currentArticleType={articleTypeParam} />
-      </Suspense>
+      <ErrorBoundary errorComponent={HomeArticlesSSRError}>
+        <Suspense fallback={<HomeArticlesSSRFallback />}>
+          <HomeArticlesSSR currentArticleType={articleTypeParam} />
+        </Suspense>
+      </ErrorBoundary>
       <QuickStart />
     </PageBase>
   )
