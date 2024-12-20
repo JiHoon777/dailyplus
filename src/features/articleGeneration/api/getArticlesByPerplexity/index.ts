@@ -4,7 +4,7 @@
 import type { GetArticlesByPerplexityInputs } from './types'
 import type { PerplexityResponse } from '@/shared/types'
 
-import { createApiClientCSR } from '@/shared/lib/supabase-csr'
+import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 
 import { configureBody } from './configureBody'
 
@@ -25,8 +25,7 @@ export const getArticlesByPerplexity = async (
     type,
   })
 
-  const apiClient = createApiClientCSR()
-  const res = await apiClient.ai.requestToPerplexity(body)
+  const res = await ApiClientCSR.ai.requestToPerplexity(body)
 
   return res.json()
 }

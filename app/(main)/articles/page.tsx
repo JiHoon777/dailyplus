@@ -14,14 +14,13 @@ import {
   InfiniteListableQueryLoader,
   IntersectionTrigger,
 } from '@/shared/lib/loader'
-import { createApiClientCSR } from '@/shared/lib/supabase-csr'
+import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { PageBase } from '@/widgets/layout'
 
 export default function ArticlesPage() {
   const searchParams = useSearchParams()
   const articleType = verifyArticleTypeParam(searchParams.get('articleType'))
-  const apiClient = createApiClientCSR()
-  const getArticles = apiClient.getArticles.bind(apiClient)
+  const getArticles = ApiClientCSR.getArticles.bind(ApiClientCSR)
 
   return (
     <PageBase className={'gap-6'}>

@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { z } from 'zod'
 
 import { DpQueryKeys } from '@/shared/api'
-import { createApiClientCSR } from '@/shared/lib/supabase-csr'
+import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { showToast } from '@/shared/lib/utils'
 
 import { getArticlesByPerplexity } from '../api/getArticlesByPerplexity'
@@ -31,7 +31,6 @@ export function useGenerateArticlesWithAi() {
   return useMutation({
     mutationFn: async (inputs: GetArticlesByPerplexityInputs) => {
       const { type: articleType } = inputs
-      const api = createApiClientCSR()
       const res = await getArticlesByPerplexity(inputs)
       const answer = res.choices?.[0]?.message?.content ?? null
 
@@ -57,7 +56,7 @@ export function useGenerateArticlesWithAi() {
         return acc
       }, [])
 
-      const { error } = await api.admin.createBulkArticles(
+      const { error } = await ApiClientCSR.admin.createBulkArticles(
         validatedArticles.map((item) => ({
           ...item,
           type: articleType,

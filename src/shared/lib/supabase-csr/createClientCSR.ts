@@ -10,5 +10,5 @@ const createClientCSR = () => {
   return createBrowserClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY)
 }
 
-export const createApiClientCSR = () => new ApiClient(createClientCSR())
+const createApiClientCSR = () => new ApiClient(createClientCSR())
 export const ApiClientCSR = createApiClientCSR()
