@@ -1,11 +1,12 @@
 'use client'
 
-import { useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Home, LogOut, Settings } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-import { useAppMutations, useAppQueries } from '@/shared/api'
+import { DpQueryKeys } from '@/shared/api'
+import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { getUsernameFromEmail } from '@/shared/lib/utils'
 import { useStore } from '@/shared/store'
 import { Button } from '@/shared/ui'
@@ -23,14 +24,21 @@ export function UserDropdown() {
   const router = useRouter()
   const pathname = usePathname()
   const queryClient = useQueryClient()
-  const logout = useAppMutations.logout()
-  const queryKeys = useAppQueries.queryKeys
+  const logout = useMutation({
+    mutationFn: async () => {
+      const { error } = await ApiClientCSR.auth.logout()
+
+      if (error) {
+        throw error
+      }
+    },
+  })
 
   const handleLogout = () => {
     logout.mutate(undefined, {
       onSuccess: () => {
         queryClient.invalidateQueries({
-          queryKey: queryKeys.auth.getAuthUser(),
+          queryKey: DpQueryKeys.auth.getAuthUser(),
         })
       },
     })

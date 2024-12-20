@@ -35,7 +35,7 @@ export const HomeArticlesSSR = async ({
   )
 }
 
-export const HomeArticlesSSRFallback = () => {
+export const HomeArticlesSSRFallback = async () => {
   return (
     <div className="flex w-full gap-4 overflow-hidden">
       {Array.from({ length: 4 }).map((_, index) => (
@@ -47,6 +47,6 @@ export const HomeArticlesSSRFallback = () => {
   )
 }
 
-export const HomeArticlesSSRError = () => {
+export const HomeArticlesSSRError = async () => {
   return <div>Something went wrong</div>
 }

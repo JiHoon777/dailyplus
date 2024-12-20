@@ -1,4 +1,2 @@
-export * from './apiClient'
-export type { IApiClientAppResponse } from './apiClientApp'
-export * from './hooks/useMutations'
-export * from './hooks/useQueries'
+export * from './client'
+export * from './queryKeys'

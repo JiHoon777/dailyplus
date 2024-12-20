@@ -1,8 +1,7 @@
 'use client'
 
-import { ArticleColumns } from '@/_pages/admin/articles'
 import { CreateArticleWithAiModal } from '@/features/articleGeneration'
-import { useAppQueries } from '@/shared/api'
+import { DpQueryKeys } from '@/shared/api'
 import { PagedListableQueryLoader } from '@/shared/lib/loader'
 import { useOverlay } from '@/shared/lib/overlay'
 import { createApiClientCSR } from '@/shared/lib/supabase-csr'
@@ -10,9 +9,10 @@ import { Button, Pagination } from '@/shared/ui'
 import { PageBase } from '@/widgets/layout'
 import { DataTableRenderer } from '@/widgets/table'
 
+import { ArticleColumns } from './_ui/articleColumns'
+
 export default function ArticlesPage() {
   const { open } = useOverlay()
-  const queryKeys = useAppQueries.queryKeys
   const apiClient = createApiClientCSR()
   const loadList = apiClient.getArticles.bind(apiClient)
 
@@ -31,7 +31,7 @@ export default function ArticlesPage() {
 
       <PagedListableQueryLoader
         fetchData={loadList}
-        queryKey={queryKeys.admin.articlesPagination}
+        queryKey={DpQueryKeys.admin.articles.list}
         params={{ limit: 5 }}
       >
         {({ list, totalPages, currentPage, onPageChange }) => (

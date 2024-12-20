@@ -1,9 +1,11 @@
 'use client'
 
+import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-import { useAppQueries } from '@/shared/api'
+import { DpQueryKeys } from '@/shared/api'
+import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { useStore } from '@/shared/store'
 import { ScreenLoading } from '@/shared/ui'
 
@@ -17,10 +19,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     data: authUser,
     error: authError,
     isLoading: isAuthLoading,
-  } = useAppQueries.getAuthUser()
+  } = useQuery({
+    queryFn: async () => {
+      const { data, error } = await ApiClientCSR.auth.getAuthUser()
+
+      if (error) {
+        throw error
+      }
+
+      return data
+    },
+    queryKey: DpQueryKeys.auth.getAuthUser(),
+  })
 
   // 2. Auth ID로 User 엔티티 가져오기
-  const { refetch: refetchUser } = useAppQueries.getMe(authUser?.id)
+  const { refetch: refetchUser } = useQuery({
+    enabled: false,
+    queryFn: async () => {
+      if (!authUser) {
+        return null
+      }
+
+      const { data, error } = await ApiClientCSR.auth.getUserEntity(authUser.id)
+
+      if (error) {
+        throw error
+      }
+
+      return data
+    },
+    queryKey: DpQueryKeys.auth.getMe(),
+  })
 
   // Auth 상태 변경 감지 및 처리
   useEffect(() => {

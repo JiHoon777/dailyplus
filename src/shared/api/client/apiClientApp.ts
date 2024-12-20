@@ -1,5 +1,5 @@
-import type { ArticleType, IApiClientResponse } from '../types'
 import type { ApiClient } from './apiClient'
+import type { ArticleType, ExtractMethodReturn } from '@/shared/types'
 
 type IApiClientApp = typeof ApiClientApp.prototype
 /**
@@ -10,7 +10,7 @@ type IApiClientApp = typeof ApiClientApp.prototype
  * type HomeArticlesResponse = IApiClientAppResponse<'getHomeArticles'>
  */
 export type IApiClientAppResponse<TMethod extends keyof IApiClientApp> =
-  IApiClientResponse<IApiClientApp, TMethod>
+  ExtractMethodReturn<IApiClientApp, TMethod>
 
 /**
  * 일반 사용자용 API 클라이언트로 일반적인 작업을 처리

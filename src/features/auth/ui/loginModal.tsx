@@ -1,10 +1,12 @@
 'use client'
 
+import type { AuthError, AuthResponse } from '@supabase/supabase-js'
 import type { FormEvent } from 'react'
 
-import { useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { useAppMutations, useAppQueries } from '@/shared/api'
+import { DpQueryKeys } from '@/shared/api'
+import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { Button, Input, Label, ModalOverlay, Spinner } from '@/shared/ui'
 
 export function LoginModal({
@@ -15,8 +17,28 @@ export function LoginModal({
   onClose: () => void
 }) {
   const queryClient = useQueryClient()
-  const queryKeys = useAppQueries.queryKeys
-  const signInWithEmail = useAppMutations.signInWithEmail()
+  const signInWithEmail = useMutation<
+    AuthResponse['data'],
+    AuthError,
+    FormData
+  >({
+    mutationFn: async (formData) => {
+      const input = {
+        email: formData.get('email') as string,
+        password: formData.get('password') as string,
+      }
+      const { data, error } = await ApiClientCSR.auth.loginWithEmail(
+        input.email,
+        input.password,
+      )
+
+      if (error) {
+        throw error
+      }
+
+      return data
+    },
+  })
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -25,7 +47,7 @@ export function LoginModal({
       onSuccess: () => {
         onClose()
         queryClient.invalidateQueries({
-          queryKey: queryKeys.auth.getAuthUser(),
+          queryKey: DpQueryKeys.auth.getAuthUser(),
         })
       },
     })
@@ -80,3 +102,24 @@ export function LoginModal({
     </ModalOverlay>
   )
 }
+
+// function signUpWithEmail() {
+//   return useMutation<null, AuthError, FormData>({
+//     mutationFn: async (formData) => {
+//       const input = {
+//         email: formData.get('email') as string,
+//         password: formData.get('password') as string,
+//       }
+//       const { error } = await ApiClientCSR.auth.signUpWithEmail(
+//         input.email,
+//         input.password,
+//       )
+
+//       if (error) {
+//         throw error
+//       }
+
+//       return null
+//     },
+//   })
+// }

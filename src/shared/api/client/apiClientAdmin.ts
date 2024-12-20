@@ -1,5 +1,5 @@
-import type { IArticle } from '../types/entity.types'
 import type { ApiClient } from './apiClient'
+import type { IArticle } from '@/shared/types'
 
 /**
  * 관리자 전용 API 클라이언트로 관리자 수준의 작업을 처리

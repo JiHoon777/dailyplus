@@ -4,6 +4,8 @@
  */
 import type {
   ArticleType,
+  ExtractMethodParameters,
+  ExtractMethodReturn,
   IArticle,
   IListableParams,
   IListableResponse,
@@ -15,6 +17,14 @@ import { ApiClientAdmin } from './apiClientAdmin'
 import { ApiClientAi } from './apiClientAi'
 import { ApiClientApp } from './apiClientApp'
 import { ApiClientAuth } from './apiClientAuth'
+
+type IApiClientApp = typeof ApiClient.prototype
+
+export type IApiClientResponse<TMethod extends keyof IApiClientApp> =
+  ExtractMethodReturn<IApiClientApp, TMethod>
+
+export type IApiClientParams<TMethod extends keyof IApiClientApp> =
+  ExtractMethodParameters<IApiClientApp, TMethod>
 
 export class ApiClient {
   readonly auth = new ApiClientAuth(this)

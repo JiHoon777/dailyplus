@@ -9,7 +9,7 @@ import {
   ArticleTypeCategory,
   verifyArticleType,
 } from '@/entities/articles'
-import { useAppQueries } from '@/shared/api'
+import { DpQueryKeys } from '@/shared/api'
 import {
   InfiniteListableQueryLoader,
   IntersectionTrigger,
@@ -19,7 +19,6 @@ import { PageBase } from '@/widgets/layout'
 
 export default function ArticlesPage() {
   const searchParams = useSearchParams()
-  const queryKeys = useAppQueries.queryKeys
   const articleType = verifyArticleTypeParam(searchParams.get('articleType'))
   const apiClient = createApiClientCSR()
   const getArticles = apiClient.getArticles.bind(apiClient)
@@ -38,7 +37,7 @@ export default function ArticlesPage() {
           orderBy: 'published_at',
           type: articleType === 'all' ? undefined : articleType,
         }}
-        queryKey={queryKeys.app.articlesInfinite}
+        queryKey={DpQueryKeys.app.articles.list}
       >
         {({
           list,

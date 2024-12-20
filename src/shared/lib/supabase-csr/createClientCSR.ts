@@ -11,3 +11,4 @@ const createClientCSR = () => {
 }
 
 export const createApiClientCSR = () => new ApiClient(createClientCSR())
+export const ApiClientCSR = createApiClientCSR()

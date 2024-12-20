@@ -32,3 +32,4 @@ async function createClientSSR() {
 
 export const createApiClientSSR = async () =>
   new ApiClient(await createClientSSR())
+export const ApiClientSSR = createApiClientSSR()

@@ -4,10 +4,9 @@ import type { GetArticlesByPerplexityInputs } from '../api/getArticlesByPerplexi
 import type { IArticleCreationInput } from '@/shared/types'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { useAppQueries } from '@/shared/api'
+import { DpQueryKeys } from '@/shared/api'
 import { createApiClientCSR } from '@/shared/lib/supabase-csr'
 import { showToast } from '@/shared/lib/utils'
 
@@ -28,7 +27,6 @@ const ArticleSchema = z.object({
 
 export function useGenerateArticlesWithAi() {
   const queryClient = useQueryClient()
-  const queryKeys = useAppQueries.queryKeys
 
   return useMutation({
     mutationFn: async (inputs: GetArticlesByPerplexityInputs) => {
@@ -78,9 +76,9 @@ export function useGenerateArticlesWithAi() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: queryKeys.admin.articlesPagination(1).slice(0, 2),
+        queryKey: DpQueryKeys.admin.articles.list({ page: 1 }).slice(0, 3),
       })
-      toast('Successfully created articles')
+      showToast.success('Successfully created articles')
     },
   })
 }

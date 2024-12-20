@@ -7,8 +7,10 @@ export class ApiClientAuth {
     return this._apiClient.supabaseClient
   }
 
-  getAuthUser() {
-    return this.supabaseClient.auth.getUser()
+  async getAuthUser() {
+    const { data, error } = await this.supabaseClient.auth.getUser()
+
+    return { data: data.user, error }
   }
 
   getUserEntity(authId: string) {
