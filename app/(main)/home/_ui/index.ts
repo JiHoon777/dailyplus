@@ -1,3 +1,3 @@
-export * from './HomeArticles'
+export * from './homeArticles'
 export * from './HomeGreeting'
 export * from './QuickStart'
