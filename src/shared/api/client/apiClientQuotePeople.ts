@@ -2,10 +2,9 @@ import type { ApiClient } from '.'
 import type {
   ExtractMethodParameters,
   ExtractMethodReturn,
-  IArticle,
-  IArticleCreationInput,
-  IArticleListableInput,
   IListableResponse,
+  IQuotePeople,
+  IQuotePeopleListableInput,
 } from '@/shared/types'
 
 type IApiClientQuotePeople = typeof ApiClientQuotePeople.prototype
@@ -26,31 +25,20 @@ export class ApiClientQuotePeople {
   }
 
   async getList(
-    input: IArticleListableInput,
-  ): Promise<IListableResponse<IArticle>> {
-    const { page = 1, limit = 10, orderBy = 'created_at', type } = input
+    input: IQuotePeopleListableInput,
+  ): Promise<IListableResponse<IQuotePeople>> {
+    const { page = 1, limit = 10, orderBy = 'created_at' } = input
 
-    const from = (page - 1) * limit
-    const to = from + limit - 1
+    const { from, to } = this._apiClient.getPaginationRange(page, limit)
 
     const query = this.supabaseClient
-      .from('articles')
+      .from('quote_people')
       .select('*', { count: 'exact' })
       .order(orderBy, { ascending: false })
       .range(from, to)
 
-    if (type) {
-      query.eq('type', type)
-    }
-
-    query.not('published_at', 'is', null)
-
     const { data, count, error } = await query
 
-    return {
-      data: data ?? [],
-      error,
-      totalCount: count ?? 0,
-    }
+    return this._apiClient.createListableResponse(data, count, error)
   }
 }

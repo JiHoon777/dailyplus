@@ -12,6 +12,7 @@ import type { Database } from 'database.types'
 import { ApiClientAi } from './apiClientAi'
 import { ApiClientArticles } from './apiClientArticles'
 import { ApiClientAuth } from './apiClientAuth'
+import { ApiClientQuotePeople } from './apiClientQuotePeople'
 
 type IApiClientApp = typeof ApiClient.prototype
 
@@ -26,10 +27,32 @@ export class ApiClient {
   readonly ai = new ApiClientAi(this)
 
   readonly articles = new ApiClientArticles(this)
+  readonly quotePeople = new ApiClientQuotePeople(this)
 
   constructor(private readonly _supabaseClient: SupabaseClient<Database>) {}
 
   get supabaseClient() {
     return this._supabaseClient
+  }
+
+  //
+  // Utils
+  //
+  getPaginationRange(page: number, limit: number) {
+    const from = (page - 1) * limit
+    const to = from + limit - 1
+
+    return { from, to }
+  }
+  createListableResponse<T>(
+    data: T[] | null,
+    count: number | null,
+    error: Error | null,
+  ) {
+    return {
+      data: data ?? [],
+      error,
+      totalCount: count ?? 0,
+    }
   }
 }

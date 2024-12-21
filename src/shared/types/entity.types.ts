@@ -8,13 +8,13 @@ import type { Database } from 'database.types'
 export type IUser = Database['public']['Tables']['users']['Row']
 
 //==============================================================================
-// * Article Entity
+// * Articles Entity
 //==============================================================================
 
 export type IArticle = Database['public']['Tables']['articles']['Row']
 
 /**
- * * Article CRUD Input
+ * * Articles CRUD Input
  */
 export type IArticleCreationInput = Pick<
   IArticle,
@@ -36,7 +36,7 @@ export type IArticleDeletionInput = Pick<IArticle, 'id'>
 export type ArticleType = Database['public']['Enums']['article_type']
 
 //==============================================================================
-// * Quote Entity
+// * Quotes Entity
 //==============================================================================
 
 export type IQuote = Database['public']['Tables']['quotes']['Row']
@@ -55,26 +55,26 @@ export type IQuoteUpdateInput = Partial<IQuoteCreationInput>
 export type IQuoteDeletionInput = Pick<IQuote, 'id'>
 
 //==============================================================================
-// * Quote Person Entity
+// * Quote People Entity
 //==============================================================================
 
-export type IQuotePerson = Database['public']['Tables']['quote_people']['Row']
+export type IQuotePeople = Database['public']['Tables']['quote_people']['Row']
 
 /**
  * * CRUD Inputs
  */
-export type IQuotePersonCreationInput = Pick<
-  IQuotePerson,
+export type IQuotePeopleCreationInput = Pick<
+  IQuotePeople,
   'name' | 'description'
 >
-export type IQuotePersonListableInput = IListableParams<{
+export type IQuotePeopleListableInput = IListableParams<{
   orderBy?: 'created_at'
 }>
-export type IQuotePersonUpdateInput = IQuotePersonCreationInput
-export type IQuotePersonDeletionInput = Pick<IQuotePerson, 'id'>
+export type IQuotePeopleUpdateInput = IQuotePeopleCreationInput
+export type IQuotePeopleDeletionInput = Pick<IQuotePeople, 'id'>
 
 //==============================================================================
-// * Quote AI Story Entity
+// * Quote AI Stories Entity
 //==============================================================================
 
 export type IQuoteAiStory =
@@ -94,7 +94,7 @@ export type IQuoteAiStoryUpdateInput = Partial<IQuoteAiStoryCreationInput>
 export type IQuoteAiStoryDeletionInput = Pick<IQuoteAiStory, 'id'>
 
 //==============================================================================
-// * Quote AI Interpretation Entity
+// * Quote AI Interpretations Entity
 //==============================================================================
 
 export type IQuoteAiInterpretation =
