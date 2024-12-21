@@ -7,6 +7,7 @@ import { verifyArticleType } from '@/entities/articles'
 import { PageBase } from '@/widgets/layout'
 
 import { HomeArticlesSSR, HomeArticlesSSRFallback, HomeGreeting } from './_ui'
+import { DPLinks } from '@/shared/config'
 
 export default async function Home({
   searchParams: _searchParams,
@@ -31,7 +32,7 @@ function verifyArticleTypeParam(searchParams: SearchParamsType) {
   const verified = verifyArticleType(articleType)
 
   if (!verified) {
-    return redirect('/home?articleType=trend')
+    return redirect(DPLinks.app.home({ articleType: 'trend' }))
   }
 
   return articleType

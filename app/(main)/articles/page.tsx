@@ -10,6 +10,7 @@ import {
   verifyArticleType,
 } from '@/entities/articles'
 import { DpQueryKeys } from '@/shared/api'
+import { DPLinks } from '@/shared/config'
 import {
   InfiniteListableQueryLoader,
   IntersectionTrigger,
@@ -26,7 +27,7 @@ export default function ArticlesPage() {
     <PageBase className={'gap-6'}>
       <ArticleTypeCategory
         showAll
-        pathName={'/articles'}
+        pathName={DPLinks.app.articles.list()}
         currentArticleType={articleType}
       />
       <InfiniteListableQueryLoader
@@ -77,7 +78,7 @@ function verifyArticleTypeParam(
     verifyArticleType(articleTypeParam) || articleTypeParam === 'all'
 
   if (!verified) {
-    return redirect('/articles?articleType=all')
+    return redirect(DPLinks.app.articles.list({ articleType: 'all' }))
   }
 
   return articleTypeParam
