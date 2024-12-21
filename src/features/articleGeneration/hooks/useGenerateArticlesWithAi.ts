@@ -1,6 +1,6 @@
 // hooks/useGenerateArticlesWithAi.ts
 
-import type { GetArticlesByPerplexityInputs } from '../api/getArticlesByPerplexity'
+import type { IApiClientPromptParams } from '@/shared/api/client/prompt/apiClientPrompt'
 import type { IArticleCreationInput } from '@/shared/types'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -10,7 +10,6 @@ import { DpQueryKeys } from '@/shared/api'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { showToast } from '@/shared/lib/utils'
 
-import { getArticlesByPerplexity } from '../api/getArticlesByPerplexity'
 import { extractJsonFromText } from '../lib/extractJsonFromText'
 import { sanitizePublishedDate } from '../lib/sanitizePublishedDate'
 
@@ -29,9 +28,11 @@ export function useGenerateArticlesWithAi() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async (inputs: GetArticlesByPerplexityInputs) => {
+    mutationFn: async (
+      inputs: IApiClientPromptParams<'getArticlesByPerplexity'>,
+    ) => {
       const { type: articleType } = inputs
-      const res = await getArticlesByPerplexity(inputs)
+      const res = await ApiClientCSR.prompt.getArticlesByPerplexity(inputs)
       const answer = res.choices?.[0]?.message?.content ?? null
 
       if (!answer) {
@@ -75,7 +76,10 @@ export function useGenerateArticlesWithAi() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: DpQueryKeys.admin.articles.list({ page: 1 }).slice(0, 3),
+        queryKey: DpQueryKeys.admin.articles
+          // Todo: 모든 리스트를 초기화 시키는데 명확하지 못하게 파라메터를 전달할 필요가 없다.
+          .list({ limit: 5, page: 1 })
+          .slice(0, 3),
       })
       showToast.success('Successfully created articles')
     },
