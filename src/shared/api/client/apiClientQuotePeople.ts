@@ -1,46 +1,35 @@
 import type { ApiClient } from '.'
 import type {
-  ExtractMethodParameters,
-  ExtractMethodReturn,
   IListableResponse,
   IQuotePeople,
+  IQuotePeopleCreationInput,
   IQuotePeopleListableInput,
+  IQuotePeopleUpdateInput,
 } from '@/shared/types'
 
-import { createListableResponse, getPaginationRange } from './utils'
+import { ApiClientEntityBase } from './base/apiClientEntityBase'
+import { createListableResponse } from './utils'
 
-type IApiClientQuotePeople = typeof ApiClientQuotePeople.prototype
-
-export type IApiClientQuotePeopleResponse<
-  TMethod extends keyof IApiClientQuotePeople,
-> = ExtractMethodReturn<IApiClientQuotePeople, TMethod>
-
-export type IApiClientQuotePeopleParams<
-  TMethod extends keyof IApiClientQuotePeople,
-> = ExtractMethodParameters<IApiClientQuotePeople, TMethod>
-
-export class ApiClientQuotePeople {
-  constructor(private readonly _apiClient: ApiClient) {}
-
-  get supabaseClient() {
-    return this._apiClient.supabaseClient
+export class ApiClientQuotePeople extends ApiClientEntityBase<
+  'quote_people',
+  IQuotePeople,
+  IQuotePeopleCreationInput,
+  IQuotePeopleUpdateInput
+> {
+  constructor(apiClient: ApiClient) {
+    super(apiClient, 'quote_people')
   }
 
   async getList(
     input: IQuotePeopleListableInput,
   ): Promise<IListableResponse<IQuotePeople>> {
-    const { page = 1, limit = 10, orderBy = 'created_at' } = input
+    const { orderBy = 'created_at' } = input
 
-    const { from, to } = getPaginationRange(page, limit)
+    const query = this._listQuery(input)
 
-    const query = this.supabaseClient
-      .from('quote_people')
-      .select('*', { count: 'exact' })
-      .order(orderBy, { ascending: false })
-      .range(from, to)
+    query.order(orderBy, { ascending: false })
 
-    const { data, count, error } = await query
-
-    return createListableResponse(data, count, error)
+    const res = await query
+    return createListableResponse(res)
   }
 }

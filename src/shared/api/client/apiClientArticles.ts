@@ -5,8 +5,12 @@ import type {
   IArticle,
   IArticleCreationInput,
   IArticleListableInput,
+  IArticleUpdateInput,
   IListableResponse,
 } from '@/shared/types'
+
+import { ApiClientEntityBase } from './base/apiClientEntityBase'
+import { createListableResponse } from './utils'
 
 type IApiClientArticles = typeof ApiClientArticles.prototype
 
@@ -17,13 +21,21 @@ export type IApiClientArticlesResponse<
 export type IApiClientArticlesParams<TMethod extends keyof IApiClientArticles> =
   ExtractMethodParameters<IApiClientArticles, TMethod>
 
-export class ApiClientArticles {
-  constructor(private readonly _apiClient: ApiClient) {}
+export class ApiClientArticles extends ApiClientEntityBase<
+  'articles',
+  IArticle,
+  IArticleCreationInput,
+  IArticleUpdateInput
+> {
+  constructor(apiClient: ApiClient) {
+    super(apiClient, 'articles')
+  }
 
   get supabaseClient() {
     return this._apiClient.supabaseClient
   }
 
+  // Todo: refactor
   async createBulk(articles: IArticleCreationInput[]) {
     const results = await Promise.allSettled(
       articles.map((article) =>
@@ -49,16 +61,11 @@ export class ApiClientArticles {
   async getList(
     input: IArticleListableInput,
   ): Promise<IListableResponse<IArticle>> {
-    const { page = 1, limit = 10, orderBy = 'created_at', type } = input
+    const { orderBy = 'created_at', type } = input
 
-    const from = (page - 1) * limit
-    const to = from + limit - 1
+    const query = this._listQuery(input)
 
-    const query = this.supabaseClient
-      .from('articles')
-      .select('*', { count: 'exact' })
-      .order(orderBy, { ascending: false })
-      .range(from, to)
+    query.order(orderBy, { ascending: false })
 
     if (type) {
       query.eq('type', type)
@@ -66,12 +73,7 @@ export class ApiClientArticles {
 
     query.not('published_at', 'is', null)
 
-    const { data, count, error } = await query
-
-    return {
-      data: data ?? [],
-      error,
-      totalCount: count ?? 0,
-    }
+    const res = await query
+    return createListableResponse(res)
   }
 }

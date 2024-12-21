@@ -10,7 +10,8 @@ export type SearchParamsType = { [key: string]: string | string[] | undefined }
  * @property page - 현재 페이지 번호
  * @property limit - 한 페이지당 보여줄 아이템 수
  */
-export type IListableParams<TParams extends Record<string, unknown>> = {
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type IListableParams<TParams extends Record<string, unknown> = {}> = {
   page: number
   limit: number
 } & TParams

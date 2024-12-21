@@ -5,11 +5,15 @@ export const getPaginationRange = (page: number, limit: number) => {
   return { from, to }
 }
 
-export const createListableResponse = <T>(
-  data: T[] | null,
-  count: number | null,
-  error: Error | null,
-) => {
+export const createListableResponse = <T>({
+  data,
+  count,
+  error,
+}: {
+  data: T[] | null
+  count: number | null
+  error: Error | null
+}) => {
   return {
     data: data ?? [],
     error,
