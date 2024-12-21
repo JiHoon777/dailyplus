@@ -8,6 +8,7 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 
+import { DPLinks } from '@/shared/config'
 import {
   Sidebar,
   SidebarContent,
@@ -23,32 +24,32 @@ const items = [
   {
     icon: UserIcon,
     title: 'Users',
-    url: '/admin/users',
+    url: DPLinks.admin.users.list,
   },
   {
     icon: NewspaperIcon,
     title: 'Articles',
-    url: '/admin/articles',
+    url: DPLinks.admin.articles.list,
   },
   {
     icon: BookHeartIcon,
     title: 'Quote People',
-    url: '/admin/quote-people',
+    url: DPLinks.admin.quotePeople.list,
   },
   {
     icon: QuoteIcon,
     title: 'Quotes',
-    url: '/admin/quotes',
+    url: DPLinks.admin.quotes.list,
   },
   {
     icon: TextQuoteIcon,
     title: 'Quote Ai Interpretations',
-    url: '/admin/quote-ai-interpretations',
+    url: DPLinks.admin.quoteAiInterpretations.list,
   },
   {
     icon: BookIcon,
     title: 'Quote Ai Stories',
-    url: '/admin/quote-ai-stories',
+    url: DPLinks.admin.quoteAiStories.list,
   },
 ]
 
