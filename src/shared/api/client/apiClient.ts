@@ -7,6 +7,7 @@ import type {
   ExtractMethodParameters,
   ExtractMethodReturn,
   IArticle,
+  IArticleListableInput,
   IListableParams,
   IListableResponse,
 } from '@/shared/types'
@@ -39,10 +40,7 @@ export class ApiClient {
   }
 
   async getArticles(
-    input: IListableParams<{
-      orderBy?: 'created_at' | 'published_at'
-      type?: ArticleType
-    }>,
+    input: IArticleListableInput,
   ): Promise<IListableResponse<IArticle>> {
     const { page = 1, limit = 10, orderBy = 'created_at', type } = input
 

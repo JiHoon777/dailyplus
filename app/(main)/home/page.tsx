@@ -4,10 +4,10 @@ import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
 
 import { verifyArticleType } from '@/entities/articles'
+import { DPLinks } from '@/shared/config'
 import { PageBase } from '@/widgets/layout'
 
 import { HomeArticlesSSR, HomeArticlesSSRFallback, HomeGreeting } from './_ui'
-import { DPLinks } from '@/shared/config'
 
 export default async function Home({
   searchParams: _searchParams,

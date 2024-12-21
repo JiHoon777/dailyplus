@@ -119,6 +119,7 @@ export type Database = {
           death_year: number | null
           description: string | null
           id: number
+          name: string
           updated_at: string
         }
         Insert: {
@@ -127,6 +128,7 @@ export type Database = {
           death_year?: number | null
           description?: string | null
           id?: number
+          name: string
           updated_at?: string
         }
         Update: {
@@ -135,6 +137,7 @@ export type Database = {
           death_year?: number | null
           description?: string | null
           id?: number
+          name?: string
           updated_at?: string
         }
         Relationships: []
