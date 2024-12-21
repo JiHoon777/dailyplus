@@ -14,7 +14,7 @@ export type IUser = Database['public']['Tables']['users']['Row']
 export type IArticle = Database['public']['Tables']['articles']['Row']
 
 /**
- * !Article CRUD Input
+ * * Article CRUD Input
  */
 export type IArticleCreationInput = Pick<
   IArticle,
@@ -42,7 +42,7 @@ export type ArticleType = Database['public']['Enums']['article_type']
 export type IQuote = Database['public']['Tables']['quotes']['Row']
 
 /**
- * ! CRUD Inputs
+ * * CRUD Inputs
  */
 export type IQuoteCreationInput = Pick<
   IQuote,
@@ -61,7 +61,7 @@ export type IQuoteDeletionInput = Pick<IQuote, 'id'>
 export type IQuotePerson = Database['public']['Tables']['quote_people']['Row']
 
 /**
- * ! CRUD Inputs
+ * * CRUD Inputs
  */
 export type IQuotePersonCreationInput = Pick<
   IQuotePerson,
@@ -81,7 +81,7 @@ export type IQuoteAiStory =
   Database['public']['Tables']['quote_ai_stories']['Row']
 
 /**
- * ! CRUD Inputs
+ * * CRUD Inputs
  */
 export type IQuoteAiStoryCreationInput = Pick<
   IQuoteAiStory,
@@ -101,7 +101,7 @@ export type IQuoteAiInterpretation =
   Database['public']['Tables']['quote_ai_interpretations']['Row']
 
 /**
- * ! CRUD Inputs
+ * * CRUD Inputs
  */
 export type IQuoteAiInterpretationCreationInput = Pick<
   IQuoteAiInterpretation,
