@@ -1,1 +1,1 @@
-export * from './quotePeopleColumns'
+export * from './QuotePeopleColumns'

@@ -9,7 +9,7 @@ import { Button, Pagination } from '@/shared/ui'
 import { PageBase } from '@/widgets/layout'
 import { DataTableRenderer } from '@/widgets/table'
 
-import { ArticleColumns } from './_ui/articleColumns'
+import { ArticleColumns } from './_ui'
 
 export default function ArticlesPage() {
   const { open } = useOverlay()
