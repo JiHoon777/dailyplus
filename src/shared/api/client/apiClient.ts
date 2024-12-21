@@ -12,7 +12,7 @@ import type { Database } from 'database.types'
 import { ApiClientArticles } from './apiClientArticles'
 import { ApiClientAuth } from './apiClientAuth'
 import { ApiClientQuotePeople } from './apiClientQuotePeople'
-import { ApiClientPrompt } from './prompt/apiClientPrompt'
+import { ApiClientPrompt } from './prompt'
 
 type IApiClientApp = typeof ApiClient.prototype
 
