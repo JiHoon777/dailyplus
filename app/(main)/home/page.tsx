@@ -6,12 +6,7 @@ import { Suspense } from 'react'
 import { verifyArticleType } from '@/entities/articles'
 import { PageBase } from '@/widgets/layout'
 
-import {
-  HomeArticlesSSR,
-  HomeArticlesSSRFallback,
-  HomeGreeting,
-  QuickStart,
-} from './_ui'
+import { HomeArticlesSSR, HomeArticlesSSRFallback, HomeGreeting } from './_ui'
 
 export default async function Home({
   searchParams: _searchParams,
@@ -27,7 +22,6 @@ export default async function Home({
       <Suspense fallback={<HomeArticlesSSRFallback />}>
         <HomeArticlesSSR currentArticleType={articleTypeParam} />
       </Suspense>
-      <QuickStart />
     </PageBase>
   )
 }
