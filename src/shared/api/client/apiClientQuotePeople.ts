@@ -7,6 +7,8 @@ import type {
   IQuotePeopleListableInput,
 } from '@/shared/types'
 
+import { createListableResponse, getPaginationRange } from './utils'
+
 type IApiClientQuotePeople = typeof ApiClientQuotePeople.prototype
 
 export type IApiClientQuotePeopleResponse<
@@ -29,7 +31,7 @@ export class ApiClientQuotePeople {
   ): Promise<IListableResponse<IQuotePeople>> {
     const { page = 1, limit = 10, orderBy = 'created_at' } = input
 
-    const { from, to } = this._apiClient.getPaginationRange(page, limit)
+    const { from, to } = getPaginationRange(page, limit)
 
     const query = this.supabaseClient
       .from('quote_people')
@@ -39,6 +41,6 @@ export class ApiClientQuotePeople {
 
     const { data, count, error } = await query
 
-    return this._apiClient.createListableResponse(data, count, error)
+    return createListableResponse(data, count, error)
   }
 }

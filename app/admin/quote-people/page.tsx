@@ -9,9 +9,11 @@ import { Button, Pagination } from '@/shared/ui'
 import { PageBase } from '@/widgets/layout'
 import { DataTableRenderer } from '@/widgets/table'
 
+import { QuotePeopleColumns } from './_ui'
+
 export default function ArticlesPage() {
   const { open } = useOverlay()
-  const loadList = ApiClientCSR.getArticles.bind(ApiClientCSR)
+  const loadList = ApiClientCSR.quotePeople.getList.bind(ApiClientCSR)
 
   const handleCreateArticle = () => {
     open(({ isOpen, close }) => (
@@ -22,18 +24,18 @@ export default function ArticlesPage() {
   return (
     <PageBase>
       <div className="mb-4 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Articles</h1>
-        <Button onClick={handleCreateArticle}>Create Article with AI</Button>
+        <h1 className="text-2xl font-bold">Quote People</h1>
+        <Button onClick={handleCreateArticle}>Create Quote People</Button>
       </div>
 
-      {/* <PagedListableQueryLoader
+      <PagedListableQueryLoader
         fetchData={loadList}
-        queryKey={DpQueryKeys.admin.articles.list}
-        params={{ limit: 5 }}
+        queryKey={DpQueryKeys.admin.quotePeople.list}
+        params={{ limit: 10 }}
       >
         {({ list, totalPages, currentPage, onPageChange }) => (
           <div className="flex flex-col gap-4">
-            <DataTableRenderer columns={ArticleColumns} data={list} />
+            <DataTableRenderer columns={QuotePeopleColumns} data={list} />
             <div className="self-start">
               <Pagination
                 currentPage={currentPage}
@@ -43,7 +45,7 @@ export default function ArticlesPage() {
             </div>
           </div>
         )}
-      </PagedListableQueryLoader> */}
+      </PagedListableQueryLoader>
     </PageBase>
   )
 }

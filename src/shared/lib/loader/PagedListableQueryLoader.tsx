@@ -68,6 +68,7 @@ export const PagedListableQueryLoader = <
   useEffect(() => {
     if (error) {
       showToast.error(error)
+      console.error(error)
     }
   }, [error])
 

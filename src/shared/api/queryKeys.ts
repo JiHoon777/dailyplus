@@ -1,4 +1,4 @@
-import type { IArticleListableInput } from '../types'
+import type { IArticleListableInput, IQuotePeopleListableInput } from '../types'
 
 /**
  * 쿼리키 생성 유틸리티 함수
@@ -14,8 +14,13 @@ const createQueryKey = <T extends Record<string, unknown>>(
 const adminQueryKeys = {
   articles: {
     /** 관리자용 게시글 목록 조회 (/admin/articles) */
-    list: (input: Omit<IArticleListableInput, 'limit'>) =>
+    list: (input: IArticleListableInput) =>
       createQueryKey(['admin', 'articles', 'list'], input),
+  },
+  quotePeople: {
+    /** 관리자용 명언 인물 조회 (/admin/articles) */
+    list: (input: IQuotePeopleListableInput) =>
+      createQueryKey(['admin', 'quote-people', 'list'], input),
   },
 } as const
 

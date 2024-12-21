@@ -34,25 +34,4 @@ export class ApiClient {
   get supabaseClient() {
     return this._supabaseClient
   }
-
-  //
-  // Utils
-  //
-  getPaginationRange(page: number, limit: number) {
-    const from = (page - 1) * limit
-    const to = from + limit - 1
-
-    return { from, to }
-  }
-  createListableResponse<T>(
-    data: T[] | null,
-    count: number | null,
-    error: Error | null,
-  ) {
-    return {
-      data: data ?? [],
-      error,
-      totalCount: count ?? 0,
-    }
-  }
 }
