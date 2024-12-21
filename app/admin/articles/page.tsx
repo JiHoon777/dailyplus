@@ -13,7 +13,7 @@ import { ArticleColumns } from './_ui/articleColumns'
 
 export default function ArticlesPage() {
   const { open } = useOverlay()
-  const loadList = ApiClientCSR.getArticles.bind(ApiClientCSR)
+  const loadList = ApiClientCSR.articles.getList.bind(ApiClientCSR)
 
   const handleCreateArticle = () => {
     open(({ isOpen, close }) => (

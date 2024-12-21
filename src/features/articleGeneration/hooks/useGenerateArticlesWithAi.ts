@@ -56,7 +56,7 @@ export function useGenerateArticlesWithAi() {
         return acc
       }, [])
 
-      const { error } = await ApiClientCSR.admin.createBulkArticles(
+      const { error } = await ApiClientCSR.articles.createBulk(
         validatedArticles.map((item) => ({
           ...item,
           type: articleType,

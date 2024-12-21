@@ -1,4 +1,4 @@
-import type { IApiClientParams } from '@/shared/api'
+import type { IArticleListableInput } from '../types'
 
 /**
  * 쿼리키 생성 유틸리티 함수
@@ -14,7 +14,7 @@ const createQueryKey = <T extends Record<string, unknown>>(
 const adminQueryKeys = {
   articles: {
     /** 관리자용 게시글 목록 조회 (/admin/articles) */
-    list: (input: Omit<IApiClientParams<'getArticles'>, 'limit'>) =>
+    list: (input: Omit<IArticleListableInput, 'limit'>) =>
       createQueryKey(['admin', 'articles', 'list'], input),
   },
 } as const
@@ -23,7 +23,7 @@ const adminQueryKeys = {
 const appQueryKeys = {
   articles: {
     /** 일반 사용자용 게시글 목록 조회 (/app/articles) */
-    list: (input: Omit<IApiClientParams<'getArticles'>, 'page' | 'limit'>) =>
+    list: (input: Omit<IArticleListableInput, 'page' | 'limit'>) =>
       createQueryKey(['app', 'articles', 'list'], input),
   },
 } as const

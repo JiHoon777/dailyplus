@@ -17,8 +17,12 @@ export const HomeArticlesSSR = async ({
   currentArticleType: ArticleType
 }) => {
   const apiClient = await createApiClientSSR()
-  const { data, error } =
-    await apiClient.app.getHomeArticles(currentArticleType)
+  const { data, error } = await apiClient.articles.getList({
+    limit: 10,
+    orderBy: 'published_at',
+    page: 1,
+    type: currentArticleType,
+  })
 
   // Todo: handle error in boundery
   if (error) {
