@@ -1,4 +1,11 @@
-import { NewspaperIcon, UserIcon } from 'lucide-react'
+import {
+  BookHeartIcon,
+  BookIcon,
+  NewspaperIcon,
+  QuoteIcon,
+  TextQuoteIcon,
+  UserIcon,
+} from 'lucide-react'
 import Link from 'next/link'
 
 import {
@@ -22,6 +29,26 @@ const items = [
     icon: NewspaperIcon,
     title: 'Articles',
     url: '/admin/articles',
+  },
+  {
+    icon: BookHeartIcon,
+    title: 'Quote People',
+    url: '/admin/quote-people',
+  },
+  {
+    icon: QuoteIcon,
+    title: 'Quotes',
+    url: '/admin/quotes',
+  },
+  {
+    icon: TextQuoteIcon,
+    title: 'Quote Ai Interpretations',
+    url: '/admin/quote-ai-interpretations',
+  },
+  {
+    icon: BookIcon,
+    title: 'Quote Ai Stories',
+    url: '/admin/quote-ai-stories',
   },
 ]
 

@@ -21,3 +21,25 @@ export type IArticleCreationInput = Pick<
 >
 
 export type ArticleType = Database['public']['Enums']['article_type']
+
+/**
+ * Quote
+ */
+export type IQuote = Database['public']['Tables']['quotes']['Row']
+
+/**
+ * Quote Person
+ */
+export type IQuotePerson = Database['public']['Tables']['quote_people']['Row']
+
+/**
+ * Quote Ai Story
+ */
+export type IQuoteAiStory =
+  Database['public']['Tables']['quote_ai_stories']['Row']
+
+/**
+ * Quote Ai Interpretation
+ */
+export type IQuoteAiInterpretation =
+  Database['public']['Tables']['quote_ai_interpretations']['Row']

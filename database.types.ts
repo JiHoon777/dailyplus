@@ -45,6 +45,135 @@ export type Database = {
         }
         Relationships: []
       }
+      quote_ai_interpretations: {
+        Row: {
+          content: string
+          created_at: string
+          id: number
+          model_version: string
+          quote_id: number
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: number
+          model_version: string
+          quote_id: number
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: number
+          model_version?: string
+          quote_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'quote_ai_interpretation_quote_id_fkey'
+            columns: ['quote_id']
+            isOneToOne: false
+            referencedRelation: 'quotes'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      quote_ai_stories: {
+        Row: {
+          content: Json
+          created_at: string
+          id: number
+          model_version: string
+          quote_id: number
+          title: string
+        }
+        Insert: {
+          content: Json
+          created_at?: string
+          id?: number
+          model_version: string
+          quote_id: number
+          title: string
+        }
+        Update: {
+          content?: Json
+          created_at?: string
+          id?: number
+          model_version?: string
+          quote_id?: number
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'quote_ai_story_quote_id_fkey'
+            columns: ['quote_id']
+            isOneToOne: false
+            referencedRelation: 'quotes'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      quote_people: {
+        Row: {
+          birth_year: number | null
+          created_at: string
+          death_year: number | null
+          description: string | null
+          id: number
+          updated_at: string
+        }
+        Insert: {
+          birth_year?: number | null
+          created_at?: string
+          death_year?: number | null
+          description?: string | null
+          id?: number
+          updated_at?: string
+        }
+        Update: {
+          birth_year?: number | null
+          created_at?: string
+          death_year?: number | null
+          description?: string | null
+          id?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      quotes: {
+        Row: {
+          created_at: string
+          id: number
+          korean_text: string | null
+          original_text: string
+          quote_person_id: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          korean_text?: string | null
+          original_text: string
+          quote_person_id: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          korean_text?: string | null
+          original_text?: string
+          quote_person_id?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'quotes_quote_person_id_fkey'
+            columns: ['quote_person_id']
+            isOneToOne: false
+            referencedRelation: 'quote_people'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       users: {
         Row: {
           avatar_url: string | null
