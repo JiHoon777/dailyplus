@@ -2,10 +2,10 @@ import type { ApiClient } from '.'
 import type {
   ExtractMethodParameters,
   ExtractMethodReturn,
-  IArticle,
-  IArticleCreationInput,
-  IArticleListableInput,
-  IArticleUpdateInput,
+  IArticles,
+  IArticlesCreationInput,
+  IArticlesListableInput,
+  IArticlesUpdateInput,
   IListableResponse,
 } from '@/shared/types'
 
@@ -23,10 +23,10 @@ export type IApiClientArticlesParams<TMethod extends keyof IApiClientArticles> =
 
 export class ApiClientArticles extends ApiClientEntityBase<
   'articles',
-  IArticle,
-  IArticleCreationInput,
-  IArticleUpdateInput,
-  IArticleListableInput
+  IArticles,
+  IArticlesCreationInput,
+  IArticlesUpdateInput,
+  IArticlesListableInput
 > {
   constructor(apiClient: ApiClient) {
     super(apiClient, 'articles')
@@ -37,7 +37,7 @@ export class ApiClientArticles extends ApiClientEntityBase<
   }
 
   // Todo: refactor
-  async createBulk(articles: IArticleCreationInput[]) {
+  async createBulk(articles: IArticlesCreationInput[]) {
     const results = await Promise.allSettled(
       articles.map((article) =>
         this.supabaseClient.from('articles').insert([article]),
@@ -60,8 +60,8 @@ export class ApiClientArticles extends ApiClientEntityBase<
   }
 
   async getList(
-    input: IArticleListableInput,
-  ): Promise<IListableResponse<IArticle>> {
+    input: IArticlesListableInput,
+  ): Promise<IListableResponse<IArticles>> {
     const { page = 1, limit = 10, orderBy = 'created_at', type } = input
 
     const { from, to } = getPaginationRange(page, limit)

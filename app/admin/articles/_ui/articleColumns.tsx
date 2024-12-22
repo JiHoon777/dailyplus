@@ -1,9 +1,9 @@
-import type { IArticle } from '@/shared/types'
+import type { IArticles } from '@/shared/types'
 import type { ColumnDef } from '@tanstack/react-table'
 
 import { format } from 'date-fns'
 
-export const ArticleColumns: ColumnDef<IArticle>[] = [
+export const ArticleColumns: ColumnDef<IArticles>[] = [
   // {
   //   cell: ({ row }) => <div>No. {row.index + 1}</div>,
   //   header: 'No.',

@@ -1,4 +1,4 @@
-import type { ArticleType } from '@/shared/types'
+import type { ArticlesType } from '@/shared/types'
 
 import Link from 'next/link'
 
@@ -10,7 +10,7 @@ import { Label } from '@/shared/ui'
 export const HomeArticlesHeader = ({
   currentArticleType,
 }: {
-  currentArticleType: ArticleType
+  currentArticleType: ArticlesType
 }) => {
   return (
     <header className="flex flex-col gap-4 md:flex-row">

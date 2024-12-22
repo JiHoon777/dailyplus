@@ -1,11 +1,11 @@
-import type { IUser } from '@/shared/types/entity.types'
+import type { IUsers } from '@/shared/types/entity.types'
 import type { StateCreator } from 'zustand'
 
 export interface AuthSlice {
   auth: {
-    me: IUser | null
+    me: IUsers | null
 
-    setMe: (user: IUser | null) => void
+    setMe: (user: IUsers | null) => void
   }
 }
 

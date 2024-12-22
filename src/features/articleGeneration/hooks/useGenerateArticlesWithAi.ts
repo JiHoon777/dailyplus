@@ -1,7 +1,7 @@
 // hooks/useGenerateArticlesWithAi.ts
 
 import type { IApiClientPromptParams } from '@/shared/api/client/prompt/apiClientPrompt'
-import type { IArticleCreationInput } from '@/shared/types'
+import type { IArticlesCreationInput } from '@/shared/types'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { z } from 'zod'
@@ -46,7 +46,7 @@ export function useGenerateArticlesWithAi() {
       }
 
       const validatedArticles = parsedData.reduce<
-        Omit<IArticleCreationInput, 'type' | 'unique_id'>[]
+        Omit<IArticlesCreationInput, 'type' | 'unique_id'>[]
       >((acc, item) => {
         try {
           const validatedItem = ArticleSchema.parse(item)

@@ -1,6 +1,6 @@
-import type { ArticleType, SupportedLanguagesType } from '@/shared/types'
+import type { ArticlesType, SupportedLanguagesType } from '@/shared/types'
 
-export const ARTICLE_TYPE_OPTIONS: ArticleType[] = [
+export const ARTICLE_TYPE_OPTIONS: ArticlesType[] = [
   'trend',
   'lifeStyle',
   'ai',
@@ -9,7 +9,7 @@ export const ARTICLE_TYPE_OPTIONS: ArticleType[] = [
   'it',
 ] as const
 
-export const ARTICLE_TYPE_TO_LABEL: Record<ArticleType, string> = {
+export const ARTICLE_TYPE_TO_LABEL: Record<ArticlesType, string> = {
   ai: 'Ai',
   backEnd: '백엔드',
   frontEnd: '프론트엔드',

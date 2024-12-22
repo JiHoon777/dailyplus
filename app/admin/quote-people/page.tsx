@@ -2,7 +2,6 @@
 
 import type { IQuotePeopleListableInput } from '@/shared/types'
 
-import { CreateArticleWithAiModal } from '@/features/articleGeneration'
 import { DpQueryKeys } from '@/shared/api'
 import { PagedListableQueryLoader } from '@/shared/lib/loader'
 import { useOverlay } from '@/shared/lib/overlay'
@@ -14,7 +13,7 @@ import { DataTableRenderer } from '@/widgets/table'
 import { QuotePeopleColumns } from './_ui'
 import { CreateQuotePeopleOverlay } from './_ui/CreateQuotePeopleOverlay'
 
-export default function ArticlesPage() {
+export default function QuotepeoplePage() {
   const { open } = useOverlay()
   const loadList = (input: IQuotePeopleListableInput) =>
     ApiClientCSR.quotePeople.getList(input)

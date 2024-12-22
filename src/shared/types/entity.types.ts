@@ -5,19 +5,19 @@ import type { Database } from 'database.types'
 // * User Entity
 //==============================================================================
 
-export type IUser = Database['public']['Tables']['users']['Row']
+export type IUsers = Database['public']['Tables']['users']['Row']
 
 //==============================================================================
 // * Articles Entity
 //==============================================================================
 
-export type IArticle = Database['public']['Tables']['articles']['Row']
+export type IArticles = Database['public']['Tables']['articles']['Row']
 
 /**
  * * Articles CRUD Input
  */
-export type IArticleCreationInput = Pick<
-  IArticle,
+export type IArticlesCreationInput = Pick<
+  IArticles,
   | 'title'
   | 'summary'
   | 'published_at'
@@ -26,33 +26,33 @@ export type IArticleCreationInput = Pick<
   | 'type'
   | 'unique_id'
 >
-export type IArticleListableInput = IListableParams<{
+export type IArticlesListableInput = IListableParams<{
   orderBy?: 'created_at' | 'published_at'
-  type?: ArticleType
+  type?: ArticlesType
 }>
-export type IArticleUpdateInput = Partial<IArticleCreationInput>
-export type IArticleDeletionInput = Pick<IArticle, 'id'>
+export type IArticlesUpdateInput = Partial<IArticlesCreationInput>
+export type IArticlesDeletionInput = Pick<IArticles, 'id'>
 
-export type ArticleType = Database['public']['Enums']['article_type']
+export type ArticlesType = Database['public']['Enums']['article_type']
 
 //==============================================================================
 // * Quotes Entity
 //==============================================================================
 
-export type IQuote = Database['public']['Tables']['quotes']['Row']
+export type IQuotes = Database['public']['Tables']['quotes']['Row']
 
 /**
  * * CRUD Inputs
  */
-export type IQuoteCreationInput = Pick<
-  IQuote,
+export type IQuotesCreationInput = Pick<
+  IQuotes,
   'original_text' | 'korean_text' | 'quote_person_id'
 >
-export type IQuoteListableInput = IListableParams<{
+export type IQuotesListableInput = IListableParams<{
   orderBy?: 'created_at'
 }>
-export type IQuoteUpdateInput = Partial<IQuoteCreationInput>
-export type IQuoteDeletionInput = Pick<IQuote, 'id'>
+export type IQuotesUpdateInput = Partial<IQuotesCreationInput>
+export type IQuotesDeletionInput = Pick<IQuotes, 'id'>
 
 //==============================================================================
 // * Quote People Entity
@@ -77,42 +77,42 @@ export type IQuotePeopleDeletionInput = Pick<IQuotePeople, 'id'>
 // * Quote AI Stories Entity
 //==============================================================================
 
-export type IQuoteAiStory =
+export type IQuoteAiStories =
   Database['public']['Tables']['quote_ai_stories']['Row']
 
 /**
  * * CRUD Inputs
  */
-export type IQuoteAiStoryCreationInput = Pick<
-  IQuoteAiStory,
+export type IQuoteAiStoriesCreationInput = Pick<
+  IQuoteAiStories,
   'title' | 'content' | 'model_version' | 'quote_id'
 >
-export type IQuoteAiStoryListableInput = IListableParams<{
+export type IQuoteAiStoriesListableInput = IListableParams<{
   orderBy?: 'created_at'
 }>
-export type IQuoteAiStoryUpdateInput = Partial<IQuoteAiStoryCreationInput>
-export type IQuoteAiStoryDeletionInput = Pick<IQuoteAiStory, 'id'>
+export type IQuoteAiStoriesUpdateInput = Partial<IQuoteAiStoriesCreationInput>
+export type IQuoteAiStoriesDeletionInput = Pick<IQuoteAiStories, 'id'>
 
 //==============================================================================
 // * Quote AI Interpretations Entity
 //==============================================================================
 
-export type IQuoteAiInterpretation =
+export type IQuoteAiInterpretations =
   Database['public']['Tables']['quote_ai_interpretations']['Row']
 
 /**
  * * CRUD Inputs
  */
-export type IQuoteAiInterpretationCreationInput = Pick<
-  IQuoteAiInterpretation,
+export type IQuoteAiInterpretationsCreationInput = Pick<
+  IQuoteAiInterpretations,
   'content' | 'model_version' | 'quote_id'
 >
-export type IQuoteAiInterpretationListableInput = IListableParams<{
+export type IQuoteAiInterpretationsListableInput = IListableParams<{
   orderBy?: 'created_at'
 }>
-export type IQuoteAiInterpretationUpdateInput =
-  Partial<IQuoteAiInterpretationCreationInput>
-export type IQuoteAiInterpretationDeletionInput = Pick<
-  IQuoteAiInterpretation,
+export type IQuoteAiInterpretationsUpdateInput =
+  Partial<IQuoteAiInterpretationsCreationInput>
+export type IQuoteAiInterpretationsDeletionInput = Pick<
+  IQuoteAiInterpretations,
   'id'
 >

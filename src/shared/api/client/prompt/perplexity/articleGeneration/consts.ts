@@ -1,4 +1,4 @@
-import type { ArticleType, SupportedLanguagesType } from '@/shared/types'
+import type { ArticlesType, SupportedLanguagesType } from '@/shared/types'
 
 // Sources
 const SOURCES = {
@@ -68,7 +68,7 @@ const SOURCES = {
     'Google Trends, Twitter Trends, Naver Trends, Daum Trends, Kakao Trends, Yahoo Trends, Naver Blog Trends, Daum Blog Trends, Kakao Blog Trends, Yahoo Blog Trends, Naver News Trends, Daum News Trends, Kakao News Trends, Yahoo News Trends 등',
 }
 
-const TRUSTED_SOURCES: Record<ArticleType, string> = {
+const TRUSTED_SOURCES: Record<ArticlesType, string> = {
   ai: SOURCES.AI,
   backEnd: [...SOURCES.KOREAN_TECH, ...SOURCES.GLOBAL_TECH].join(', '),
   frontEnd: [...SOURCES.KOREAN_TECH, ...SOURCES.GLOBAL_TECH].join(', '),
@@ -82,7 +82,7 @@ const TRUSTED_SOURCES: Record<ArticleType, string> = {
 // Prompts
 const PROMPTS = {
   SYSTEM: {
-    en: (type: ArticleType, dateRangeText: string) =>
+    en: (type: ArticlesType, dateRangeText: string) =>
       `Only find the most recent articles published ${dateRangeText}. ` +
       `STRICT REQUIREMENTS:` +
       `1. MUST return exactly 5 articles` +
@@ -95,7 +95,7 @@ const PROMPTS = {
       `- title: Keep original title in English (DO NOT translate)` +
       `- summary: MUST be translated to Korean` +
       `6. Keep original reference_name and reference_url unchanged`,
-    ko: (type: ArticleType, dateRangeText: string) =>
+    ko: (type: ArticlesType, dateRangeText: string) =>
       `${dateRangeText}에 게시된 가장 최근 기사만 찾아주세요. ` +
       `필수 요구사항:` +
       `1. 정확히 5개의 기사를 반환해야 합니다` +
@@ -129,13 +129,13 @@ const PROMPTS = {
         `"reference_url": "원본 URL" } ]`,
     },
     NEWS: {
-      en: (type: ArticleType) =>
+      en: (type: ArticlesType) =>
         `You are a search expert specializing in finding important ${type} news within the specified timeframe. ` +
         `Please identify the most impactful and significant ${type} news articles from the specified period. ` +
         `Return the response in exactly this JSON format: ` +
         `[ { "title": "글 제목", "summary": "한글로 번역된 글 주요 내용 요약 (200자 이내)", "published_at": "YYYY-MM-DD", ` +
         `"reference_name": "위에 명시된 매체 중 하나", "reference_url": "원본 기사 URL" } ]`,
-      ko: (type: ArticleType) =>
+      ko: (type: ArticlesType) =>
         `당신은 지정된 기간 내의 중요한 ${type} 뉴스를 찾는 전문가입니다. ` +
         `해당 기간 동안 가장 영향력 있고 중요한 ${type} 뉴스 기사를 식별해주세요. ` +
         `다음 JSON 형식으로 정확히 응답해주세요: ` +
@@ -143,14 +143,14 @@ const PROMPTS = {
         `"reference_name": "위에 명시된 매체 중 하나", "reference_url": "원본 기사 URL" } ]`,
     },
     TECH: {
-      en: (type: ArticleType) =>
+      en: (type: ArticlesType) =>
         `You are a search expert specializing in finding ${type} development articles within the specified timeframe. ` +
         `Please identify articles from authoritative tech blogs of prominent Korean and international IT companies matching our trusted sources for this period. ` +
         `Respond in exactly this JSON format: ` +
         `[ { "title": "글 제목", "summary": "한글로 번역된 글 주요 내용 요약 (200자 이내)", ` +
         `"published_at": "YYYY-MM-DD", "reference_name": "위에 명시된 출처 중 하나", ` +
         `"reference_url": "원본 URL" } ]`,
-      ko: (type: ArticleType) =>
+      ko: (type: ArticlesType) =>
         `당신은 지정된 기간 내의 ${type} 개발 관련 기사를 찾는 전문가입니다. ` +
         `이 기간 동안 신뢰할 수 있는 출처와 일치하는 한국 및 해외 주요 IT 기업의 공식 기술 블로그에서 기사를 식별해주세요. ` +
         `다음 JSON 형식으로 정확히 응답해주세요: ` +
@@ -191,7 +191,7 @@ export const getDateRangeText = (startDate?: string, endDate?: string) => {
 }
 
 export const getSystemContentByLanguage = (
-  type: ArticleType,
+  type: ArticlesType,
   language: SupportedLanguagesType,
   dateRangeText: string,
 ) => {
@@ -201,7 +201,7 @@ export const getSystemContentByLanguage = (
 }
 
 export const getUserContentByLanguage = (
-  type: ArticleType,
+  type: ArticlesType,
   language: SupportedLanguagesType,
 ) => {
   if (type === 'it') {

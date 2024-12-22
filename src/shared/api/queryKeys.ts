@@ -1,4 +1,8 @@
-import type { IArticleListableInput, IQuotePeopleListableInput } from '../types'
+import type {
+  IArticlesListableInput,
+  IQuotePeopleListableInput,
+  IQuotesListableInput,
+} from '../types'
 
 /**
  * 쿼리키 생성 유틸리티 함수
@@ -14,7 +18,7 @@ const createQueryKey = <T extends Record<string, unknown>>(
 const adminQueryKeys = {
   articles: {
     /** 관리자용 게시글 목록 조회 (/admin/articles) */
-    list: (input: IArticleListableInput) =>
+    list: (input: IArticlesListableInput) =>
       createQueryKey(['admin', 'articles', 'list'], input),
   },
   quotePeople: {
@@ -22,13 +26,18 @@ const adminQueryKeys = {
     list: (input: IQuotePeopleListableInput) =>
       createQueryKey(['admin', 'quote-people', 'list'], input),
   },
+  quotes: {
+    /** 관리자용 명언 조회 (/admin/articles) */
+    list: (input: IQuotesListableInput) =>
+      createQueryKey(['admin', 'quotes', 'list'], input),
+  },
 } as const
 
 /** 일반 사용자 영역 쿼리키 */
 const appQueryKeys = {
   articles: {
     /** 일반 사용자용 게시글 목록 조회 (/app/articles) */
-    list: (input: Omit<IArticleListableInput, 'page' | 'limit'>) =>
+    list: (input: Omit<IArticlesListableInput, 'page' | 'limit'>) =>
       createQueryKey(['app', 'articles', 'list'], input),
   },
 } as const

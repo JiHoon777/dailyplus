@@ -1,5 +1,5 @@
 'use server'
-import type { ArticleType } from '@/shared/types'
+import type { ArticlesType } from '@/shared/types'
 
 import { ArticleCardSkeleton } from '@/entities/articles'
 import { createApiClientSSR } from '@/shared/lib/supabase-ssr'
@@ -14,7 +14,7 @@ import { HomeArticlesHeader } from './HomeArticlesHeader'
 export const HomeArticlesSSR = async ({
   currentArticleType,
 }: {
-  currentArticleType: ArticleType
+  currentArticleType: ArticlesType
 }) => {
   const apiClient = await createApiClientSSR()
   const { data, error } = await apiClient.articles.getList({

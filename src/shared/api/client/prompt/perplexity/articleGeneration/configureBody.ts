@@ -1,4 +1,4 @@
-import type { ArticleType, SupportedLanguagesType } from '@/shared/types'
+import type { ArticlesType, SupportedLanguagesType } from '@/shared/types'
 
 import {
   getDateRangeText,
@@ -14,7 +14,7 @@ export const configureBody = ({
 }: {
   startDate?: string
   endDate?: string
-  type: ArticleType
+  type: ArticlesType
   language: SupportedLanguagesType
 }) => {
   const dateRangeText = getDateRangeText(startDate, endDate)

@@ -1,5 +1,5 @@
 'use client'
-import type { ArticleType, IArticleListableInput } from '@/shared/types'
+import type { ArticlesType, IArticlesListableInput } from '@/shared/types'
 
 import { redirect, useSearchParams } from 'next/navigation'
 
@@ -21,7 +21,7 @@ import { PageBase } from '@/widgets/layout'
 export default function ArticlesPage() {
   const searchParams = useSearchParams()
   const articleType = verifyArticleTypeParam(searchParams.get('articleType'))
-  const getArticles = (input: IArticleListableInput) =>
+  const getArticles = (input: IArticlesListableInput) =>
     ApiClientCSR.articles.getList(input)
 
   return (
@@ -74,7 +74,7 @@ export default function ArticlesPage() {
 
 function verifyArticleTypeParam(
   articleTypeParam: string | null,
-): 'all' | ArticleType {
+): 'all' | ArticlesType {
   const verified =
     verifyArticleType(articleTypeParam) || articleTypeParam === 'all'
 

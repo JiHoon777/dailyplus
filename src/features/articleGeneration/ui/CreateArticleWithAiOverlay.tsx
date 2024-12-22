@@ -1,6 +1,6 @@
 'use client'
 import type { OverlayProps } from '@/shared/lib/overlay'
-import type { ArticleType, SupportedLanguagesType } from '@/shared/types'
+import type { ArticlesType, SupportedLanguagesType } from '@/shared/types'
 
 import { useState } from 'react'
 
@@ -13,7 +13,7 @@ import { useGenerateArticlesWithAi } from '../hooks/useGenerateArticlesWithAi'
 // Todo: Form Type Check, like zod, Refactor
 // Todo: Refactor Form Logic, Components
 export const CreateArticleWithAiOverlay = ({ isOpen, close }: OverlayProps) => {
-  const [articleType, setArticleType] = useState<ArticleType>('trend')
+  const [articleType, setArticleType] = useState<ArticlesType>('trend')
   const [language, setLanguage] = useState<SupportedLanguagesType>('ko')
   const { mutate, isPending } = useGenerateArticlesWithAi()
 
@@ -38,7 +38,7 @@ export const CreateArticleWithAiOverlay = ({ isOpen, close }: OverlayProps) => {
           <RadioGroup
             defaultValue={articleType}
             className="flex flex-wrap gap-4"
-            onValueChange={(value: ArticleType) => setArticleType(value)}
+            onValueChange={(value: ArticlesType) => setArticleType(value)}
           >
             {ARTICLE_TYPE_OPTIONS.map((type) => (
               <div key={type} className="flex items-center space-x-2">

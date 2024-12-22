@@ -12,6 +12,7 @@ import type { Database } from 'database.types'
 import { ApiClientArticles } from './apiClientArticles'
 import { ApiClientAuth } from './apiClientAuth'
 import { ApiClientQuotePeople } from './apiClientQuotePeople'
+import { ApiClientQuotes } from './apiClientQuotes'
 import { ApiClientPrompt } from './prompt'
 
 type IApiClientApp = typeof ApiClient.prototype
@@ -28,6 +29,7 @@ export class ApiClient {
 
   readonly articles = new ApiClientArticles(this)
   readonly quotePeople = new ApiClientQuotePeople(this)
+  readonly quotes = new ApiClientQuotes(this)
 
   constructor(private readonly _supabaseClient: SupabaseClient<Database>) {}
 

@@ -1,6 +1,6 @@
 import type { ApiClient } from '../apiClient'
 import type {
-  ArticleType,
+  ArticlesType,
   ExtractMethodParameters,
   ExtractMethodReturn,
   PerplexityResponse,
@@ -41,7 +41,7 @@ export class ApiClientPrompt {
     startDate,
     endDate,
   }: {
-    type: ArticleType
+    type: ArticlesType
     language: SupportedLanguagesType
     startDate?: string // YYYY-MM-DD
     endDate?: string // YYYY-MM-DD
