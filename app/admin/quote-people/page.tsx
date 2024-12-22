@@ -10,8 +10,7 @@ import { Button, Pagination } from '@/shared/ui'
 import { PageBase } from '@/widgets/layout'
 import { DataTableRenderer } from '@/widgets/table'
 
-import { QuotePeopleColumns } from './_ui'
-import { CreateQuotePeopleOverlay } from './_ui/CreateQuotePeopleOverlay'
+import { CreateQuotePeopleOverlay, QuotePeopleColumns } from './_ui'
 
 export default function QuotepeoplePage() {
   const { open } = useOverlay()

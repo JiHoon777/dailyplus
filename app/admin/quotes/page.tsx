@@ -13,8 +13,7 @@ import { Button, Pagination } from '@/shared/ui'
 import { PageBase } from '@/widgets/layout'
 import { DataTableRenderer } from '@/widgets/table'
 
-import { QuotesColumns } from './_ui'
-import { CreateQuotesOverlay } from './_ui/CreateQuotesOverlay'
+import { CreateQuotesOverlay, QuotesColumns } from './_ui'
 
 export default function QuotesPage() {
   const { open } = useOverlay()
