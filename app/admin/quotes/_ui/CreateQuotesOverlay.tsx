@@ -1,5 +1,5 @@
 import type { OverlayProps } from '@/shared/lib/overlay'
-import type { IQuotePeopleCreationInput } from '@/shared/types'
+import type { IQuotesCreationInput } from '@/shared/types'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
@@ -15,16 +15,19 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  Input,
   ModalOverlay,
+  Textarea,
 } from '@/shared/ui'
 
 const formSchema = z.object({
-  description: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
+  korean_text: z.string().min(2, {
+    message: 'Korean text must be at least 2 characters.',
   }),
-  name: z.string().min(2, {
-    message: 'Name must be at least 2 characters.',
+  original_text: z.string().min(2, {
+    message: 'Original text must be at least 2 characters.',
+  }),
+  quote_person_id: z.number().min(1, {
+    message: 'Quote person id must be at least 1.',
   }),
 })
 
@@ -32,14 +35,15 @@ const formSchema = z.object({
 export const CreateQuotesOverlay = ({ isOpen, close }: OverlayProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
-      description: '',
-      name: '',
+      korean_text: '',
+      original_text: '',
+      quote_person_id: undefined,
     },
     resolver: zodResolver(formSchema),
   })
   const { mutate, isPending } = useMutation({
-    mutationFn: async (input: IQuotePeopleCreationInput) => {
-      ApiClientCSR.quotePeople.create(input)
+    mutationFn: async (input: IQuotesCreationInput) => {
+      ApiClientCSR.quotes.create(input)
     },
   })
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -53,7 +57,7 @@ export const CreateQuotesOverlay = ({ isOpen, close }: OverlayProps) => {
       className="flex flex-col gap-6 p-4"
     >
       <header>
-        <h3 className="text-lg font-semibold">Create Quote People</h3>
+        <h3 className="text-lg font-semibold">Create Quotes</h3>
       </header>
       <Form {...form}>
         <form
@@ -65,9 +69,9 @@ export const CreateQuotesOverlay = ({ isOpen, close }: OverlayProps) => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>Original Text</FormLabel>
                 <FormControl>
-                  <Input placeholder="name" {...field} />
+                  <Textarea placeholder="original" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -78,9 +82,9 @@ export const CreateQuotesOverlay = ({ isOpen, close }: OverlayProps) => {
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Description</FormLabel>
+                <FormLabel>Korean Text</FormLabel>
                 <FormControl>
-                  <Input placeholder="description" {...field} />
+                  <Textarea placeholder="korean" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -1,9 +1,6 @@
 'use client'
 
-import type {
-  IQuotePeopleListableInput,
-  IQuotesListableInput,
-} from '@/shared/types'
+import type { IQuotesListableInput } from '@/shared/types'
 
 import { DpQueryKeys } from '@/shared/api'
 import { PagedListableQueryLoader } from '@/shared/lib/loader'
