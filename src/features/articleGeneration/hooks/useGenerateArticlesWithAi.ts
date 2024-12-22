@@ -76,10 +76,7 @@ export function useGenerateArticlesWithAi() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: DpQueryKeys.admin.articles
-          // Todo: 모든 리스트를 초기화 시키는데 명확하지 못하게 파라메터를 전달할 필요가 없다.
-          .list({ limit: 5, page: 1 })
-          .slice(0, 3),
+        queryKey: DpQueryKeys.admin.articles.list(),
       })
       showToast.success('Successfully created articles')
     },

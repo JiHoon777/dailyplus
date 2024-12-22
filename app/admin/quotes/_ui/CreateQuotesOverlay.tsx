@@ -2,11 +2,13 @@ import type { OverlayProps } from '@/shared/lib/overlay'
 import type { IQuotesCreationInput } from '@/shared/types'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { DpQueryKeys } from '@/shared/api'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
+import { showToast } from '@/shared/lib/utils'
 import {
   Button,
   Form,
@@ -16,6 +18,11 @@ import {
   FormLabel,
   FormMessage,
   ModalOverlay,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
   Textarea,
 } from '@/shared/ui'
 
@@ -41,9 +48,18 @@ export const CreateQuotesOverlay = ({ isOpen, close }: OverlayProps) => {
     },
     resolver: zodResolver(formSchema),
   })
+
+  const queryClient = useQueryClient()
   const { mutate, isPending } = useMutation({
     mutationFn: async (input: IQuotesCreationInput) => {
       ApiClientCSR.quotes.create(input)
+    },
+    onSuccess: () => {
+      showToast.success('Quote created successfully!')
+      queryClient.invalidateQueries({
+        queryKey: DpQueryKeys.admin.quotes.list(),
+      })
+      close()
     },
   })
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -66,7 +82,7 @@ export const CreateQuotesOverlay = ({ isOpen, close }: OverlayProps) => {
         >
           <FormField
             control={form.control}
-            name="name"
+            name="korean_text"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Original Text</FormLabel>
@@ -79,13 +95,37 @@ export const CreateQuotesOverlay = ({ isOpen, close }: OverlayProps) => {
           />
           <FormField
             control={form.control}
-            name="description"
+            name="original_text"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Korean Text</FormLabel>
                 <FormControl>
                   <Textarea placeholder="korean" {...field} />
                 </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* Todo: List Api, 현재는 공자 위주로 할 거기때문에 스킵 */}
+          <FormField
+            control={form.control}
+            name="quote_person_id"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Quote Person Id</FormLabel>
+                <Select
+                  onValueChange={(v) => field.onChange(Number(v))}
+                  defaultValue={field.value?.toString()}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a quote person" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value={'2'}>공자</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}

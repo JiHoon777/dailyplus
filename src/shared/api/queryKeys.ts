@@ -12,23 +12,31 @@ import type {
 const createQueryKey = <T extends Record<string, unknown>>(
   keys: string[],
   input?: T,
-) => [...keys, JSON.stringify(input ?? {})]
+) => {
+  const base = [...keys]
+
+  if (input) {
+    base.push(JSON.stringify(input))
+  }
+
+  return base
+}
 
 /** 관리자 영역 쿼리키 */
 const adminQueryKeys = {
   articles: {
     /** 관리자용 게시글 목록 조회 (/admin/articles) */
-    list: (input: IArticlesListableInput) =>
+    list: (input?: IArticlesListableInput) =>
       createQueryKey(['admin', 'articles', 'list'], input),
   },
   quotePeople: {
     /** 관리자용 명언 인물 조회 (/admin/articles) */
-    list: (input: IQuotePeopleListableInput) =>
+    list: (input?: IQuotePeopleListableInput) =>
       createQueryKey(['admin', 'quote-people', 'list'], input),
   },
   quotes: {
     /** 관리자용 명언 조회 (/admin/articles) */
-    list: (input: IQuotesListableInput) =>
+    list: (input?: IQuotesListableInput) =>
       createQueryKey(['admin', 'quotes', 'list'], input),
   },
 } as const
@@ -37,7 +45,7 @@ const adminQueryKeys = {
 const appQueryKeys = {
   articles: {
     /** 일반 사용자용 게시글 목록 조회 (/app/articles) */
-    list: (input: Omit<IArticlesListableInput, 'page' | 'limit'>) =>
+    list: (input?: Omit<IArticlesListableInput, 'page' | 'limit'>) =>
       createQueryKey(['app', 'articles', 'list'], input),
   },
 } as const
