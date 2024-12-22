@@ -1,5 +1,7 @@
 'use client'
 
+import type { IQuotePeopleListableInput } from '@/shared/types'
+
 import { CreateArticleWithAiModal } from '@/features/articleGeneration'
 import { DpQueryKeys } from '@/shared/api'
 import { PagedListableQueryLoader } from '@/shared/lib/loader'
@@ -13,7 +15,8 @@ import { QuotePeopleColumns } from './_ui'
 
 export default function ArticlesPage() {
   const { open } = useOverlay()
-  const loadList = ApiClientCSR.quotePeople.getList.bind(ApiClientCSR)
+  const loadList = (input: IQuotePeopleListableInput) =>
+    ApiClientCSR.quotePeople.getList(input)
 
   const handleCreateArticle = () => {
     open(({ isOpen, close }) => (

@@ -1,5 +1,7 @@
 'use client'
 
+import type { IArticleListableInput } from '@/shared/types'
+
 import { CreateArticleWithAiModal } from '@/features/articleGeneration'
 import { DpQueryKeys } from '@/shared/api'
 import { PagedListableQueryLoader } from '@/shared/lib/loader'
@@ -13,7 +15,8 @@ import { ArticleColumns } from './_ui'
 
 export default function ArticlesPage() {
   const { open } = useOverlay()
-  const loadList = ApiClientCSR.articles.getList.bind(ApiClientCSR)
+  const loadList = (input: IArticleListableInput) =>
+    ApiClientCSR.articles.getList(input)
 
   const handleCreateArticle = () => {
     open(({ isOpen, close }) => (
