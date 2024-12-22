@@ -1,5 +1,5 @@
 'use client'
-import type { ArticleType } from '@/shared/types'
+import type { ArticleType, IArticleListableInput } from '@/shared/types'
 
 import { redirect, useSearchParams } from 'next/navigation'
 
@@ -21,7 +21,8 @@ import { PageBase } from '@/widgets/layout'
 export default function ArticlesPage() {
   const searchParams = useSearchParams()
   const articleType = verifyArticleTypeParam(searchParams.get('articleType'))
-  const getArticles = ApiClientCSR.getArticles.bind(ApiClientCSR)
+  const getArticles = (input: IArticleListableInput) =>
+    ApiClientCSR.articles.getList(input)
 
   return (
     <PageBase className={'gap-6'}>

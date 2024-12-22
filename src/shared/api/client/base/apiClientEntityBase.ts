@@ -1,8 +1,6 @@
 import type { ApiClient } from '../apiClient'
-import type { IListableParams } from '@/shared/types'
+import type { IListableResponse } from '@/shared/types'
 import type { Database } from 'database.types'
-
-import { getPaginationRange } from '../utils'
 
 // Todo: Entity 공용 CRUD 타입 맞추기 빡세다.
 // Todo: 일단 type error ignore 하고 시간될 때 연구해보자.
@@ -11,6 +9,7 @@ export abstract class ApiClientEntityBase<
   TEntity extends Database['public']['Tables'][TableName]['Row'],
   TCreateInput extends Database['public']['Tables'][TableName]['Insert'],
   TUpdateInput extends Database['public']['Tables'][TableName]['Update'],
+  IListableInput,
 > {
   constructor(
     protected readonly _apiClient: ApiClient,
@@ -21,18 +20,7 @@ export abstract class ApiClientEntityBase<
     return this._apiClient.supabaseClient
   }
 
-  protected _listQuery(input: IListableParams) {
-    const { page = 1, limit = 10 } = input
-
-    const { from, to } = getPaginationRange(page, limit)
-
-    const query = this.supabaseClient
-      .from(this._tableName)
-      .select('*', { count: 'exact' })
-      .range(from, to)
-
-    return query
-  }
+  abstract getList(input: IListableInput): Promise<IListableResponse<TEntity>>
 
   async getById(id: number): Promise<TEntity> {
     const { data, error } = await this.supabaseClient

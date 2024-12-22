@@ -10,7 +10,7 @@ import type {
 } from '@/shared/types'
 
 import { ApiClientEntityBase } from './base/apiClientEntityBase'
-import { createListableResponse } from './utils'
+import { createListableResponse, getPaginationRange } from './utils'
 
 type IApiClientArticles = typeof ApiClientArticles.prototype
 
@@ -25,7 +25,8 @@ export class ApiClientArticles extends ApiClientEntityBase<
   'articles',
   IArticle,
   IArticleCreationInput,
-  IArticleUpdateInput
+  IArticleUpdateInput,
+  IArticleListableInput
 > {
   constructor(apiClient: ApiClient) {
     super(apiClient, 'articles')
@@ -61,9 +62,14 @@ export class ApiClientArticles extends ApiClientEntityBase<
   async getList(
     input: IArticleListableInput,
   ): Promise<IListableResponse<IArticle>> {
-    const { orderBy = 'created_at', type } = input
+    const { page = 1, limit = 10, orderBy = 'created_at', type } = input
 
-    const query = this._listQuery(input)
+    const { from, to } = getPaginationRange(page, limit)
+
+    const query = this.supabaseClient
+      .from(this._tableName)
+      .select('*', { count: 'exact' })
+      .range(from, to)
 
     query.order(orderBy, { ascending: false })
 
@@ -73,7 +79,6 @@ export class ApiClientArticles extends ApiClientEntityBase<
 
     query.not('published_at', 'is', null)
 
-    const res = await query
-    return createListableResponse(res)
+    return createListableResponse(await query)
   }
 }
