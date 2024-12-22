@@ -7,8 +7,8 @@ import { AnimatePresence, motion as m } from 'framer-motion'
 import { useRef } from 'react'
 
 import { useOutsideClick } from '@/shared/hooks'
-import { Portal } from '@/shared/ui'
 import { cn } from '@/shared/lib/utils'
+import { Portal } from '@/shared/ui'
 
 const modalVariants = cva('w-full rounded-xl bg-background shadow-lg', {
   defaultVariants: {
@@ -19,6 +19,7 @@ const modalVariants = cva('w-full rounded-xl bg-background shadow-lg', {
       '2xl': 'max-w-2xl',
       '3xl': 'max-w-3xl',
       '7xl': 'max-w-7xl',
+      full: 'w-screen',
       lg: 'max-w-lg',
       md: 'max-w-md',
       sm: 'max-w-sm',

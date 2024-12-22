@@ -12,6 +12,7 @@ import { PageBase } from '@/widgets/layout'
 import { DataTableRenderer } from '@/widgets/table'
 
 import { QuotePeopleColumns } from './_ui'
+import { CreateQuotePeopleOverlay } from './_ui/CreateQuotePeopleOverlay'
 
 export default function ArticlesPage() {
   const { open } = useOverlay()
@@ -20,7 +21,7 @@ export default function ArticlesPage() {
 
   const handleCreateArticle = () => {
     open(({ isOpen, close }) => (
-      <CreateArticleWithAiModal isOpen={isOpen} onClose={close} />
+      <CreateQuotePeopleOverlay isOpen={isOpen} close={close} />
     ))
   }
 

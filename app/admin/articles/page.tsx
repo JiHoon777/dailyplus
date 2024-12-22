@@ -2,7 +2,7 @@
 
 import type { IArticleListableInput } from '@/shared/types'
 
-import { CreateArticleWithAiModal } from '@/features/articleGeneration'
+import { CreateArticleWithAiOverlay } from '@/features/articleGeneration'
 import { DpQueryKeys } from '@/shared/api'
 import { PagedListableQueryLoader } from '@/shared/lib/loader'
 import { useOverlay } from '@/shared/lib/overlay'
@@ -20,7 +20,7 @@ export default function ArticlesPage() {
 
   const handleCreateArticle = () => {
     open(({ isOpen, close }) => (
-      <CreateArticleWithAiModal isOpen={isOpen} onClose={close} />
+      <CreateArticleWithAiOverlay isOpen={isOpen} close={close} />
     ))
   }
 

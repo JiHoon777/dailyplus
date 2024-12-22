@@ -1,1 +1,1 @@
-export { CreateArticleWithAiModal } from './ui/createArticleWithAiModal'
+export { CreateArticleWithAiOverlay } from './ui/CreateArticleWithAiOverlay'

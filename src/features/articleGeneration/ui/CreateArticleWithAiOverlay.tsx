@@ -1,4 +1,5 @@
 'use client'
+import type { OverlayProps } from '@/shared/lib/overlay'
 import type { ArticleType, SupportedLanguagesType } from '@/shared/types'
 
 import { useState } from 'react'
@@ -10,13 +11,8 @@ import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group'
 import { useGenerateArticlesWithAi } from '../hooks/useGenerateArticlesWithAi'
 
 // Todo: Form Type Check, like zod, Refactor
-export const CreateArticleWithAiModal = ({
-  isOpen,
-  onClose,
-}: {
-  isOpen: boolean
-  onClose: () => void
-}) => {
+// Todo: Refactor Form Logic, Components
+export const CreateArticleWithAiOverlay = ({ isOpen, close }: OverlayProps) => {
   const [articleType, setArticleType] = useState<ArticleType>('trend')
   const [language, setLanguage] = useState<SupportedLanguagesType>('ko')
   const { mutate, isPending } = useGenerateArticlesWithAi()
@@ -28,7 +24,7 @@ export const CreateArticleWithAiModal = ({
   return (
     <ModalOverlay
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={close}
       className="flex flex-col gap-6 p-4"
     >
       <header>
@@ -71,7 +67,7 @@ export const CreateArticleWithAiModal = ({
         </div>
       </div>
       <footer className="flex w-full justify-end gap-4">
-        <Button variant="ghost" onClick={onClose} disabled={isPending}>
+        <Button variant="ghost" onClick={close} disabled={isPending}>
           Close
         </Button>
         <Button onClick={handleCreate} disabled={isPending}>
