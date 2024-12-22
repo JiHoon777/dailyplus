@@ -12,6 +12,7 @@ export function QueryProvider({ children }: { children: React.ReactNode }) {
           mutations: {
             onError: (error) => {
               toast.error('error: ' + (error?.message ?? JSON.stringify(error)))
+              console.error(error)
             },
           },
           queries: {

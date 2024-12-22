@@ -7,7 +7,6 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
-import { showToast } from '@/shared/lib/utils'
 import {
   Button,
   Form,
@@ -40,11 +39,7 @@ export const CreateQuotePeopleOverlay = ({ isOpen, close }: OverlayProps) => {
   })
   const { mutate, isPending } = useMutation({
     mutationFn: async (input: IQuotePeopleCreationInput) => {
-      try {
-        await ApiClientCSR.quotePeople.create(input)
-      } catch (ex) {
-        showToast.error(ex)
-      }
+      ApiClientCSR.quotePeople.create(input)
     },
   })
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
