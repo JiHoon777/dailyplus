@@ -8,6 +8,9 @@ export const QuotesColumns: ColumnDef<IQuotes>[] = [
     accessorKey: 'id',
     cell: ({ row }) => <div>{row.getValue('id')}</div>,
     header: 'ID',
+    maxSize: 50,
+    minSize: 50,
+    size: 50,
   },
   {
     accessorKey: 'original_text',
@@ -18,7 +21,9 @@ export const QuotesColumns: ColumnDef<IQuotes>[] = [
   },
   {
     accessorKey: 'korean_text',
-    cell: ({ row }) => <div>{row.getValue('korean_text')}</div>,
+    cell: ({ row }) => (
+      <div className="whitespace-pre-line">{row.getValue('korean_text')}</div>
+    ),
     header: 'Korean Text',
   },
   {
@@ -37,6 +42,6 @@ export const QuotesColumns: ColumnDef<IQuotes>[] = [
       if (!dateText) return <div>No data</div>
       return <div>{formatDate(dateText)}</div>
     },
-    header: 'Created At',
+    header: 'Updated At',
   },
 ]

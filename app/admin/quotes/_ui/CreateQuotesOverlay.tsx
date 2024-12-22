@@ -57,6 +57,7 @@ export const CreateQuotesOverlay = ({ isOpen, close }: OverlayProps) => {
     onSuccess: () => {
       showToast.success('Quote created successfully!')
       queryClient.invalidateQueries({
+        exact: false,
         queryKey: DpQueryKeys.admin.quotes.list(),
       })
       close()
@@ -82,7 +83,7 @@ export const CreateQuotesOverlay = ({ isOpen, close }: OverlayProps) => {
         >
           <FormField
             control={form.control}
-            name="korean_text"
+            name="original_text"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Original Text</FormLabel>
@@ -95,7 +96,7 @@ export const CreateQuotesOverlay = ({ isOpen, close }: OverlayProps) => {
           />
           <FormField
             control={form.control}
-            name="original_text"
+            name="korean_text"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Korean Text</FormLabel>
