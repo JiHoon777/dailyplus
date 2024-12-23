@@ -7,7 +7,12 @@ import { verifyArticleType } from '@/entities/articles'
 import { DPLinks } from '@/shared/config'
 import { PageBase } from '@/widgets/layout'
 
-import { HomeArticlesSSR, HomeArticlesSSRFallback, HomeGreeting } from './_ui'
+import {
+  ConfuciusQuotes,
+  HomeArticlesSSR,
+  HomeArticlesSSRFallback,
+  HomeGreeting,
+} from './_ui'
 
 export default async function Home({
   searchParams: _searchParams,
@@ -23,6 +28,8 @@ export default async function Home({
       <Suspense fallback={<HomeArticlesSSRFallback />}>
         <HomeArticlesSSR currentArticleType={articleTypeParam} />
       </Suspense>
+      <ConfuciusQuotes />
+      <div className="h-10 w-full" />
     </PageBase>
   )
 }

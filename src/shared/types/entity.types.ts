@@ -50,6 +50,7 @@ export type IQuotesCreationInput = Pick<
 >
 export type IQuotesListableInput = IListableParams<{
   orderBy?: 'created_at'
+  quotePeopleName?: string
 }>
 export type IQuotesUpdateInput = Partial<IQuotesCreationInput>
 export type IQuotesDeletionInput = Pick<IQuotes, 'id'>

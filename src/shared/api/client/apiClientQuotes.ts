@@ -39,7 +39,12 @@ export class ApiClientQuotes extends ApiClientEntityBase<
       IQuotes & { quote_people: Pick<IQuotePeople, 'id' | 'name'> | null }
     >
   > {
-    const { page = 1, limit = 10, orderBy = 'created_at' } = input
+    const {
+      page = 1,
+      limit = 10,
+      orderBy = 'created_at',
+      quotePeopleName,
+    } = input
 
     const { from, to } = getPaginationRange(page, limit)
 
@@ -55,6 +60,10 @@ export class ApiClientQuotes extends ApiClientEntityBase<
       .range(from, to)
 
     query.order(orderBy, { ascending: false })
+
+    if (quotePeopleName) {
+      query.eq('quote_people.name', quotePeopleName)
+    }
 
     return createListableResponse(await query)
   }

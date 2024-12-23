@@ -48,6 +48,10 @@ const appQueryKeys = {
     list: (input?: Omit<IArticlesListableInput, 'page' | 'limit'>) =>
       createQueryKey(['app', 'articles', 'list'], input),
   },
+  home: {
+    quoteList: (input?: Omit<IQuotesListableInput, 'page' | 'limit'>) =>
+      createQueryKey(['app', 'home', 'quotes', 'list'], input),
+  },
 } as const
 
 /** 인증 관련 쿼리키 */
