@@ -28,7 +28,7 @@ export function QuoteCard({ quote }: { quote: IQuotes | null }) {
           <Book className="mr-2 text-gray-600" />
           {quote.original_text}
         </CardTitle>
-        <CardDescription className="text-lg italic text-gray-600">
+        <CardDescription className="whitespace-pre-line text-lg italic text-gray-600">
           {quote.korean_text}
         </CardDescription>
       </CardHeader>

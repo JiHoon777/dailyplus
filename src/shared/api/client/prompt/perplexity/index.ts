@@ -1,1 +1,1 @@
-export * from './articleGeneration'
+export * from './articles'

@@ -6,7 +6,7 @@ import {
   getUserContentByLanguage,
 } from './consts'
 
-export const configureBody = ({
+export const createArticlePromptBodyToPerplexity = ({
   startDate,
   endDate,
   type,

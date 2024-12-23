@@ -1,17 +1,14 @@
 import { createServerClient } from '@supabase/ssr'
 import { type NextRequest, NextResponse } from 'next/server'
 
-import {
-  PUBLIC_SUPABASE_ANON_KEY,
-  PUBLIC_SUPABASE_URL,
-} from '@/shared/lib/supabase-config/consts'
+import { DPEnvs } from '@/shared/config'
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
   })
 
-  createServerClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
+  createServerClient(DPEnvs.SUPABASE_URL, DPEnvs.SUPABASE_ANON_KEY, {
     cookies: {
       getAll() {
         return request.cookies.getAll()

@@ -7,7 +7,7 @@ import { QuoteCard, QuoteList } from '@/entities/quotes'
 
 export const QuotesWithPrompt = ({
   queryKey,
-}: Pick<IQuoteListProps, 'queryKey'>) => {
+}: Pick<IQuoteListProps, 'queryKey' | 'quotePeopleName'>) => {
   const [selectedQuote, setSelectedQuote] = useState<IQuotes | null>(null)
 
   return (

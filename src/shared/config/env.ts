@@ -1,0 +1,7 @@
+export const DPEnvs = {
+  OPENAI_API_KEY: process.env.NEXT_PUBLIC_OPENAI_API_KEY as string,
+  PERPLEXITY_API_KEY: process.env.NEXT_PUBLIC_PERPLEXITY_API_KEY as string,
+  SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string,
+  SUPABASE_PROJECT_ID: process.env.NEXT_PUBLIC_SUPABASE_PROJECT_ID as string,
+  SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL as string,
+}

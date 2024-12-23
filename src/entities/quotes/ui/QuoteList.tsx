@@ -10,9 +10,14 @@ import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 export type IQuoteListProps = {
   onSelectQuote: (quote: IQuotes) => void
   queryKey: (input: Omit<IQuotesListableInput, 'page' | 'limit'>) => QueryKey
+  quotePeopleName?: string
 }
 
-export const QuoteList = ({ onSelectQuote, queryKey }: IQuoteListProps) => {
+export const QuoteList = ({
+  onSelectQuote,
+  queryKey,
+  quotePeopleName,
+}: IQuoteListProps) => {
   const getQuoteList = (input: IQuotesListableInput) =>
     ApiClientCSR.quotes.getList(input)
 
@@ -21,7 +26,7 @@ export const QuoteList = ({ onSelectQuote, queryKey }: IQuoteListProps) => {
       fetchData={getQuoteList}
       params={{
         limit: 10,
-        quotePeopleName: '공자',
+        quotePeopleName,
       }}
       queryKey={queryKey}
     >
@@ -42,7 +47,7 @@ export const QuoteList = ({ onSelectQuote, queryKey }: IQuoteListProps) => {
               <h3 className="mb-2 break-all text-lg font-bold">
                 {quote.original_text}
               </h3>
-              <p className="break-all text-sm text-gray-600">
+              <p className="whitespace-pre-line break-all text-sm text-gray-600">
                 {quote.korean_text}
               </p>
             </div>
