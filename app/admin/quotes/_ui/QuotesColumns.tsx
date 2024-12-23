@@ -1,35 +1,37 @@
-import type { IQuotes } from '@/shared/types'
+import type { IApiClientQuotesResponse } from '@/shared/api'
 import type { ColumnDef } from '@tanstack/react-table'
 
 import { formatDate } from '@/shared/lib/utils'
 
-export const QuotesColumns: ColumnDef<IQuotes>[] = [
+export const QuotesColumns: ColumnDef<
+  IApiClientQuotesResponse<'getList'>['data'][number]
+>[] = [
   {
     accessorKey: 'id',
-    cell: ({ row }) => <div>{row.getValue('id')}</div>,
     header: 'ID',
-    maxSize: 50,
-    minSize: 50,
-    size: 50,
+  },
+  {
+    accessorKey: 'quote_people.name',
+    header: 'Quote Person Name',
   },
   {
     accessorKey: 'original_text',
     cell: ({ row }) => (
-      <div className="break-all">{row.getValue('original_text')}</div>
+      <div className="break-all">{row.original.original_text}</div>
     ),
     header: 'Original Text',
   },
   {
     accessorKey: 'korean_text',
     cell: ({ row }) => (
-      <div className="whitespace-pre-line">{row.getValue('korean_text')}</div>
+      <div className="break-all">{row.original.korean_text}</div>
     ),
     header: 'Korean Text',
   },
   {
     accessorKey: 'created_at',
     cell: ({ row }) => {
-      const dateText: string = row.getValue('created_at')
+      const dateText = row.original.created_at
       if (!dateText) return <div>No data</div>
       return <div>{formatDate(dateText)}</div>
     },
@@ -38,10 +40,10 @@ export const QuotesColumns: ColumnDef<IQuotes>[] = [
   {
     accessorKey: 'updated_at',
     cell: ({ row }) => {
-      const dateText: string = row.getValue('updated_at')
+      const dateText = row.original.updated_at
       if (!dateText) return <div>No data</div>
       return <div>{formatDate(dateText)}</div>
     },
-    header: 'Updated At',
+    header: 'Created At',
   },
 ]

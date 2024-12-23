@@ -1,2 +1,5 @@
 export * from './apiClient'
-export type { IApiClientAppResponse } from './apiClientApp'
+export type {
+  IApiClientQuotesParams,
+  IApiClientQuotesResponse,
+} from './apiClientQuotes'
