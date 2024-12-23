@@ -9,11 +9,11 @@ import type {
 import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Database } from 'database.types'
 
+import { ApiClientOpenAi, ApiClientPerplexity } from './ai'
 import { ApiClientArticles } from './ApiClientArticles'
 import { ApiClientAuth } from './ApiClientAuth'
 import { ApiClientQuotePeople } from './ApiClientQuotePeople'
 import { ApiClientQuotes } from './ApiClientQuotes'
-import { ApiClientPrompt } from './prompt'
 
 type IApiClientApp = typeof ApiClient.prototype
 
@@ -25,7 +25,8 @@ export type IApiClientParams<TMethod extends keyof IApiClientApp> =
 
 export class ApiClient {
   readonly auth = new ApiClientAuth(this)
-  readonly prompt = new ApiClientPrompt(this)
+  readonly perplexity = new ApiClientPerplexity(this)
+  readonly openai = new ApiClientOpenAi(this)
 
   readonly articles = new ApiClientArticles(this)
   readonly quotePeople = new ApiClientQuotePeople(this)
