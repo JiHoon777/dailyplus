@@ -9,10 +9,10 @@ import type {
 import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Database } from 'database.types'
 
-import { ApiClientArticles } from './apiClientArticles'
-import { ApiClientAuth } from './apiClientAuth'
-import { ApiClientQuotePeople } from './apiClientQuotePeople'
-import { ApiClientQuotes } from './apiClientQuotes'
+import { ApiClientArticles } from './ApiClientArticles'
+import { ApiClientAuth } from './ApiClientAuth'
+import { ApiClientQuotePeople } from './ApiClientQuotePeople'
+import { ApiClientQuotes } from './ApiClientQuotes'
 import { ApiClientPrompt } from './prompt'
 
 type IApiClientApp = typeof ApiClient.prototype

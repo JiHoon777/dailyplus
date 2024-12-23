@@ -1,4 +1,4 @@
-import type { ApiClient } from '../apiClient'
+import type { ApiClient } from '../ApiClient'
 import type { IListableResponse } from '@/shared/types'
 import type { Database } from 'database.types'
 

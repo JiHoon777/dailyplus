@@ -1,4 +1,4 @@
-import type { ApiClient } from './apiClient'
+import type { ApiClient } from './ApiClient'
 
 export class ApiClientAuth {
   constructor(private readonly _apiClient: ApiClient) {}
