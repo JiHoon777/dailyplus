@@ -51,6 +51,7 @@ export type Database = {
           created_at: string
           id: number
           model_version: string
+          prompt: string | null
           quote_id: number
         }
         Insert: {
@@ -58,6 +59,7 @@ export type Database = {
           created_at?: string
           id?: number
           model_version: string
+          prompt?: string | null
           quote_id: number
         }
         Update: {
@@ -65,6 +67,7 @@ export type Database = {
           created_at?: string
           id?: number
           model_version?: string
+          prompt?: string | null
           quote_id?: number
         }
         Relationships: [

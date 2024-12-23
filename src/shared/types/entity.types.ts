@@ -106,7 +106,7 @@ export type IQuoteAiInterpretations =
  */
 export type IQuoteAiInterpretationsCreationInput = Pick<
   IQuoteAiInterpretations,
-  'content' | 'model_version' | 'quote_id'
+  'content' | 'model_version' | 'quote_id' | 'prompt'
 >
 export type IQuoteAiInterpretationsListableInput = IListableParams<{
   orderBy?: 'created_at'

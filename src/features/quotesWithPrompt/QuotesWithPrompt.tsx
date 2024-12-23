@@ -16,7 +16,7 @@ export const QuotesWithPrompt = ({
         <div className="w-full md:w-1/2">
           <QuoteCard quote={selectedQuote} />
         </div>
-        <div className="h-[600px] w-full bg-gray-300 md:w-1/2">
+        <div className="h-[40vh] w-full bg-gray-300 md:w-1/2">
           {/* <ConfuciusChat selectedQuote={selectedQuote} /> */}
         </div>
       </div>
