@@ -1,4 +1,4 @@
-import type { ApiClient } from '.'
+import type { ApiClient } from '..'
 import type {
   IListableResponse,
   IQuotePeople,
@@ -7,8 +7,8 @@ import type {
   IQuotePeopleUpdateInput,
 } from '@/shared/types'
 
-import { ApiClientEntityBase } from './base/apiClientEntityBase'
-import { createListableResponse, getPaginationRange } from './utils'
+import { ApiClientEntityBase } from '../base/apiClientEntityBase'
+import { createListableResponse, getPaginationRange } from '../utils'
 
 export class ApiClientQuotePeople extends ApiClientEntityBase<
   'quote_people',

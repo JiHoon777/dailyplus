@@ -1,4 +1,4 @@
-import type { ApiClient } from '.'
+import type { ApiClient } from '..'
 import type {
   ExtractMethodParameters,
   ExtractMethodReturn,
@@ -9,8 +9,8 @@ import type {
   IListableResponse,
 } from '@/shared/types'
 
-import { ApiClientEntityBase } from './base/apiClientEntityBase'
-import { createListableResponse, getPaginationRange } from './utils'
+import { ApiClientEntityBase } from '../base/apiClientEntityBase'
+import { createListableResponse, getPaginationRange } from '../utils'
 
 type IApiClientArticles = typeof ApiClientArticles.prototype
 

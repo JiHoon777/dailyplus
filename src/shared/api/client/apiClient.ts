@@ -10,10 +10,12 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Database } from 'database.types'
 
 import { ApiClientOpenAi, ApiClientPerplexity } from './ai'
-import { ApiClientArticles } from './ApiClientArticles'
-import { ApiClientAuth } from './ApiClientAuth'
-import { ApiClientQuotePeople } from './ApiClientQuotePeople'
-import { ApiClientQuotes } from './ApiClientQuotes'
+import {
+  ApiClientArticles,
+  ApiClientAuth,
+  ApiClientQuotePeople,
+  ApiClientQuotes,
+} from './entity'
 
 type IApiClientApp = typeof ApiClient.prototype
 
