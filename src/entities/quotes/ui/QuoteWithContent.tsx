@@ -1,4 +1,5 @@
 import type { IQuotes } from '@/shared/types'
+import type { ReactNode } from 'react'
 
 import { Book } from 'lucide-react'
 
@@ -10,7 +11,13 @@ import {
   CardTitle,
 } from '@/shared/ui'
 
-export function QuoteCard({ quote }: { quote: IQuotes | null }) {
+export function QuoteWithContent({
+  quote,
+  bottomContent,
+}: {
+  quote: IQuotes | null
+  bottomContent?: ReactNode
+}) {
   if (!quote) {
     return (
       <Card className="flex h-full w-full items-center justify-center rounded-lg border border-gray-200 bg-white shadow-md">
@@ -32,14 +39,7 @@ export function QuoteCard({ quote }: { quote: IQuotes | null }) {
           {quote.korean_text}
         </CardDescription>
       </CardHeader>
-      <CardContent className="bg-white p-6">
-        <div>
-          <h4 className="mb-2 text-xl font-semibold text-gray-700">AI 해석:</h4>
-          {/* <p className="leading-relaxed text-gray-700">
-            {quote.aiInterpretation}
-          </p> */}
-        </div>
-      </CardContent>
+      {bottomContent && <CardContent>{bottomContent}</CardContent>}
     </Card>
   )
 }

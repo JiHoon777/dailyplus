@@ -40,6 +40,7 @@ export class ApiClientOpenAi {
     })
 
     const content = completion.choices[0].message.content
+    console.log(43, content)
 
     if (!content) {
       return null

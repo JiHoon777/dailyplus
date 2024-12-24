@@ -39,18 +39,11 @@ export const QuoteList = ({
       }) => (
         <div className="overflow-x-auto whitespace-nowrap pb-4">
           {list.map((quote) => (
-            <div
+            <QuoteListCard
+              quote={quote}
               key={quote.id}
-              className="inline-block w-64 cursor-pointer rounded-lg bg-white p-4 shadow hover:bg-gray-50"
-              onClick={() => onSelectQuote(quote)}
-            >
-              <h3 className="mb-2 break-all text-lg font-bold">
-                {quote.original_text}
-              </h3>
-              <p className="whitespace-pre-line break-all text-sm text-gray-600">
-                {quote.korean_text}
-              </p>
-            </div>
+              onClick={onSelectQuote}
+            />
           ))}
           {/* {(isLoading || isFetchingNextPage) &&
               Array.from({ length: 10 }).map((_, index) => (
@@ -67,5 +60,27 @@ export const QuoteList = ({
         </div>
       )}
     </InfiniteListableQueryLoader>
+  )
+}
+
+const QuoteListCard = ({
+  quote,
+  onClick,
+}: {
+  quote: IQuotes
+  onClick: (quote: IQuotes) => void
+}) => {
+  return (
+    <div
+      className="inline-block w-64 cursor-pointer rounded-lg bg-white p-4 shadow hover:bg-gray-50"
+      onClick={() => onClick(quote)}
+    >
+      <h3 className="mb-2 break-all text-lg font-bold">
+        {quote.original_text}
+      </h3>
+      <p className="whitespace-pre-line break-all text-sm text-gray-600">
+        {quote.korean_text}
+      </p>
+    </div>
   )
 }
