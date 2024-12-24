@@ -1,6 +1,6 @@
 // hooks/useGenerateArticlesWithAi.ts
 
-import type { IApiClientPromptParams } from '@/shared/api/client/prompt/apiClientPrompt'
+import type { IApiClientPerplexityParams } from '@/shared/api'
 import type { IArticlesCreationInput } from '@/shared/types'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -24,15 +24,15 @@ const ArticleSchema = z.object({
   title: z.string().min(1),
 })
 
-export function useGenerateArticlesWithAi() {
+export function useCreateArticlesWithAi() {
   const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: async (
-      inputs: IApiClientPromptParams<'getArticlesByPerplexity'>,
+      inputs: IApiClientPerplexityParams<'getArticlesByPerplexity'>,
     ) => {
       const { type: articleType } = inputs
-      const res = await ApiClientCSR.prompt.getArticlesByPerplexity(inputs)
+      const res = await ApiClientCSR.perplexity.getArticlesByPerplexity(inputs)
       const answer = res.choices?.[0]?.message?.content ?? null
 
       if (!answer) {

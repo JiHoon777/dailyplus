@@ -1,6 +1,8 @@
 import type { ApiClient } from '../ApiClient'
 import type {
   ArticlesType,
+  ExtractMethodParameters,
+  ExtractMethodReturn,
   PerplexityResponse,
   SupportedLanguagesType,
 } from '@/shared/types'
@@ -12,6 +14,16 @@ import {
   getSystemContentByLanguage,
   getUserContentByLanguage,
 } from '../prompt/articles'
+
+type IApiClientPerplexity = typeof ApiClientPerplexity.prototype
+
+export type IApiClientPerplexityResponse<
+  TMethod extends keyof IApiClientPerplexity,
+> = ExtractMethodReturn<IApiClientPerplexity, TMethod>
+
+export type IApiClientPerplexityParams<
+  TMethod extends keyof IApiClientPerplexity,
+> = ExtractMethodParameters<IApiClientPerplexity, TMethod>
 
 export class ApiClientPerplexity {
   constructor(private readonly _apiClient: ApiClient) {}

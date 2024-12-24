@@ -1,8 +1,20 @@
 import type { ApiClient } from '../ApiClient'
+import type {
+  ExtractMethodParameters,
+  ExtractMethodReturn,
+} from '@/shared/types'
 
 import OpenAI from 'openai'
 
 import { DPEnvs } from '@/shared/config'
+
+type IApiClientOpenAi = typeof ApiClientOpenAi.prototype
+
+export type IApiClientOpenAiResponse<TMethod extends keyof IApiClientOpenAi> =
+  ExtractMethodReturn<IApiClientOpenAi, TMethod>
+
+export type IApiClientOpenAiParams<TMethod extends keyof IApiClientOpenAi> =
+  ExtractMethodParameters<IApiClientOpenAi, TMethod>
 
 export class ApiClientOpenAi {
   constructor(private readonly _apiClient: ApiClient) {}
@@ -11,7 +23,7 @@ export class ApiClientOpenAi {
     return this._apiClient.supabaseClient
   }
 
-  private async requestToChatGPT<TResult>({
+  async createChatCompletions<TResult>({
     model = 'gpt-4o-mini',
     messages,
   }: {

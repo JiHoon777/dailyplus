@@ -8,14 +8,14 @@ import { ARTICLE_TYPE_OPTIONS, SUPPORTED_LANGUAGES } from '@/shared/config'
 import { Button, Label, ModalOverlay } from '@/shared/ui'
 import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group'
 
-import { useGenerateArticlesWithAi } from '../hooks/useGenerateArticlesWithAi'
+import { useCreateArticlesWithAi } from '../hooks/useCreateArticlesWithAi'
 
 // Todo: Form Type Check, like zod, Refactor
 // Todo: Refactor Form Logic, Components
 export const CreateArticleWithAiOverlay = ({ isOpen, close }: OverlayProps) => {
   const [articleType, setArticleType] = useState<ArticlesType>('trend')
   const [language, setLanguage] = useState<SupportedLanguagesType>('ko')
-  const { mutate, isPending } = useGenerateArticlesWithAi()
+  const { mutate, isPending } = useCreateArticlesWithAi()
 
   const handleCreate = async () => {
     mutate({ language, type: articleType })
