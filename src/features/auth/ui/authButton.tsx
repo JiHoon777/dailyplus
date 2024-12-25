@@ -1,14 +1,14 @@
 'use client'
 
 import { useOverlay } from '@/shared/lib/overlay'
-import { useStore } from '@/shared/store'
+import { useDPStore } from '@/shared/store'
 import { Button } from '@/shared/ui'
 
 import { LoginModal } from './loginModal'
 import { UserDropdown } from './userDropdown'
 
 export function AuthButton() {
-  const me = useStore((state) => state.auth.me)
+  const me = useDPStore((state) => state.auth.me)
   const { open } = useOverlay()
 
   const handleLogin = () => {

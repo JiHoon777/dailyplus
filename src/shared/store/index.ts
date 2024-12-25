@@ -7,7 +7,7 @@ import { createAuthSlice } from './authSlice'
 
 type StoreState = AuthSlice
 
-export const useStore = create<StoreState>()(
+export const useDPStore = create<StoreState>()(
   immer((...args) => ({
     ...createAuthSlice(...args),
   })),

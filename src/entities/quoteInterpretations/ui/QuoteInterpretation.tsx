@@ -11,6 +11,7 @@ import { useState } from 'react'
 
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { cn } from '@/shared/lib/utils'
+import { useDPStore } from '@/shared/store'
 import { Button, Skeleton } from '@/shared/ui'
 
 import { useCreateQuoteInterpretationWithAi } from '../hooks/useCreateQuoteInterpretationWithAi'
@@ -26,6 +27,7 @@ export const QuoteInterpretation = ({
   quote,
   getQuoteInterpretationQueryKey,
 }: IQuoteInterpretationProps) => {
+  const hasAiPromptAccess = useDPStore((s) => s.auth.hasAiPromptAccess)
   const {
     mutate,
     isPending: isCreateLoading,
@@ -58,7 +60,8 @@ export const QuoteInterpretation = ({
 
   const isLoading = isCreateLoading || isGetLoading
   const handleCreate = () => {
-    if (isLoading) {
+    // Todo: handle Ai Prompt Access
+    if (isLoading || !hasAiPromptAccess) {
       return
     }
 

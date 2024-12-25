@@ -1,11 +1,11 @@
 'use client'
 import { getUsernameFromEmail } from '@/shared/lib/utils'
-import { useStore } from '@/shared/store'
+import { useDPStore } from '@/shared/store'
 
 import { getGreetingByTime } from '../_lib'
 
 export const HomeGreeting = () => {
-  const user = useStore((state) => state.auth.me)
+  const user = useDPStore((state) => state.auth.me)
 
   return (
     <div className={'w-full'}>

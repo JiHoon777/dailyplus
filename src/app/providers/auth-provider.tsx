@@ -6,12 +6,12 @@ import { useEffect, useState } from 'react'
 
 import { DpQueryKeys } from '@/shared/api'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
-import { useStore } from '@/shared/store'
+import { useDPStore } from '@/shared/store'
 import { ScreenLoading } from '@/shared/ui'
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter()
-  const setAuthUser = useStore((state) => state.auth.setMe)
+  const setAuthUser = useDPStore((state) => state.auth.setMe)
   const [isLoaded, setIsLoaded] = useState(false)
 
   // 1. Auth 세션 정보 가져오기

@@ -5,6 +5,7 @@ export interface AuthSlice {
   auth: {
     me: IUsers | null
 
+    hasAiPromptAccess: boolean
     setMe: (user: IUsers | null) => void
   }
 }
@@ -15,11 +16,16 @@ export const createAuthSlice: StateCreator<
   []
 > = (set) => ({
   auth: {
+    hasAiPromptAccess: false,
     me: null,
 
-    setMe: (user) =>
+    setMe: (user) => {
       set((state) => {
         state.auth.me = user
-      }),
+
+        // Todo: AI Prompt Access
+        state.auth.hasAiPromptAccess = !!user
+      })
+    },
   },
 })
