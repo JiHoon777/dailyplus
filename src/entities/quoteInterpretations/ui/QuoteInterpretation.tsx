@@ -10,7 +10,7 @@ import { ChevronRight, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
-import { Spinner } from '@/shared/ui'
+import { Button, Spinner } from '@/shared/ui'
 
 import { useCreateQuoteInterpretationWithAi } from '../hooks/useCreateQuoteInterpretationWithAi'
 
@@ -25,21 +25,29 @@ export const QuoteInterpretation = ({
   quote,
   getQuoteInterpretationQueryKey,
 }: IQuoteInterpretationProps) => {
-  const { mutate, isPending } = useCreateQuoteInterpretationWithAi()
+  const {
+    mutate,
+    isPending: isCreateLoading,
+    error: createError,
+  } = useCreateQuoteInterpretationWithAi()
   const [createdInterpretation, setCreatedInterpretation] =
     useState<IQuoteAiInterpretations | null>(null)
-  const { data, error, isLoading } = useQuery({
+  const {
+    data,
+    isLoading: isGetLoading,
+    error: getError,
+    refetch,
+  } = useQuery({
     queryFn: async () => {
-      const { data, error } = await ApiClientCSR.quoteAiInterpretations.getList(
-        {
+      const { data, error: getError } =
+        await ApiClientCSR.quoteAiInterpretations.getList({
           limit: 1,
           page: 1,
           quote_id: quote.id,
-        },
-      )
+        })
 
-      if (error) {
-        throw error
+      if (getError) {
+        throw getError
       }
 
       return data
@@ -60,7 +68,19 @@ export const QuoteInterpretation = ({
     )
   }
 
+  const handleError = () => {
+    if (getError) {
+      refetch()
+      return
+    }
+    if (createError) {
+      handleCreate()
+    }
+  }
+
   const interpretation = createdInterpretation || data?.[0]
+  const hasError = getError || createError
+  const isLoading = isCreateLoading || isGetLoading
   return (
     <div className="flex flex-col gap-4 p-6">
       <div className="flex items-center gap-2 text-gray-600">
@@ -72,7 +92,10 @@ export const QuoteInterpretation = ({
           해설
         </h4>
         <ChevronRight className="h-5 w-5" />
-        {(isPending || isLoading) && <Spinner />}
+        {isLoading && <Spinner />}
+        {!interpretation && hasError && (
+          <Button onClick={handleError}>Retry</Button>
+        )}
       </div>
       {interpretation && (
         <p className="whitespace-pre-line break-all leading-relaxed text-gray-700">
