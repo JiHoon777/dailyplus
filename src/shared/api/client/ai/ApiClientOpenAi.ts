@@ -23,13 +23,13 @@ export class ApiClientOpenAi {
     return this._apiClient.supabaseClient
   }
 
-  async createChatCompletions<TResult>({
+  async createChatCompletions({
     model = 'gpt-4o-mini',
     messages,
   }: {
     model: OpenAI.Chat.ChatModel
     messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[]
-  }): Promise<TResult | null> {
+  }): Promise<string | null> {
     const openai = new OpenAI({
       apiKey: DPEnvs.OPENAI_API_KEY,
     })
@@ -40,12 +40,7 @@ export class ApiClientOpenAi {
     })
 
     const content = completion.choices[0].message.content
-    console.log(43, content)
 
-    if (!content) {
-      return null
-    }
-
-    return JSON.parse(content)
+    return content
   }
 }

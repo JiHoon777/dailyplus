@@ -1,2 +1,2 @@
-export * from './ui/QuoteCard'
 export * from './ui/QuoteList'
+export * from './ui/QuoteWithContent'

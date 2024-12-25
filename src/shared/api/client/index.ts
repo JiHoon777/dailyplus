@@ -1,4 +1,6 @@
 export type {
+  IApiClientOpenAiParams,
+  IApiClientOpenAiResponse,
   IApiClientPerplexityParams,
   IApiClientPerplexityResponse,
 } from './ai'

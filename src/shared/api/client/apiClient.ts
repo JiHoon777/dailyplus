@@ -10,9 +10,11 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Database } from 'database.types'
 
 import { ApiClientOpenAi, ApiClientPerplexity } from './ai'
+import { ApiClientFetch } from './base/apiClientFetch'
 import {
   ApiClientArticles,
   ApiClientAuth,
+  ApiClientQuoteAiInterpretations,
   ApiClientQuotePeople,
   ApiClientQuotes,
 } from './entity'
@@ -26,6 +28,8 @@ export type IApiClientParams<TMethod extends keyof IApiClientApp> =
   ExtractMethodParameters<IApiClientApp, TMethod>
 
 export class ApiClient {
+  readonly fetch = new ApiClientFetch(this)
+
   readonly auth = new ApiClientAuth(this)
   readonly perplexity = new ApiClientPerplexity(this)
   readonly openai = new ApiClientOpenAi(this)
@@ -33,6 +37,7 @@ export class ApiClient {
   readonly articles = new ApiClientArticles(this)
   readonly quotePeople = new ApiClientQuotePeople(this)
   readonly quotes = new ApiClientQuotes(this)
+  readonly quoteAiInterpretations = new ApiClientQuoteAiInterpretations(this)
 
   constructor(private readonly _supabaseClient: SupabaseClient<Database>) {}
 

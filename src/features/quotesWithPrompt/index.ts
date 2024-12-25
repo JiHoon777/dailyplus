@@ -1,1 +1,0 @@
-export { QuotesWithPrompt } from './QuotesWithPrompt'

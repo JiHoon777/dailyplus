@@ -1,5 +1,4 @@
 import type { IQuotes } from '@/shared/types'
-import type { ReactNode } from 'react'
 
 import { Book } from 'lucide-react'
 
@@ -16,7 +15,7 @@ export function QuoteWithContent({
   bottomContent,
 }: {
   quote: IQuotes | null
-  bottomContent?: ReactNode
+  bottomContent?: (quote: IQuotes) => JSX.Element
 }) {
   if (!quote) {
     return (
@@ -39,7 +38,7 @@ export function QuoteWithContent({
           {quote.korean_text}
         </CardDescription>
       </CardHeader>
-      {bottomContent && <CardContent>{bottomContent}</CardContent>}
+      {bottomContent && bottomContent(quote)}
     </Card>
   )
 }
