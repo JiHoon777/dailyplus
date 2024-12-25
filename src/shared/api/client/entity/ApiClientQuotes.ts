@@ -11,7 +11,7 @@ import type {
 } from '@/shared/types'
 
 import { ApiClientEntityBase } from '../base/apiClientEntityBase'
-import { createListableResponse, getPaginationRange } from '../utils'
+import { createListableResponse, getPaginationRange } from '../lib'
 
 type IApiClientQuotes = typeof ApiClientQuotes.prototype
 

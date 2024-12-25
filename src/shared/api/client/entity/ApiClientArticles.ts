@@ -1,7 +1,8 @@
-import type { ApiClient } from '..'
+import type { ApiClient, IApiClientPerplexityParams } from '..'
 import type {
   ExtractMethodParameters,
   ExtractMethodReturn,
+  IAiGeneratedArticleBase,
   IArticles,
   IArticlesCreationInput,
   IArticlesListableInput,
@@ -9,8 +10,15 @@ import type {
   IListableResponse,
 } from '@/shared/types'
 
+import { z } from 'zod'
+
+import {
+  extractJsonArrayFromText,
+  formatToHyphenYyyyMMddDate,
+} from '@/shared/lib/utils'
+
 import { ApiClientEntityBase } from '../base/apiClientEntityBase'
-import { createListableResponse, getPaginationRange } from '../utils'
+import { createListableResponse, getPaginationRange } from '../lib'
 
 type IApiClientArticles = typeof ApiClientArticles.prototype
 
@@ -20,6 +28,17 @@ export type IApiClientArticlesResponse<
 
 export type IApiClientArticlesParams<TMethod extends keyof IApiClientArticles> =
   ExtractMethodParameters<IApiClientArticles, TMethod>
+
+const AiGeneratedArticleValidationSchema = z.object({
+  published_at: z
+    .string()
+    .nullable()
+    .transform((val) => formatToHyphenYyyyMMddDate(val)),
+  reference_name: z.string().min(1),
+  reference_url: z.string().url(),
+  summary: z.string().min(1),
+  title: z.string().min(1),
+})
 
 export class ApiClientArticles extends ApiClientEntityBase<
   'articles',
@@ -80,5 +99,61 @@ export class ApiClientArticles extends ApiClientEntityBase<
     query.not('published_at', 'is', null)
 
     return createListableResponse(await query)
+  }
+
+  //
+  // Generate with AI
+  //
+
+  private validateArticles(parsedData: IAiGeneratedArticleBase[]) {
+    if (!Array.isArray(parsedData)) {
+      throw new Error('Data is not an array')
+    }
+
+    return parsedData.reduce<IAiGeneratedArticleBase[]>((acc, item) => {
+      try {
+        const validatedItem = AiGeneratedArticleValidationSchema.parse(item)
+        acc.push(validatedItem)
+      } catch (error) {
+        console.error('Validation error for item:', item, error)
+      }
+      return acc
+    }, [])
+  }
+
+  private async generateBulkFromAi(
+    input: IApiClientPerplexityParams<'getArticlesByPerplexity'>,
+  ) {
+    const res = await this._apiClient.perplexity.getArticlesByPerplexity(input)
+
+    if (!res) {
+      throw new Error('No response from AI')
+    }
+
+    const validatedArticles = this.validateArticles(
+      JSON.parse(extractJsonArrayFromText(res)),
+    )
+
+    return validatedArticles
+  }
+
+  async generateAndSaveArticlesWithAi(
+    input: IApiClientPerplexityParams<'getArticlesByPerplexity'>,
+  ) {
+    const generatedArticles = await this.generateBulkFromAi(input)
+
+    const { error } = await this.createBulk(
+      generatedArticles.map((item) => ({
+        ...item,
+        type: input.type,
+        unique_id: `${item.title}-${item.reference_url}`,
+      })),
+    )
+
+    if (error) {
+      throw error
+    }
+
+    return generatedArticles
   }
 }

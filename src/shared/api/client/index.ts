@@ -6,6 +6,8 @@ export type {
 } from './ai'
 export * from './ApiClient'
 export type {
+  IApiClientArticlesParams,
+  IApiClientArticlesResponse,
   IApiClientQuoteAiInterpretationsParams,
   IApiClientQuoteAiInterpretationsResponse,
   IApiClientQuotesParams,

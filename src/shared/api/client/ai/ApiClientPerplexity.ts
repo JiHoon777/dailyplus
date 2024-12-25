@@ -63,7 +63,9 @@ export class ApiClientPerplexity {
   }: {
     type: ArticlesType
     language: SupportedLanguagesType
-  }): Promise<PerplexityResponse> {
+  }): Promise<
+    PerplexityResponse['choices'][number]['message']['content'] | null
+  > {
     const dateRangeText = getDateRangeText()
     const systemContent = getSystemContentByLanguage(
       type,
@@ -92,6 +94,8 @@ export class ApiClientPerplexity {
       throw new Error('Failed to fetch data')
     }
 
-    return res.json()
+    const data = (await res.json()) as PerplexityResponse
+
+    return data.choices?.[0]?.message?.content ?? null
   }
 }

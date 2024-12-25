@@ -2,7 +2,6 @@
 
 import type { IArticlesListableInput } from '@/shared/types'
 
-import { CreateArticleWithAiOverlay } from '@/features/articleGeneration'
 import { DpQueryKeys } from '@/shared/api'
 import { PagedListableQueryLoader } from '@/shared/lib/loader'
 import { useOverlay } from '@/shared/lib/overlay'
@@ -10,7 +9,7 @@ import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { Button, DataTableRenderer, Pagination } from '@/shared/ui'
 import { PageBase } from '@/widgets/layout'
 
-import { ArticleColumns } from './_ui'
+import { ArticleColumns, CreateArticleWithAiOverlay } from './_ui'
 
 export default function ArticlesPage() {
   const { open } = useOverlay()

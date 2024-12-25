@@ -2,20 +2,33 @@
 import type { OverlayProps } from '@/shared/lib/overlay'
 import type { ArticlesType, SupportedLanguagesType } from '@/shared/types'
 
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 
+import { DpQueryKeys, type IApiClientArticlesParams } from '@/shared/api'
 import { ARTICLE_TYPE_OPTIONS, SUPPORTED_LANGUAGES } from '@/shared/config'
+import { ApiClientCSR } from '@/shared/lib/supabase-csr'
+import { showToast } from '@/shared/lib/utils'
 import { Button, Label, ModalOverlay } from '@/shared/ui'
 import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group'
 
-import { useCreateArticlesWithAi } from '../hooks/useCreateArticlesWithAi'
-
-// Todo: Form Type Check, like zod, Refactor
-// Todo: Refactor Form Logic, Components
 export const CreateArticleWithAiOverlay = ({ isOpen, close }: OverlayProps) => {
   const [articleType, setArticleType] = useState<ArticlesType>('trend')
   const [language, setLanguage] = useState<SupportedLanguagesType>('ko')
-  const { mutate, isPending } = useCreateArticlesWithAi()
+  const queryClient = useQueryClient()
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (
+      inputs: IApiClientArticlesParams<'generateAndSaveArticlesWithAi'>,
+    ) => {
+      return ApiClientCSR.articles.generateAndSaveArticlesWithAi(inputs)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: DpQueryKeys.admin.articles.list(),
+      })
+      showToast.success('Successfully created articles')
+    },
+  })
 
   const handleCreate = async () => {
     mutate({ language, type: articleType })
