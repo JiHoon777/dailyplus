@@ -6,9 +6,8 @@ import { DpQueryKeys } from '@/shared/api'
 import { PagedListableQueryLoader } from '@/shared/lib/loader'
 import { useOverlay } from '@/shared/lib/overlay'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
-import { Button, Pagination } from '@/shared/ui'
+import { Button, DataTableRenderer, Pagination } from '@/shared/ui'
 import { PageBase } from '@/widgets/layout'
-import { DataTableRenderer } from '@/widgets/table'
 
 import { CreateQuotesOverlay, QuotesColumns } from './_ui'
 

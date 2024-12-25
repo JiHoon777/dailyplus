@@ -30,10 +30,10 @@ export type IApiClientParams<TMethod extends keyof IApiClientApp> =
 export class ApiClient {
   readonly fetch = new ApiClientFetch(this)
 
-  readonly auth = new ApiClientAuth(this)
   readonly perplexity = new ApiClientPerplexity(this)
   readonly openai = new ApiClientOpenAi(this)
 
+  readonly auth = new ApiClientAuth(this)
   readonly articles = new ApiClientArticles(this)
   readonly quotePeople = new ApiClientQuotePeople(this)
   readonly quotes = new ApiClientQuotes(this)
