@@ -10,7 +10,7 @@ import { ChevronRight, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
-import { Button, Skeleton, Spinner } from '@/shared/ui'
+import { Button, Skeleton } from '@/shared/ui'
 
 import { useCreateQuoteInterpretationWithAi } from '../hooks/useCreateQuoteInterpretationWithAi'
 
