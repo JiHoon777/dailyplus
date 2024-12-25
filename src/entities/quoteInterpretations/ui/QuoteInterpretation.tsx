@@ -11,7 +11,7 @@ export const QuoteInterpretation = ({ quote }: { quote: IQuotes }) => {
   const [interpretation, setInterpretation] =
     useState<IQuoteAiInterpretations | null>(null)
 
-  const handle = () => {
+  const handleCreate = () => {
     mutate(
       {
         quote,
@@ -29,7 +29,7 @@ export const QuoteInterpretation = ({ quote }: { quote: IQuotes }) => {
       <div className="flex gap-2">
         <h4
           className="mb-2 max-w-fit cursor-pointer text-xl font-semibold text-gray-700"
-          onClick={handle}
+          onClick={handleCreate}
         >
           AI 해설
         </h4>
