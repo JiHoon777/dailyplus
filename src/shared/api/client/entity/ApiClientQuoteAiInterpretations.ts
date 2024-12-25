@@ -37,7 +37,7 @@ export class ApiClientQuoteAiInterpretations extends ApiClientEntityBase<
   async getList(
     input: IQuoteAiInterpretationsListableInput,
   ): Promise<IListableResponse<IQuoteAiInterpretations>> {
-    const { page = 1, limit = 10, orderBy = 'created_at' } = input
+    const { page = 1, limit = 10, orderBy = 'created_at', quote_id } = input
 
     const { from, to } = getPaginationRange(page, limit)
 
@@ -47,6 +47,10 @@ export class ApiClientQuoteAiInterpretations extends ApiClientEntityBase<
       .range(from, to)
 
     query.order(orderBy, { ascending: false })
+
+    if (quote_id) {
+      query.eq('quote_id', quote_id)
+    }
 
     return createListableResponse(await query)
   }

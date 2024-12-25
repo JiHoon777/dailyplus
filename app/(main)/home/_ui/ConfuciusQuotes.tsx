@@ -13,7 +13,10 @@ export const ConfuciusQuotes = () => {
       </div>
       <QuotesInteractive
         quotePeopleName="공자"
-        queryKey={DpQueryKeys.app.home.quoteList}
+        getQuoteListQueryKey={DpQueryKeys.app.home.quoteList}
+        getQuoteInterpretationQueryKey={
+          DpQueryKeys.app.home.quoteInterpretation
+        }
       />
     </div>
   )

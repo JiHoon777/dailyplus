@@ -1,5 +1,6 @@
 import type {
   IArticlesListableInput,
+  IQuoteAiInterpretationsListableInput,
   IQuotePeopleListableInput,
   IQuotesListableInput,
 } from '../types'
@@ -49,6 +50,9 @@ const appQueryKeys = {
       createQueryKey(['app', 'articles', 'list'], input),
   },
   home: {
+    quoteInterpretation: (
+      input?: Omit<IQuoteAiInterpretationsListableInput, 'page' | 'limit'>,
+    ) => createQueryKey(['app', 'home', 'quote-ai-interpretation'], input),
     quoteList: (input?: Omit<IQuotesListableInput, 'page' | 'limit'>) =>
       createQueryKey(['app', 'home', 'quotes', 'list'], input),
   },

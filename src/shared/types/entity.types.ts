@@ -110,6 +110,7 @@ export type IQuoteAiInterpretationsCreationInput = Pick<
 >
 export type IQuoteAiInterpretationsListableInput = IListableParams<{
   orderBy?: 'created_at'
+  quote_id?: number
 }>
 export type IQuoteAiInterpretationsUpdateInput =
   Partial<IQuoteAiInterpretationsCreationInput>

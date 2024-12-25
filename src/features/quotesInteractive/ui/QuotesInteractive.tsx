@@ -1,3 +1,4 @@
+import type { IQuoteInterpretationProps } from '@/entities/quoteInterpretations/ui/QuoteInterpretation'
 import type { IQuoteListProps } from '@/entities/quotes'
 import type { IQuotes } from '@/shared/types'
 
@@ -6,9 +7,14 @@ import { useState } from 'react'
 import { QuoteInterpretation } from '@/entities/quoteInterpretations/ui/QuoteInterpretation'
 import { QuoteList, QuoteWithContent } from '@/entities/quotes'
 
+type Props = Pick<IQuoteListProps, 'quotePeopleName' | 'getQuoteListQueryKey'> &
+  Pick<IQuoteInterpretationProps, 'getQuoteInterpretationQueryKey'>
+
 export const QuotesInteractive = ({
-  queryKey,
-}: Pick<IQuoteListProps, 'queryKey' | 'quotePeopleName'>) => {
+  getQuoteInterpretationQueryKey,
+  quotePeopleName,
+  getQuoteListQueryKey,
+}: Props) => {
   const [selectedQuote, setSelectedQuote] = useState<IQuotes | null>(null)
 
   return (
@@ -17,7 +23,12 @@ export const QuotesInteractive = ({
         <div className="w-full md:w-1/2">
           <QuoteWithContent
             quote={selectedQuote}
-            bottomContent={(quote) => <QuoteInterpretation quote={quote} />}
+            bottomContent={(quote) => (
+              <QuoteInterpretation
+                quote={quote}
+                getQuoteInterpretationQueryKey={getQuoteInterpretationQueryKey}
+              />
+            )}
           />
         </div>
         <div className="h-[40vh] w-full bg-gray-300 md:w-1/2">
@@ -25,7 +36,11 @@ export const QuotesInteractive = ({
         </div>
       </div>
       <div className="w-full">
-        <QuoteList onSelectQuote={setSelectedQuote} queryKey={queryKey} />
+        <QuoteList
+          onSelectQuote={setSelectedQuote}
+          getQuoteListQueryKey={getQuoteListQueryKey}
+          quotePeopleName={quotePeopleName}
+        />
       </div>
     </div>
   )

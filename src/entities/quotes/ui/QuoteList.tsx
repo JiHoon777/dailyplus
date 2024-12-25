@@ -9,13 +9,15 @@ import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 
 export type IQuoteListProps = {
   onSelectQuote: (quote: IQuotes) => void
-  queryKey: (input: Omit<IQuotesListableInput, 'page' | 'limit'>) => QueryKey
+  getQuoteListQueryKey: (
+    input: Omit<IQuotesListableInput, 'page' | 'limit'>,
+  ) => QueryKey
   quotePeopleName?: string
 }
 
 export const QuoteList = ({
   onSelectQuote,
-  queryKey,
+  getQuoteListQueryKey,
   quotePeopleName,
 }: IQuoteListProps) => {
   const getQuoteList = (input: IQuotesListableInput) =>
@@ -28,7 +30,7 @@ export const QuoteList = ({
         limit: 10,
         quotePeopleName,
       }}
-      queryKey={queryKey}
+      queryKey={getQuoteListQueryKey}
     >
       {({
         list,
