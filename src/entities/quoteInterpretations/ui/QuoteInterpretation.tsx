@@ -9,9 +9,9 @@ import { useQuery } from '@tanstack/react-query'
 import { ChevronRight, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 
+import { useAiPromptAccess } from '@/shared/hooks'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { cn } from '@/shared/lib/utils'
-import { useDPStore } from '@/shared/store'
 import { Button, Skeleton } from '@/shared/ui'
 
 import { useCreateQuoteInterpretationWithAi } from '../hooks/useCreateQuoteInterpretationWithAi'
@@ -27,7 +27,7 @@ export const QuoteInterpretation = ({
   quote,
   getQuoteInterpretationQueryKey,
 }: IQuoteInterpretationProps) => {
-  const hasAiPromptAccess = useDPStore((s) => s.auth.hasAiPromptAccess)
+  const { hasAiPromptAccess } = useAiPromptAccess()
   const {
     mutate,
     isPending: isCreateLoading,
