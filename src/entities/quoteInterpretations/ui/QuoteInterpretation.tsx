@@ -13,6 +13,7 @@ import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { Button, Skeleton } from '@/shared/ui'
 
 import { useCreateQuoteInterpretationWithAi } from '../hooks/useCreateQuoteInterpretationWithAi'
+import { cn } from '@/shared/lib/utils'
 
 export type IQuoteInterpretationProps = {
   quote: IQuotes
@@ -55,7 +56,12 @@ export const QuoteInterpretation = ({
     queryKey: getQuoteInterpretationQueryKey(),
   })
 
+  const isLoading = isCreateLoading || isGetLoading
   const handleCreate = () => {
+    if (isLoading) {
+      return
+    }
+
     mutate(
       {
         quote,
@@ -80,20 +86,21 @@ export const QuoteInterpretation = ({
 
   const interpretation = createdInterpretation || data?.[0]
   const hasError = getError || createError
-  const isLoading = isCreateLoading || isGetLoading
   const showRetry = !interpretation && hasError && !isLoading
   const showContent = interpretation && !isLoading
   return (
     <div className="flex flex-col gap-4 p-6">
       <div className="flex items-center gap-2 text-gray-600">
-        <Sparkles className="h-5 w-5" />
-        <h4
-          className="max-w-fit cursor-pointer text-lg font-semibold"
+        <div
+          className={cn('flex max-w-fit cursor-pointer items-center gap-2', {
+            'pointer-events-none': isLoading,
+          })}
           onClick={handleCreate}
         >
-          해설
-        </h4>
-        <ChevronRight className="h-5 w-5" />
+          <Sparkles className="h-5 w-5" />
+          <h4 className="max-w-fittext-lg font-semibold">해설</h4>
+          <ChevronRight className="h-5 w-5" />
+        </div>
         {showRetry && <Button onClick={handleRetry}>Retry</Button>}
       </div>
       {showContent && (
