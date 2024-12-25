@@ -1,29 +1,19 @@
 import type { ApiClient } from '../ApiClient'
-import type {
-  ExtractMethodParameters,
-  ExtractMethodReturn,
-} from '@/shared/types'
+import type { IApiClientAiBase } from './types'
+import type { ArticlesType, SupportedLanguagesType } from '@/shared/types'
 
 import OpenAI from 'openai'
 
 import { DPEnvs } from '@/shared/config'
 
-type IApiClientOpenAi = typeof ApiClientOpenAi.prototype
-
-export type IApiClientOpenAiResponse<TMethod extends keyof IApiClientOpenAi> =
-  ExtractMethodReturn<IApiClientOpenAi, TMethod>
-
-export type IApiClientOpenAiParams<TMethod extends keyof IApiClientOpenAi> =
-  ExtractMethodParameters<IApiClientOpenAi, TMethod>
-
-export class ApiClientOpenAi {
+export class ApiClientOpenAi implements IApiClientAiBase {
   constructor(private readonly _apiClient: ApiClient) {}
 
   get supabaseClient() {
     return this._apiClient.supabaseClient
   }
 
-  async createChatCompletions({
+  private async createChatCompletions({
     model = 'gpt-4o-mini',
     messages,
   }: {
@@ -39,8 +29,48 @@ export class ApiClientOpenAi {
       model,
     })
 
-    const content = completion.choices[0].message.content
+    const content = completion.choices?.[0]?.message?.content
 
-    return content
+    return content ?? null
+  }
+
+  getArticles(_input: {
+    type: ArticlesType
+    language: SupportedLanguagesType
+  }): Promise<string | null> {
+    throw new Error('Method not implemented.')
+  }
+
+  getQuoteInterpretation({
+    quoteText,
+    customPrompt,
+  }: {
+    quoteText: string
+    customPrompt?: string
+  }): Promise<string | null> {
+    const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
+      {
+        content: `너는 유머러스하면서도 통찰력 있는 명언 해석가야. 💡재치있는 해석: 유머러스한 관점에서 명언 해석 🎯실용적 교훈: 일상생활에서 실천할 수 있는 구체적인 조언 🌟현대적 적용: 현시대에 맞는 실천 방안`,
+        role: 'system',
+      },
+      {
+        content: `명언: "${quoteText}"`,
+        role: 'user',
+      },
+    ]
+
+    if (customPrompt) {
+      messages.push({
+        content: customPrompt,
+        role: 'user',
+      })
+    }
+
+    const res = this.createChatCompletions({
+      messages,
+      model: 'gpt-4o-mini',
+    })
+
+    return res
   }
 }

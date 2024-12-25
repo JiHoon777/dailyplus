@@ -5,16 +5,14 @@ import type {
 } from '@/shared/types'
 import type { QueryKey } from '@tanstack/react-query'
 
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { ChevronRight, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 
 import { useAiPromptAccess } from '@/shared/hooks'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
-import { cn } from '@/shared/lib/utils'
+import { cn, showToast } from '@/shared/lib/utils'
 import { Button, Skeleton } from '@/shared/ui'
-
-import { useCreateQuoteInterpretationWithAi } from '../hooks/useCreateQuoteInterpretationWithAi'
 
 export type IQuoteInterpretationProps = {
   quote: IQuotes
@@ -28,13 +26,9 @@ export const QuoteInterpretation = ({
   getQuoteInterpretationQueryKey,
 }: IQuoteInterpretationProps) => {
   const { hasAiPromptAccess } = useAiPromptAccess()
-  const {
-    mutate,
-    isPending: isCreateLoading,
-    error: createError,
-  } = useCreateQuoteInterpretationWithAi()
   const [createdInterpretation, setCreatedInterpretation] =
     useState<IQuoteAiInterpretations | null>(null)
+
   const {
     data,
     isLoading: isGetLoading,
@@ -58,6 +52,30 @@ export const QuoteInterpretation = ({
     queryKey: getQuoteInterpretationQueryKey(),
   })
 
+  const {
+    mutate,
+    isPending: isCreateLoading,
+    error: createError,
+  } = useMutation({
+    mutationFn: async () => {
+      const joinedQuote = `${quote.original_text}, ${quote.korean_text}`
+
+      const interpretation =
+        await ApiClientCSR.quoteAiInterpretations.generateAndSaveQuoteInterpretationWithAi(
+          {
+            quoteText: joinedQuote,
+            quote_id: quote.id,
+          },
+        )
+
+      return interpretation
+    },
+    onSuccess(res) {
+      setCreatedInterpretation(res)
+      showToast.success('Quote Interpretation created successfully!')
+    },
+  })
+
   const isLoading = isCreateLoading || isGetLoading
   const handleCreate = () => {
     // Todo: handle Ai Prompt Access
@@ -65,16 +83,7 @@ export const QuoteInterpretation = ({
       return
     }
 
-    mutate(
-      {
-        quote,
-      },
-      {
-        onSuccess: (res) => {
-          setCreatedInterpretation(res)
-        },
-      },
-    )
+    mutate()
   }
 
   const handleRetry = () => {

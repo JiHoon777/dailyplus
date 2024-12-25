@@ -1,9 +1,4 @@
-export type {
-  IApiClientOpenAiParams,
-  IApiClientOpenAiResponse,
-  IApiClientPerplexityParams,
-  IApiClientPerplexityResponse,
-} from './ai'
+export * from './ai/types'
 export * from './ApiClient'
 export type {
   IApiClientArticlesParams,

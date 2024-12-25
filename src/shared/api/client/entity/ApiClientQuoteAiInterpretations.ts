@@ -1,4 +1,4 @@
-import type { ApiClient, IApiClientOpenAiParams } from '..'
+import type { ApiClient, IApiClientAiBaseParams } from '..'
 import type {
   ExtractMethodParameters,
   ExtractMethodReturn,
@@ -55,12 +55,24 @@ export class ApiClientQuoteAiInterpretations extends ApiClientEntityBase<
     return createListableResponse(await query)
   }
 
-  createAiInterpretation(
-    input: IApiClientOpenAiParams<'createChatCompletions'>,
+  async generateAndSaveQuoteInterpretationWithAi(
+    input: IApiClientAiBaseParams<'getQuoteInterpretation'> & {
+      quote_id: number
+    },
   ) {
-    return this._apiClient.fetch.post<{ content: string }>(
+    const { customPrompt, quote_id } = input
+    const res = await this._apiClient.fetch.post<{ content: string }>(
       '/api/ai/quote-interpretation',
       input,
     )
+
+    const interpretation = await this.create({
+      content: res.content,
+      model_version: 'gpt-4o-mini',
+      prompt: customPrompt ?? null,
+      quote_id,
+    })
+
+    return interpretation
   }
 }

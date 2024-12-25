@@ -1,4 +1,4 @@
-import type { ApiClient, IApiClientPerplexityParams } from '..'
+import type { ApiClient, IApiClientAiBaseParams } from '..'
 import type {
   ExtractMethodParameters,
   ExtractMethodReturn,
@@ -122,9 +122,9 @@ export class ApiClientArticles extends ApiClientEntityBase<
   }
 
   private async generateBulkFromAi(
-    input: IApiClientPerplexityParams<'getArticlesByPerplexity'>,
+    input: IApiClientAiBaseParams<'getArticles'>,
   ) {
-    const res = await this._apiClient.perplexity.getArticlesByPerplexity(input)
+    const res = await this._apiClient.perplexity.getArticles(input)
 
     if (!res) {
       throw new Error('No response from AI')
@@ -138,7 +138,7 @@ export class ApiClientArticles extends ApiClientEntityBase<
   }
 
   async generateAndSaveArticlesWithAi(
-    input: IApiClientPerplexityParams<'getArticlesByPerplexity'>,
+    input: IApiClientAiBaseParams<'getArticles'>,
   ) {
     const generatedArticles = await this.generateBulkFromAi(input)
 

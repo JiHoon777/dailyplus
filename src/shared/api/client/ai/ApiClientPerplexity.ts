@@ -1,8 +1,7 @@
 import type { ApiClient } from '../ApiClient'
+import type { IApiClientAiBase } from './types'
 import type {
   ArticlesType,
-  ExtractMethodParameters,
-  ExtractMethodReturn,
   PerplexityResponse,
   SupportedLanguagesType,
 } from '@/shared/types'
@@ -15,17 +14,7 @@ import {
   getUserContentByLanguage,
 } from '../prompt/articles'
 
-type IApiClientPerplexity = typeof ApiClientPerplexity.prototype
-
-export type IApiClientPerplexityResponse<
-  TMethod extends keyof IApiClientPerplexity,
-> = ExtractMethodReturn<IApiClientPerplexity, TMethod>
-
-export type IApiClientPerplexityParams<
-  TMethod extends keyof IApiClientPerplexity,
-> = ExtractMethodParameters<IApiClientPerplexity, TMethod>
-
-export class ApiClientPerplexity {
+export class ApiClientPerplexity implements IApiClientAiBase {
   constructor(private readonly _apiClient: ApiClient) {}
 
   get supabaseClient() {
@@ -57,7 +46,7 @@ export class ApiClientPerplexity {
    * - getSystemContentByLanguage: 시스템 프롬프트
    * - getUserContentByLanguage: 사용자 프롬프트
    */
-  async getArticlesByPerplexity({
+  async getArticles({
     type,
     language,
   }: {
@@ -97,5 +86,12 @@ export class ApiClientPerplexity {
     const data = (await res.json()) as PerplexityResponse
 
     return data.choices?.[0]?.message?.content ?? null
+  }
+
+  getQuoteInterpretation(_input: {
+    quoteText: string
+    customPrompt?: string
+  }): Promise<string | null> {
+    throw new Error('Method not implemented.')
   }
 }
