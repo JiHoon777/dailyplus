@@ -1,4 +1,4 @@
-import type { IApiClientOpenAiParams } from '@/shared/api'
+import type { IApiClientQuoteAiInterpretationsParams } from '@/shared/api'
 import type { IQuotes } from '@/shared/types'
 
 import { useMutation } from '@tanstack/react-query'
@@ -17,7 +17,7 @@ export const useCreateQuoteInterpretationWithAi = () => {
     }) => {
       const joinedQuote = `${quote.original_text}, ${quote.korean_text}`
 
-      const messages: IApiClientOpenAiParams<'createChatCompletions'>['messages'] =
+      const messages: IApiClientQuoteAiInterpretationsParams<'createAiInterpretation'>['messages'] =
         [
           {
             content: `너는 유머러스하면서도 통찰력 있는 명언 해석가야. 💡재치있는 해석: 유머러스한 관점에서 명언 해석 🎯실용적 교훈: 일상생활에서 실천할 수 있는 구체적인 조언 🌟현대적 적용: 현시대에 맞는 실천 방안`,
@@ -36,13 +36,11 @@ export const useCreateQuoteInterpretationWithAi = () => {
         })
       }
 
-      const response = await ApiClientCSR.fetch.post<
-        { content: string },
-        IApiClientOpenAiParams<'createChatCompletions'>
-      >('/api/ai/quote-interpretation', {
-        messages,
-        model: 'gpt-4o-mini',
-      })
+      const response =
+        await ApiClientCSR.quoteAiInterpretations.createAiInterpretation({
+          messages,
+          model: 'gpt-4o-mini',
+        })
 
       const interpretation = await ApiClientCSR.quoteAiInterpretations.create({
         content: response.content,

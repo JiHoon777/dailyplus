@@ -5,4 +5,9 @@ export type {
   IApiClientPerplexityResponse,
 } from './ai'
 export * from './ApiClient'
-export type { IApiClientQuotesParams, IApiClientQuotesResponse } from './entity'
+export type {
+  IApiClientQuoteAiInterpretationsParams,
+  IApiClientQuoteAiInterpretationsResponse,
+  IApiClientQuotesParams,
+  IApiClientQuotesResponse,
+} from './entity'

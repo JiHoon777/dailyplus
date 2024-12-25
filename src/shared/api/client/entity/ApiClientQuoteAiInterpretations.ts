@@ -1,4 +1,4 @@
-import type { ApiClient } from '..'
+import type { ApiClient, IApiClientOpenAiParams } from '..'
 import type {
   ExtractMethodParameters,
   ExtractMethodReturn,
@@ -53,5 +53,14 @@ export class ApiClientQuoteAiInterpretations extends ApiClientEntityBase<
     }
 
     return createListableResponse(await query)
+  }
+
+  createAiInterpretation(
+    input: IApiClientOpenAiParams<'createChatCompletions'>,
+  ) {
+    return this._apiClient.fetch.post<{ content: string }>(
+      '/api/ai/quote-interpretation',
+      input,
+    )
   }
 }
