@@ -29,7 +29,7 @@ export const QuotesColumns: ColumnDef<
   },
   {
     accessorKey: 'updated_at',
-    header: 'Created At',
+    header: 'Updated At',
     meta: {
       valueType: 'date',
     },

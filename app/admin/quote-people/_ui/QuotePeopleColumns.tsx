@@ -35,7 +35,7 @@ export const QuotePeopleColumns: ColumnDef<IQuotePeople>[] = [
   },
   {
     accessorKey: 'updated_at',
-    header: 'Created At',
+    header: 'Updated At',
     meta: {
       valueType: 'date',
     },

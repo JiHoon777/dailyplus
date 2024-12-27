@@ -9,12 +9,12 @@ export type IApiClientAiBase = {
   getArticles(input: {
     type: ArticlesType
     language: SupportedLanguagesType
-  }): Promise<string | null>
+  }): Promise<string>
 
   getQuoteInterpretation(input: {
     quoteText: string
     customPrompt?: string
-  }): Promise<string | null>
+  }): Promise<string>
 }
 
 export type IApiClientAiBaseResponse<TMethod extends keyof IApiClientAiBase> =

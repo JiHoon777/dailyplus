@@ -19,7 +19,12 @@ interface Choice {
   }
 }
 
-export interface PerplexityResponse {
+export type IPerplexityInput = {
+  model: 'llama-3.1-sonar-huge-128k-online'
+  messages: Message[]
+}
+
+export type IPerplexityResponse = {
   id: string
   model: string
   created: number

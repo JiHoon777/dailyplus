@@ -61,13 +61,10 @@ export class ApiClientQuoteAiInterpretations extends ApiClientEntityBase<
     },
   ) {
     const { customPrompt, quote_id } = input
-    const res = await this._apiClient.fetch.post<{ content: string }>(
-      '/api/ai/quote-interpretation',
-      input,
-    )
+    const res = await this._apiClient.openai.getQuoteInterpretation(input)
 
     const interpretation = await this.create({
-      content: res.content,
+      content: res,
       model_version: 'gpt-4o-mini',
       prompt: customPrompt ?? null,
       quote_id,
