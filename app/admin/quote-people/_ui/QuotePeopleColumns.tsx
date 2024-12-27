@@ -1,8 +1,6 @@
 import type { IQuotePeople } from '@/shared/types'
 import type { ColumnDef } from '@tanstack/react-table'
 
-import { formatDate } from '@/shared/lib/utils'
-
 export const QuotePeopleColumns: ColumnDef<IQuotePeople>[] = [
   {
     accessorKey: 'id',
@@ -16,9 +14,6 @@ export const QuotePeopleColumns: ColumnDef<IQuotePeople>[] = [
   },
   {
     accessorKey: 'description',
-    cell: ({ row }) => (
-      <div className="break-all">{row.getValue('description')}</div>
-    ),
     header: 'Description',
   },
   {
@@ -33,20 +28,16 @@ export const QuotePeopleColumns: ColumnDef<IQuotePeople>[] = [
   },
   {
     accessorKey: 'created_at',
-    cell: ({ row }) => {
-      const dateText: string = row.getValue('created_at')
-      if (!dateText) return <div>No data</div>
-      return <div>{formatDate(dateText)}</div>
-    },
     header: 'Created At',
+    meta: {
+      valueType: 'date',
+    },
   },
   {
     accessorKey: 'updated_at',
-    cell: ({ row }) => {
-      const dateText: string = row.getValue('updated_at')
-      if (!dateText) return <div>No data</div>
-      return <div>{formatDate(dateText)}</div>
-    },
     header: 'Created At',
+    meta: {
+      valueType: 'date',
+    },
   },
 ]
