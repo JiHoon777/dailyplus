@@ -21,6 +21,10 @@ export class ApiClientPerplexity implements IApiClientAiBase {
     return this._apiClient.supabaseClient
   }
 
+  /**
+   * ! Next api routes [POST] /api/ai/perplexity/chat-completions-create 로 호출
+   * ! API Key 보안
+   */
   private requestToPerplexity(body: string) {
     return fetch('https://api.perplexity.ai/chat/completions', {
       body,

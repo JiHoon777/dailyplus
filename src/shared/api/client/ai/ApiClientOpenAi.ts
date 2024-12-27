@@ -13,6 +13,10 @@ export class ApiClientOpenAi implements IApiClientAiBase {
     return this._apiClient.supabaseClient
   }
 
+  /**
+   * ! Next api routes [POST] /api/ai/openai/chat-completions-create 로 호출
+   * ! API Key 보안
+   */
   private async createChatCompletions({
     model = 'gpt-4o-mini',
     messages,
