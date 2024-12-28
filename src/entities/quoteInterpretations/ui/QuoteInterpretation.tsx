@@ -60,18 +60,12 @@ export const QuoteInterpretation = ({
     isPending: isCreateLoading,
     error: createError,
   } = useMutation({
-    mutationFn: async ({
-      quote_id,
-      user_id,
-      quoteText,
-    }: IApiClientQuoteAiInterpretationsParams<'generateAndSaveQuoteInterpretationWithAi'>) => {
+    mutationFn: async (
+      input: IApiClientQuoteAiInterpretationsParams<'generateAndSaveQuoteInterpretationWithAi'>,
+    ) => {
       const interpretation =
         await ApiClientCSR.quoteAiInterpretations.generateAndSaveQuoteInterpretationWithAi(
-          {
-            quoteText,
-            quote_id,
-            user_id,
-          },
+          input,
         )
 
       return interpretation
