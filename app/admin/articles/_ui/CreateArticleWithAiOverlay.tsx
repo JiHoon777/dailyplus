@@ -13,7 +13,8 @@ import { Button, Label, ModalOverlay } from '@/shared/ui'
 import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group'
 
 export const CreateArticleWithAiOverlay = ({ isOpen, close }: OverlayProps) => {
-  const [articleType, setArticleType] = useState<ArticlesType>('trend')
+  const [articleType, setArticleType] =
+    useState<ArticlesType>('trendAndLifestyle')
   const [language, setLanguage] = useState<SupportedLanguagesType>('ko')
   const queryClient = useQueryClient()
   const { mutate, isPending } = useMutation({

@@ -9,16 +9,25 @@ import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { Button, DataTableRenderer, Pagination } from '@/shared/ui'
 import { PageBase } from '@/widgets/layout'
 
-import { ArticleColumns, CreateArticleWithAiOverlay } from './_ui'
+import {
+  ArticleColumns,
+  CreateArticleOverlay,
+  CreateArticleWithAiOverlay,
+} from './_ui'
 
 export default function ArticlesPage() {
   const { open } = useOverlay()
   const loadList = (input: IArticlesListableInput) =>
     ApiClientCSR.articles.getList(input)
 
-  const handleCreateArticle = () => {
+  const handleCreateArticleWithAi = () => {
     open(({ isOpen, close }) => (
       <CreateArticleWithAiOverlay isOpen={isOpen} close={close} />
+    ))
+  }
+  const handleCreateArticle = () => {
+    open(({ isOpen, close }) => (
+      <CreateArticleOverlay isOpen={isOpen} close={close} />
     ))
   }
 
@@ -26,7 +35,12 @@ export default function ArticlesPage() {
     <PageBase>
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Articles</h1>
-        <Button onClick={handleCreateArticle}>Create Article with AI</Button>
+        <div className="flex items-center gap-4">
+          <Button onClick={handleCreateArticleWithAi}>
+            Create Article with AI
+          </Button>
+          <Button onClick={handleCreateArticle}>Create Article</Button>
+        </div>
       </div>
 
       <PagedListableQueryLoader

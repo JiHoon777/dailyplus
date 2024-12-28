@@ -39,7 +39,7 @@ function verifyArticleTypeParam(searchParams: SearchParamsType) {
   const verified = verifyArticleType(articleType)
 
   if (!verified) {
-    return redirect(DPLinks.app.home({ articleType: 'trend' }))
+    return redirect(DPLinks.app.home({ articleType: 'trendAndLifestyle' }))
   }
 
   return articleType
