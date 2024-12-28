@@ -58,9 +58,10 @@ export class ApiClientQuoteAiInterpretations extends ApiClientEntityBase<
   async generateAndSaveQuoteInterpretationWithAi(
     input: IApiClientAiBaseParams<'getQuoteInterpretation'> & {
       quote_id: number
+      user_id: string
     },
   ) {
-    const { customPrompt, quote_id } = input
+    const { customPrompt, quote_id, user_id } = input
     const res = await this._apiClient.openai.getQuoteInterpretation(input)
 
     const interpretation = await this.create({
@@ -68,6 +69,7 @@ export class ApiClientQuoteAiInterpretations extends ApiClientEntityBase<
       model_version: 'gpt-4o-mini',
       prompt: customPrompt ?? null,
       quote_id,
+      user_id,
     })
 
     return interpretation

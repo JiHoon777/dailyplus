@@ -1,3 +1,4 @@
+import type { IApiClientQuoteAiInterpretationsParams } from '@/shared/api'
 import type {
   IQuoteAiInterpretations,
   IQuoteAiInterpretationsListableInput,
@@ -12,6 +13,7 @@ import { useState } from 'react'
 import { useAiPromptAccess } from '@/shared/hooks'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { cn, showToast } from '@/shared/lib/utils'
+import { useDPStore } from '@/shared/store'
 import { Button, Skeleton } from '@/shared/ui'
 
 export type IQuoteInterpretationProps = {
@@ -25,6 +27,7 @@ export const QuoteInterpretation = ({
   quote,
   getQuoteInterpretationQueryKey,
 }: IQuoteInterpretationProps) => {
+  const userId = useDPStore((s) => s.auth.me?.id)
   const { hasAiPromptAccess } = useAiPromptAccess()
   const [createdInterpretation, setCreatedInterpretation] =
     useState<IQuoteAiInterpretations | null>(null)
@@ -57,14 +60,17 @@ export const QuoteInterpretation = ({
     isPending: isCreateLoading,
     error: createError,
   } = useMutation({
-    mutationFn: async () => {
-      const joinedQuote = `${quote.original_text}, ${quote.korean_text}`
-
+    mutationFn: async ({
+      quote_id,
+      user_id,
+      quoteText,
+    }: IApiClientQuoteAiInterpretationsParams<'generateAndSaveQuoteInterpretationWithAi'>) => {
       const interpretation =
         await ApiClientCSR.quoteAiInterpretations.generateAndSaveQuoteInterpretationWithAi(
           {
-            quoteText: joinedQuote,
-            quote_id: quote.id,
+            quoteText,
+            quote_id,
+            user_id,
           },
         )
 
@@ -79,11 +85,15 @@ export const QuoteInterpretation = ({
   const isLoading = isCreateLoading || isGetLoading
   const handleCreate = () => {
     // Todo: handle Ai Prompt Access
-    if (isLoading || !hasAiPromptAccess) {
+    if (isLoading || !hasAiPromptAccess || !userId) {
       return
     }
 
-    mutate()
+    mutate({
+      quoteText: `${quote.original_text}, ${quote.korean_text}`,
+      quote_id: quote.id,
+      user_id: userId,
+    })
   }
 
   const handleRetry = () => {

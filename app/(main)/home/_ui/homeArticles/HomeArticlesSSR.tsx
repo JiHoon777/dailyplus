@@ -24,7 +24,6 @@ export const HomeArticlesSSR = async ({
     type: currentArticleType,
   })
 
-  // Todo: handle error in boundery
   if (error) {
     throw error
   }

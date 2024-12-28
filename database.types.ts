@@ -96,26 +96,39 @@ export type Database = {
           created_at: string
           id: number
           model_version: string
+          prompt: string | null
           quote_id: number
           title: string
+          user_id: string
         }
         Insert: {
           content: Json
           created_at?: string
           id?: number
           model_version: string
+          prompt?: string | null
           quote_id: number
           title: string
+          user_id: string
         }
         Update: {
           content?: Json
           created_at?: string
           id?: number
           model_version?: string
+          prompt?: string | null
           quote_id?: number
           title?: string
+          user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: 'quote_ai_stories_user_id_fkey'
+            columns: ['user_id']
+            isOneToOne: false
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
           {
             foreignKeyName: 'quote_ai_story_quote_id_fkey'
             columns: ['quote_id']
