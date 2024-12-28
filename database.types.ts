@@ -97,7 +97,6 @@ export type Database = {
           id: number
           model_version: string
           prompt: string | null
-          quote_id: number
           title: string
           user_id: string
         }
@@ -107,7 +106,6 @@ export type Database = {
           id?: number
           model_version: string
           prompt?: string | null
-          quote_id: number
           title: string
           user_id: string
         }
@@ -117,7 +115,6 @@ export type Database = {
           id?: number
           model_version?: string
           prompt?: string | null
-          quote_id?: number
           title?: string
           user_id?: string
         }
@@ -129,8 +126,37 @@ export type Database = {
             referencedRelation: 'users'
             referencedColumns: ['id']
           },
+        ]
+      }
+      quote_ai_stories_quotes: {
+        Row: {
+          created_at: string
+          id: number
+          quote_ai_story_id: number
+          quote_id: number
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          quote_ai_story_id: number
+          quote_id: number
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          quote_ai_story_id?: number
+          quote_id?: number
+        }
+        Relationships: [
           {
-            foreignKeyName: 'quote_ai_story_quote_id_fkey'
+            foreignKeyName: 'quote_ai_stories_quotes_quote_ai_story_id_fkey'
+            columns: ['quote_ai_story_id']
+            isOneToOne: false
+            referencedRelation: 'quote_ai_stories'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'quote_ai_stories_quotes_quote_id_fkey'
             columns: ['quote_id']
             isOneToOne: false
             referencedRelation: 'quotes'

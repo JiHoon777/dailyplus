@@ -86,7 +86,7 @@ export type IQuoteAiStories =
  */
 export type IQuoteAiStoriesCreationInput = Pick<
   IQuoteAiStories,
-  'title' | 'content' | 'model_version' | 'quote_id' | 'prompt' | 'user_id'
+  'title' | 'content' | 'model_version' | 'prompt' | 'user_id'
 >
 export type IQuoteAiStoriesListableInput = IListableParams<{
   orderBy?: 'created_at'
