@@ -1,9 +1,13 @@
+import { Greeting } from '@/features/auth'
 import { DPStudioPage } from '@/shared/ui'
+
+import { StudioPromptInput } from './_ui'
 
 export default function StudioNewPage() {
   return (
-    <DPStudioPage>
-      <h1>Studio New Page</h1>
+    <DPStudioPage className="gap-6">
+      <Greeting />
+      <StudioPromptInput />
     </DPStudioPage>
   )
 }

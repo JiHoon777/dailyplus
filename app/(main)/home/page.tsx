@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
 
 import { verifyArticleType } from '@/entities/articles'
+import { Greeting } from '@/features/auth'
 import { DPLinks } from '@/shared/config'
 import { DPage } from '@/shared/ui'
 
@@ -11,7 +12,6 @@ import {
   ConfuciusQuotes,
   HomeArticlesSSR,
   HomeArticlesSSRFallback,
-  HomeGreeting,
 } from './_ui'
 
 export default async function Home({
@@ -24,7 +24,7 @@ export default async function Home({
 
   return (
     <DPage className={'gap-6'}>
-      <HomeGreeting />
+      <Greeting />
       <Suspense fallback={<HomeArticlesSSRFallback />}>
         <HomeArticlesSSR currentArticleType={articleTypeParam} />
       </Suspense>
