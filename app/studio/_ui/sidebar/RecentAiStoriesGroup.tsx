@@ -29,7 +29,7 @@ export const RecentAiStoriesGroup = () => {
         <SidebarMenu>
           <PagedListableQueryLoader
             fetchData={loadList}
-            queryKey={DpQueryKeys.studio.recentAiStories.list}
+            queryKey={DpQueryKeys.studio.recentAiStoryList}
             params={{ limit: 10, user_id: meId }}
           >
             {({ list }) =>
