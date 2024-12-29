@@ -1,4 +1,4 @@
-import { AppHomeHeaderBase } from '@/widgets/layout'
+import { DPHeader } from '@/widgets/layout'
 
 export default function MainLayout({
   children,
@@ -7,7 +7,7 @@ export default function MainLayout({
 }) {
   return (
     <>
-      <AppHomeHeaderBase />
+      <DPHeader />
       {children}
     </>
   )

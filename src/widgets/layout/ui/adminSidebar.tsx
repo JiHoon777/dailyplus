@@ -1,3 +1,5 @@
+'use client'
+
 import {
   BookHeartIcon,
   BookIcon,
@@ -7,6 +9,7 @@ import {
   UserIcon,
 } from 'lucide-react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 import { DPLinks } from '@/shared/config'
 import {
@@ -19,7 +22,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/shared/ui'
-import { usePathname } from 'next/navigation'
 
 const items = [
   {

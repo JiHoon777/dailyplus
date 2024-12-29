@@ -16,7 +16,7 @@ import {
   IntersectionTrigger,
 } from '@/shared/lib/loader'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
-import { PageBase } from '@/widgets/layout'
+import { DPage } from '@/widgets/layout'
 
 export default function ArticlesPage() {
   const searchParams = useSearchParams()
@@ -25,7 +25,7 @@ export default function ArticlesPage() {
     ApiClientCSR.articles.getList(input)
 
   return (
-    <PageBase className={'gap-6'}>
+    <DPage className={'gap-6'}>
       <ArticleTypeCategory
         showAll
         pathName={DPLinks.app.articles.list()}
@@ -68,7 +68,7 @@ export default function ArticlesPage() {
           </div>
         )}
       </InfiniteListableQueryLoader>
-    </PageBase>
+    </DPage>
   )
 }
 

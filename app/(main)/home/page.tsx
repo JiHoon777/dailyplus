@@ -5,7 +5,7 @@ import { Suspense } from 'react'
 
 import { verifyArticleType } from '@/entities/articles'
 import { DPLinks } from '@/shared/config'
-import { PageBase } from '@/widgets/layout'
+import { DPage } from '@/widgets/layout'
 
 import {
   ConfuciusQuotes,
@@ -23,14 +23,14 @@ export default async function Home({
   const articleTypeParam = verifyArticleTypeParam(resolvedParams)
 
   return (
-    <PageBase className={'gap-6'}>
+    <DPage className={'gap-6'}>
       <HomeGreeting />
       <Suspense fallback={<HomeArticlesSSRFallback />}>
         <HomeArticlesSSR currentArticleType={articleTypeParam} />
       </Suspense>
       <ConfuciusQuotes />
       <div className="h-10 w-full" />
-    </PageBase>
+    </DPage>
   )
 }
 

@@ -4,8 +4,7 @@ import { redirect } from 'next/navigation'
 
 import { useDPStore } from '@/shared/store'
 import { SidebarInset } from '@/shared/ui'
-import { AdminHeaderBase } from '@/widgets/layout/ui/adminHeaderBase'
-import { AdminSidebar } from '@/widgets/layout/ui/adminSidebar'
+import { AdminHeader, AdminSidebar } from '@/widgets/layout/'
 
 export default function AdminLayout({
   children,
@@ -23,7 +22,7 @@ export default function AdminLayout({
     <div className="flex w-full">
       <AdminSidebar />
       <SidebarInset>
-        <AdminHeaderBase />
+        <AdminHeader />
         {children}
       </SidebarInset>
     </div>

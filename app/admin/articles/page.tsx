@@ -7,7 +7,7 @@ import { PagedListableQueryLoader } from '@/shared/lib/loader'
 import { useOverlay } from '@/shared/lib/overlay'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { Button, DataTableRenderer, Pagination } from '@/shared/ui'
-import { PageBase } from '@/widgets/layout'
+import { DPage } from '@/widgets/layout'
 
 import {
   ArticleColumns,
@@ -32,7 +32,7 @@ export default function ArticlesPage() {
   }
 
   return (
-    <PageBase>
+    <DPage>
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Articles</h1>
         <div className="flex items-center gap-4">
@@ -61,6 +61,6 @@ export default function ArticlesPage() {
           </div>
         )}
       </PagedListableQueryLoader>
-    </PageBase>
+    </DPage>
   )
 }

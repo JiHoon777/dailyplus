@@ -6,7 +6,7 @@ import { DpQueryKeys } from '@/shared/api'
 import { PagedListableQueryLoader } from '@/shared/lib/loader'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { DataTableRenderer, Pagination } from '@/shared/ui'
-import { PageBase } from '@/widgets/layout'
+import { DPage } from '@/widgets/layout'
 
 import { QuoteAiInterpretationsColumns } from './_ui'
 
@@ -15,7 +15,7 @@ export default function QuoteAiInterpretationsPage() {
     ApiClientCSR.quoteAiInterpretations.getList(input)
 
   return (
-    <PageBase>
+    <DPage>
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Quote Ai Interpretations</h1>
       </div>
@@ -41,6 +41,6 @@ export default function QuoteAiInterpretationsPage() {
           </div>
         )}
       </PagedListableQueryLoader>
-    </PageBase>
+    </DPage>
   )
 }

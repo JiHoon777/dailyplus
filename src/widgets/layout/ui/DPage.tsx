@@ -6,7 +6,7 @@ import type {
 
 import { cn } from '@/shared/lib/utils'
 
-export const PageBase = ({
+export const DPage = ({
   className,
   ...props
 }: PropsWithChildren &

@@ -7,7 +7,7 @@ import { PagedListableQueryLoader } from '@/shared/lib/loader'
 import { useOverlay } from '@/shared/lib/overlay'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { Button, DataTableRenderer, Pagination } from '@/shared/ui'
-import { PageBase } from '@/widgets/layout'
+import { DPage } from '@/widgets/layout'
 
 import { CreateQuotePeopleOverlay, QuotePeopleColumns } from './_ui'
 
@@ -23,7 +23,7 @@ export default function QuotepeoplePage() {
   }
 
   return (
-    <PageBase>
+    <DPage>
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Quote People</h1>
         <Button onClick={handleCreateArticle}>Create Quote People</Button>
@@ -47,6 +47,6 @@ export default function QuotepeoplePage() {
           </div>
         )}
       </PagedListableQueryLoader>
-    </PageBase>
+    </DPage>
   )
 }
