@@ -45,4 +45,10 @@ export const DPLinks = {
     home: (queryParams?: QueryParams) =>
       appendQueryParams('/home', queryParams),
   },
+  studio: {
+    aiStories: {
+      detail: (id: number) => `/studio/ai-stories/${id}`,
+    },
+    new: '/studio/new',
+  },
 } as const

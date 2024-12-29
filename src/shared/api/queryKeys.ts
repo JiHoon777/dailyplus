@@ -1,4 +1,5 @@
 import type {
+  IAiStoriesListableInput,
   IArticlesListableInput,
   IQuoteAiInterpretationsListableInput,
   IQuotePeopleListableInput,
@@ -63,6 +64,15 @@ const appQueryKeys = {
   },
 } as const
 
+/** 스튜디오 영역 쿼리키 */
+const studioQueryKeys = {
+  recentAiStories: {
+    /** 스튜디오 최근 생성된 Ai Story 목록 조회 */
+    list: (input?: Omit<IAiStoriesListableInput, 'page' | 'limit'>) =>
+      createQueryKey(['studio', 'recent', 'ai-stories', 'list'], input),
+  },
+} as const
+
 /** 인증 관련 쿼리키 */
 const authQueryKeys = {
   /** 현재 인증 세션 조회 */
@@ -75,4 +85,5 @@ export const DpQueryKeys = {
   admin: adminQueryKeys,
   app: appQueryKeys,
   auth: authQueryKeys,
+  studio: studioQueryKeys,
 } as const

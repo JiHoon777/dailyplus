@@ -13,6 +13,7 @@ import type { Database } from 'database.types'
 import { ApiClientOpenAi, ApiClientPerplexity } from './ai'
 import { ApiClientFetch } from './base/apiClientFetch'
 import {
+  ApiClientAiStories,
   ApiClientArticles,
   ApiClientAuth,
   ApiClientQuoteAiInterpretations,
@@ -39,6 +40,7 @@ export class ApiClient {
   readonly quotePeople = new ApiClientQuotePeople(this)
   readonly quotes = new ApiClientQuotes(this)
   readonly quoteAiInterpretations = new ApiClientQuoteAiInterpretations(this)
+  readonly aiStories = new ApiClientAiStories(this)
 
   constructor(private readonly _supabaseClient: SupabaseClient<Database>) {}
 

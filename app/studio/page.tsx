@@ -1,9 +1,9 @@
-import { DPStudioPage } from '@/shared/ui'
+import { redirect } from 'next/navigation'
+
+import { DPLinks } from '@/shared/config'
 
 export default function StudioPage() {
-  return (
-    <DPStudioPage>
-      <h1>Studio</h1>
-    </DPStudioPage>
-  )
+  redirect(DPLinks.studio.new)
+
+  return null
 }

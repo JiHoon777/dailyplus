@@ -91,12 +91,11 @@ export class ApiClientArticles extends ApiClientEntityBase<
       .range(from, to)
 
     query.order(orderBy, { ascending: false })
+    query.not('published_at', 'is', null)
 
     if (type) {
       query.eq('type', type)
     }
-
-    query.not('published_at', 'is', null)
 
     return createListableResponse(await query)
   }

@@ -89,6 +89,7 @@ export type IAiStoriesCreationInput = Pick<
 >
 export type IAiStoriesListableInput = IListableParams<{
   orderBy?: 'created_at'
+  user_id?: string
 }>
 export type IAiStoriesUpdateInput = Partial<IAiStoriesCreationInput>
 export type IAiStoriesDeletionInput = Pick<IAiStories, 'id'>

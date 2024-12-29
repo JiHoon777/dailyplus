@@ -1,1 +1,1 @@
-export * from './StudioSidebar'
+export * from './sidebar'
