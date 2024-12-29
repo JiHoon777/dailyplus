@@ -1,7 +1,7 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Home, LogOut, Settings, Sparkles } from 'lucide-react'
+import { ChevronDown, Home, LogOut, Settings, Sparkles } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
@@ -9,7 +9,7 @@ import { DpQueryKeys } from '@/shared/api'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { getUsernameFromEmail } from '@/shared/lib/utils'
 import { useDPStore } from '@/shared/store'
-import { Button } from '@/shared/ui'
+import { Avatar, AvatarFallback, Button } from '@/shared/ui'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -53,11 +53,16 @@ export function UserDropdown() {
     return null
   }
 
+  const name = me?.name?.slice(0, 2) ?? me?.email?.slice(0, 2) ?? '??'
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" onClick={() => setIsOpen(!isOpen)}>
+        <Button size={'sm'} variant="ghost" onClick={() => setIsOpen(!isOpen)}>
+          <Avatar className="h-6 w-6">
+            <AvatarFallback>{name}</AvatarFallback>
+          </Avatar>
           {me.name ?? getUsernameFromEmail(me.email)}
+          <ChevronDown />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
