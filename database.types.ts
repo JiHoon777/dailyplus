@@ -9,6 +9,116 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      ai_stories: {
+        Row: {
+          content: Json
+          created_at: string
+          id: number
+          model_version: string
+          prompt: string | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          content: Json
+          created_at?: string
+          id?: number
+          model_version: string
+          prompt?: string | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          content?: Json
+          created_at?: string
+          id?: number
+          model_version?: string
+          prompt?: string | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'quote_ai_stories_user_id_fkey'
+            columns: ['user_id']
+            isOneToOne: false
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      ai_stories_compositions: {
+        Row: {
+          child_ai_story_id: number
+          created_at: string
+          id: number
+          parent_ai_story_id: number
+        }
+        Insert: {
+          child_ai_story_id: number
+          created_at?: string
+          id?: number
+          parent_ai_story_id: number
+        }
+        Update: {
+          child_ai_story_id?: number
+          created_at?: string
+          id?: number
+          parent_ai_story_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'ai_stories_compositions_child_ai_story_id_fkey'
+            columns: ['child_ai_story_id']
+            isOneToOne: false
+            referencedRelation: 'ai_stories'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'ai_stories_compositions_parent_ai_story_id_fkey'
+            columns: ['parent_ai_story_id']
+            isOneToOne: false
+            referencedRelation: 'ai_stories'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      ai_stories_quotes: {
+        Row: {
+          ai_story_id: number
+          created_at: string
+          id: number
+          quote_id: number
+        }
+        Insert: {
+          ai_story_id: number
+          created_at?: string
+          id?: number
+          quote_id: number
+        }
+        Update: {
+          ai_story_id?: number
+          created_at?: string
+          id?: number
+          quote_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'quote_ai_stories_quotes_quote_ai_story_id_fkey'
+            columns: ['ai_story_id']
+            isOneToOne: false
+            referencedRelation: 'ai_stories'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'quote_ai_stories_quotes_quote_id_fkey'
+            columns: ['quote_id']
+            isOneToOne: false
+            referencedRelation: 'quotes'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       articles: {
         Row: {
           created_at: string
@@ -18,7 +128,7 @@ export type Database = {
           reference_url: string
           summary: string | null
           title: string | null
-          type: Database["public"]["Enums"]["article_type"]
+          type: Database['public']['Enums']['article_type']
           unique_id: string
         }
         Insert: {
@@ -29,7 +139,7 @@ export type Database = {
           reference_url: string
           summary?: string | null
           title?: string | null
-          type: Database["public"]["Enums"]["article_type"]
+          type: Database['public']['Enums']['article_type']
           unique_id: string
         }
         Update: {
@@ -40,7 +150,7 @@ export type Database = {
           reference_url?: string
           summary?: string | null
           title?: string | null
-          type?: Database["public"]["Enums"]["article_type"]
+          type?: Database['public']['Enums']['article_type']
           unique_id?: string
         }
         Relationships: []
@@ -75,92 +185,18 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "quote_ai_interpretations_quote_id_fkey"
-            columns: ["quote_id"]
+            foreignKeyName: 'quote_ai_interpretations_quote_id_fkey'
+            columns: ['quote_id']
             isOneToOne: false
-            referencedRelation: "quotes"
-            referencedColumns: ["id"]
+            referencedRelation: 'quotes'
+            referencedColumns: ['id']
           },
           {
-            foreignKeyName: "quote_ai_interpretations_user_id_fkey"
-            columns: ["user_id"]
+            foreignKeyName: 'quote_ai_interpretations_user_id_fkey'
+            columns: ['user_id']
             isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      quote_ai_stories: {
-        Row: {
-          content: Json
-          created_at: string
-          id: number
-          model_version: string
-          prompt: string | null
-          title: string
-          user_id: string
-        }
-        Insert: {
-          content: Json
-          created_at?: string
-          id?: number
-          model_version: string
-          prompt?: string | null
-          title: string
-          user_id: string
-        }
-        Update: {
-          content?: Json
-          created_at?: string
-          id?: number
-          model_version?: string
-          prompt?: string | null
-          title?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "quote_ai_stories_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      quote_ai_stories_quotes: {
-        Row: {
-          created_at: string
-          id: number
-          quote_ai_story_id: number
-          quote_id: number
-        }
-        Insert: {
-          created_at?: string
-          id?: number
-          quote_ai_story_id: number
-          quote_id: number
-        }
-        Update: {
-          created_at?: string
-          id?: number
-          quote_ai_story_id?: number
-          quote_id?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "quote_ai_stories_quotes_quote_ai_story_id_fkey"
-            columns: ["quote_ai_story_id"]
-            isOneToOne: false
-            referencedRelation: "quote_ai_stories"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "quote_ai_stories_quotes_quote_id_fkey"
-            columns: ["quote_id"]
-            isOneToOne: false
-            referencedRelation: "quotes"
-            referencedColumns: ["id"]
+            referencedRelation: 'users'
+            referencedColumns: ['id']
           },
         ]
       }
@@ -221,11 +257,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "quotes_quote_person_id_fkey"
-            columns: ["quote_person_id"]
+            foreignKeyName: 'quotes_quote_person_id_fkey'
+            columns: ['quote_person_id']
             isOneToOne: false
-            referencedRelation: "quote_people"
-            referencedColumns: ["id"]
+            referencedRelation: 'quote_people'
+            referencedColumns: ['id']
           },
         ]
       }
@@ -236,7 +272,7 @@ export type Database = {
           email: string
           id: string
           name: string | null
-          role: Database["public"]["Enums"]["user_role"]
+          role: Database['public']['Enums']['user_role']
           updated_at: string
         }
         Insert: {
@@ -245,7 +281,7 @@ export type Database = {
           email?: string
           id: string
           name?: string | null
-          role?: Database["public"]["Enums"]["user_role"]
+          role?: Database['public']['Enums']['user_role']
           updated_at?: string
         }
         Update: {
@@ -254,7 +290,7 @@ export type Database = {
           email?: string
           id?: string
           name?: string | null
-          role?: Database["public"]["Enums"]["user_role"]
+          role?: Database['public']['Enums']['user_role']
           updated_at?: string
         }
         Relationships: []
@@ -267,8 +303,8 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      article_type: "trendAndLifestyle" | "ai" | "frontend"
-      user_role: "user" | "admin"
+      article_type: 'trendAndLifestyle' | 'ai' | 'frontend'
+      user_role: 'user' | 'admin'
     }
     CompositeTypes: {
       [_ in never]: never
@@ -276,27 +312,27 @@ export type Database = {
   }
 }
 
-type PublicSchema = Database[Extract<keyof Database, "public">]
+type PublicSchema = Database[Extract<keyof Database, 'public'>]
 
 export type Tables<
   PublicTableNameOrOptions extends
-    | keyof (PublicSchema["Tables"] & PublicSchema["Views"])
+    | keyof (PublicSchema['Tables'] & PublicSchema['Views'])
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
-        Database[PublicTableNameOrOptions["schema"]]["Views"])
+    ? keyof (Database[PublicTableNameOrOptions['schema']]['Tables'] &
+        Database[PublicTableNameOrOptions['schema']]['Views'])
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
-      Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+  ? (Database[PublicTableNameOrOptions['schema']]['Tables'] &
+      Database[PublicTableNameOrOptions['schema']]['Views'])[TableName] extends {
       Row: infer R
     }
     ? R
     : never
-  : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] &
-        PublicSchema["Views"])
-    ? (PublicSchema["Tables"] &
-        PublicSchema["Views"])[PublicTableNameOrOptions] extends {
+  : PublicTableNameOrOptions extends keyof (PublicSchema['Tables'] &
+        PublicSchema['Views'])
+    ? (PublicSchema['Tables'] &
+        PublicSchema['Views'])[PublicTableNameOrOptions] extends {
         Row: infer R
       }
       ? R
@@ -305,19 +341,19 @@ export type Tables<
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
-    | keyof PublicSchema["Tables"]
+    | keyof PublicSchema['Tables']
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
+    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
       Insert: infer I
     }
     ? I
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
-    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
+    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
         Insert: infer I
       }
       ? I
@@ -326,19 +362,19 @@ export type TablesInsert<
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
-    | keyof PublicSchema["Tables"]
+    | keyof PublicSchema['Tables']
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
+    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
       Update: infer U
     }
     ? U
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
-    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
+    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
         Update: infer U
       }
       ? U
@@ -347,28 +383,28 @@ export type TablesUpdate<
 
 export type Enums<
   PublicEnumNameOrOptions extends
-    | keyof PublicSchema["Enums"]
+    | keyof PublicSchema['Enums']
     | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
+    ? keyof Database[PublicEnumNameOrOptions['schema']]['Enums']
     : never = never,
 > = PublicEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
-  : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
-    ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+  ? Database[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
+  : PublicEnumNameOrOptions extends keyof PublicSchema['Enums']
+    ? PublicSchema['Enums'][PublicEnumNameOrOptions]
     : never
 
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
-    | keyof PublicSchema["CompositeTypes"]
+    | keyof PublicSchema['CompositeTypes']
     | { schema: keyof Database },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
     schema: keyof Database
   }
-    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    ? keyof Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes']
     : never = never,
 > = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
-  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
-    ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+  ? Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes'][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema['CompositeTypes']
+    ? PublicSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]
     : never
