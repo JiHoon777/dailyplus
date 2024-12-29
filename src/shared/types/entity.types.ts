@@ -75,24 +75,23 @@ export type IQuotePeopleUpdateInput = IQuotePeopleCreationInput
 export type IQuotePeopleDeletionInput = Pick<IQuotePeople, 'id'>
 
 //==============================================================================
-// * Quote AI Stories Entity
+// * AI Stories Entity
 //==============================================================================
 
-export type IQuoteAiStories =
-  Database['public']['Tables']['quote_ai_stories']['Row']
+export type IAiStories = Database['public']['Tables']['ai_stories']['Row']
 
 /**
  * * CRUD Inputs
  */
-export type IQuoteAiStoriesCreationInput = Pick<
-  IQuoteAiStories,
+export type IAiStoriesCreationInput = Pick<
+  IAiStories,
   'title' | 'content' | 'model_version' | 'prompt' | 'user_id'
 >
-export type IQuoteAiStoriesListableInput = IListableParams<{
+export type IAiStoriesListableInput = IListableParams<{
   orderBy?: 'created_at'
 }>
-export type IQuoteAiStoriesUpdateInput = Partial<IQuoteAiStoriesCreationInput>
-export type IQuoteAiStoriesDeletionInput = Pick<IQuoteAiStories, 'id'>
+export type IAiStoriesUpdateInput = Partial<IAiStoriesCreationInput>
+export type IAiStoriesDeletionInput = Pick<IAiStories, 'id'>
 
 //==============================================================================
 // * Quote AI Interpretations Entity
