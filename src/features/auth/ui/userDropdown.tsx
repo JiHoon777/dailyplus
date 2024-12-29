@@ -1,7 +1,7 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Home, LogOut, Settings } from 'lucide-react'
+import { Home, LogOut, Settings, Sparkles } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
@@ -45,8 +45,10 @@ export function UserDropdown() {
   }
   const handlePushAdmin = () => router.push('/admin/articles')
   const handlePushHome = () => router.push('/')
+  const handlePushStudio = () => router.push('/studio')
 
   const isAdminPage = pathname?.startsWith('/admin')
+  const isStudioPage = pathname?.startsWith('/studio')
   if (!me) {
     return null
   }
@@ -72,9 +74,20 @@ export function UserDropdown() {
                 <span>어드민</span>
               </DropdownMenuItem>
             )}
-            <DropdownMenuSeparator />
           </>
         )}
+        {isStudioPage ? (
+          <DropdownMenuItem onClick={handlePushHome}>
+            <Home />
+            <span>홈</span>
+          </DropdownMenuItem>
+        ) : (
+          <DropdownMenuItem onClick={handlePushStudio}>
+            <Sparkles />
+            <span>스튜디오</span>
+          </DropdownMenuItem>
+        )}
+        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogout}>
           <LogOut />
           <span>로그아웃</span>
