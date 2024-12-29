@@ -4,7 +4,8 @@ import { redirect } from 'next/navigation'
 
 import { useDPStore } from '@/shared/store'
 import { SidebarInset } from '@/shared/ui'
-import { AdminHeader, AdminSidebar } from '@/widgets/layout/'
+
+import { AdminHeader, AdminSidebar } from './_ui'
 
 export default function AdminLayout({
   children,

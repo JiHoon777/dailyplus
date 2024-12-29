@@ -16,7 +16,7 @@ import {
   IntersectionTrigger,
 } from '@/shared/lib/loader'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
-import { DPage } from '@/widgets/layout'
+import { DPage } from '@/shared/ui'
 
 export default function ArticlesPage() {
   const searchParams = useSearchParams()

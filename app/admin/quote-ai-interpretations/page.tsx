@@ -5,8 +5,7 @@ import type { IQuoteAiInterpretationsListableInput } from '@/shared/types'
 import { DpQueryKeys } from '@/shared/api'
 import { PagedListableQueryLoader } from '@/shared/lib/loader'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
-import { DataTableRenderer, Pagination } from '@/shared/ui'
-import { DPage } from '@/widgets/layout'
+import { DataTableRenderer, DPage, Pagination } from '@/shared/ui'
 
 import { QuoteAiInterpretationsColumns } from './_ui'
 

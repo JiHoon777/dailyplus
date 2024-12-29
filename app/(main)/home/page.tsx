@@ -5,7 +5,7 @@ import { Suspense } from 'react'
 
 import { verifyArticleType } from '@/entities/articles'
 import { DPLinks } from '@/shared/config'
-import { DPage } from '@/widgets/layout'
+import { DPage } from '@/shared/ui'
 
 import {
   ConfuciusQuotes,
