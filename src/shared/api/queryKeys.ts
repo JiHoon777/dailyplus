@@ -26,17 +26,22 @@ const createQueryKey = <T extends Record<string, unknown>>(
 /** 관리자 영역 쿼리키 */
 const adminQueryKeys = {
   articles: {
-    /** 관리자용 게시글 목록 조회 (/admin/articles) */
+    /** 관리자용 게시글 목록 조회 */
     list: (input?: IArticlesListableInput) =>
       createQueryKey(['admin', 'articles', 'list'], input),
   },
+  quoteAiInterpretations: {
+    /** 관리자용 명언 해석 조회  */
+    list: (input?: IQuoteAiInterpretationsListableInput) =>
+      createQueryKey(['admin', 'quote-ai-interpretations', 'list'], input),
+  },
   quotePeople: {
-    /** 관리자용 명언 인물 조회 (/admin/articles) */
+    /** 관리자용 명언 인물 조회  */
     list: (input?: IQuotePeopleListableInput) =>
       createQueryKey(['admin', 'quote-people', 'list'], input),
   },
   quotes: {
-    /** 관리자용 명언 조회 (/admin/articles) */
+    /** 관리자용 명언 조회  */
     list: (input?: IQuotesListableInput) =>
       createQueryKey(['admin', 'quotes', 'list'], input),
   },

@@ -19,6 +19,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/shared/ui'
+import { usePathname } from 'next/navigation'
 
 const items = [
   {
@@ -48,12 +49,13 @@ const items = [
   },
   {
     icon: BookIcon,
-    title: 'Quote Ai Stories',
-    url: DPLinks.admin.quoteAiStories.list,
+    title: 'Ai Stories',
+    url: DPLinks.admin.aiStories.list,
   },
 ]
 
 export const AdminSidebar = () => {
+  const pathname = usePathname()
   return (
     <Sidebar>
       <SidebarContent>
@@ -63,7 +65,7 @@ export const AdminSidebar = () => {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild isActive={pathname === item.url}>
                     <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
