@@ -6,7 +6,6 @@ import { Slot } from '@radix-ui/react-slot'
 import { Button } from '@shared/ui/button'
 import { Input } from '@shared/ui/input'
 import { Separator } from '@shared/ui/separator'
-import { Sheet, SheetContent } from '@shared/ui/sheet'
 import { Skeleton } from '@shared/ui/skeleton'
 import {
   Tooltip,
@@ -20,6 +19,8 @@ import * as React from 'react'
 
 import { useIsMobile } from '@/shared/hooks/useMobile'
 import { cn } from '@/shared/lib/utils'
+
+import { Sheet, SheetContent } from './sheet'
 
 const SIDEBAR_COOKIE_NAME = 'sidebar:state'
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7

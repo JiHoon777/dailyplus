@@ -3,6 +3,7 @@ import type { OverlayProps } from '@/shared/lib/overlay'
 
 import { QuoteList } from '@/entities/quotes'
 import { DpQueryKeys } from '@/shared/api'
+import { SheetOverlay } from '@/shared/ui'
 
 export const StudioQuoteOverlay = ({
   isOpen,
@@ -10,7 +11,7 @@ export const StudioQuoteOverlay = ({
   onSelectQuote,
 }: Pick<IQuoteListProps, 'onSelectQuote'> & OverlayProps) => {
   return (
-    <div className="flex w-full flex-col gap-2">
+    <SheetOverlay isOpen={isOpen} onClose={close}>
       <div>
         <h3 className="text-lg font-bold">Quotes</h3>
       </div>
@@ -18,6 +19,6 @@ export const StudioQuoteOverlay = ({
         onSelectQuote={onSelectQuote}
         getQuoteListQueryKey={DpQueryKeys.studio.new.quoteList}
       />
-    </div>
+    </SheetOverlay>
   )
 }
