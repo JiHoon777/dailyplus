@@ -1,11 +1,14 @@
 import type { IQuoteListProps } from '@/entities/quotes'
+import type { OverlayProps } from '@/shared/lib/overlay'
 
 import { QuoteList } from '@/entities/quotes'
 import { DpQueryKeys } from '@/shared/api'
 
-export const StudioQuoteList = ({
+export const StudioQuoteOverlay = ({
+  isOpen,
+  close,
   onSelectQuote,
-}: Pick<IQuoteListProps, 'onSelectQuote'>) => {
+}: Pick<IQuoteListProps, 'onSelectQuote'> & OverlayProps) => {
   return (
     <div className="flex w-full flex-col gap-2">
       <div>

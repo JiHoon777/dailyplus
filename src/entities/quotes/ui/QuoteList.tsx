@@ -65,7 +65,7 @@ export const QuoteList = ({
   )
 }
 
-const QuoteListCard = ({
+export const QuoteListCard = ({
   quote,
   onClick,
 }: {

@@ -6,16 +6,13 @@ import type { IQuotes } from '@/shared/types'
 import { useState } from 'react'
 
 import { Greeting } from '@/features/auth'
+import { useOverlay } from '@/shared/lib/overlay'
 import { DPStudioPage } from '@/shared/ui'
 
-import {
-  StudioAiStoryList,
-  StudioMergeList,
-  StudioPromptInput,
-  StudioQuoteList,
-} from './_ui'
+import { StudioMergeList, StudioPromptInput, StudioQuoteOverlay } from './_ui'
 
 export default function StudioNewPage() {
+  const { open } = useOverlay()
   const [prompt, setPrompt] = useState('')
 
   const [mergeItems, setMergeItems] = useState<IStudioMergeItems[]>([])
@@ -37,13 +34,21 @@ export default function StudioNewPage() {
     setMergeItems((prev) => [...prev, newItem])
   }
 
+  const openQuoteList = () => {
+    open(({ isOpen, close }) => (
+      <StudioQuoteOverlay
+        isOpen={isOpen}
+        close={close}
+        onSelectQuote={addQuote}
+      />
+    ))
+  }
+
   return (
     <DPStudioPage className="gap-6 pt-[6rem]">
       <Greeting />
       <StudioPromptInput value={prompt} onChange={setPrompt} />
       <StudioMergeList items={mergeItems} />
-      <StudioQuoteList onSelectQuote={addQuote} />
-      <StudioAiStoryList />
     </DPStudioPage>
   )
 }

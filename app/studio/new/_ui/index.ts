@@ -1,4 +1,4 @@
 export * from './StudioAiStoryList'
 export * from './StudioMergeList'
 export * from './StudioPromptInput'
-export * from './StudioQuoteList'
+export * from './StudioQuoteOverlay'

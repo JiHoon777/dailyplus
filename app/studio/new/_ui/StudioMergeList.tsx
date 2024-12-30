@@ -1,5 +1,7 @@
 import type { IStudioMergeItems } from 'app/studio/_types'
 
+import { QuoteListCard } from '@/entities/quotes'
+
 export const StudioMergeList = ({ items }: { items: IStudioMergeItems[] }) => {
   return (
     <div className="flex w-full flex-col gap-2">
@@ -9,7 +11,13 @@ export const StudioMergeList = ({ items }: { items: IStudioMergeItems[] }) => {
       <div className="flex w-full gap-2">
         {items.map((item) => {
           if (item.type === 'quote') {
-            return <div key={item.data.id}>{item.data.original_text}</div>
+            return (
+              <QuoteListCard
+                onClick={() => {}}
+                key={item.data.id}
+                quote={item.data}
+              />
+            )
           }
 
           return <div key={item.data.id}>{item.data.title}</div>
