@@ -13,7 +13,7 @@ export interface IStudioStore {
 }
 
 export const StudioStore = createStore<IStudioStore>(
-  (set, get) => ({
+  (set) => ({
     userPrompt: '',
     mergingItems: [],
 
@@ -22,21 +22,20 @@ export const StudioStore = createStore<IStudioStore>(
         state.userPrompt = prompt
       })
     },
-    appendItem: (item) => {
-      const existingItem = get().mergingItems.find(
-        (existing) =>
-          existing.type === item.type && existing.data.id === item.data.id,
-      )
-
-      if (existingItem) {
-        return
-      }
-
+    appendItem: (item) =>
       set((state) => {
+        const existingItem = state.mergingItems.find(
+          (existing) =>
+            existing.type === item.type && existing.data.id === item.data.id,
+        )
+
+        if (existingItem) {
+          return
+        }
+
         state.mergingItems.push(item)
-      })
-    },
-    removeItem: (item) => {
+      }),
+    removeItem: (item) =>
       set((state) => {
         const index = state.mergingItems.findIndex(
           (existing) =>
@@ -46,14 +45,11 @@ export const StudioStore = createStore<IStudioStore>(
         if (index !== -1) {
           state.mergingItems.splice(index, 1)
         }
-      })
-    },
-
-    clearItems: () => {
+      }),
+    clearItems: () =>
       set((state) => {
         state.mergingItems = []
-      })
-    },
+      }),
   }),
   'Studio Store',
 )

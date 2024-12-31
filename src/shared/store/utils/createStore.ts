@@ -7,7 +7,8 @@ import { immer } from 'zustand/middleware/immer'
 export const createStore = <T extends object>(
   initializer: StateCreator<
     T,
-    [['zustand/devtools', never], ['zustand/immer', never]]
+    [['zustand/devtools', never], ['zustand/immer', never]],
+    []
   >,
   name: string,
 ) => create<T>()(devtools(immer(initializer), { name }))
