@@ -1,8 +1,9 @@
-import type { IStudioMergeItems } from 'app/studio/_types'
-
 import { QuoteListCard } from '@/entities/quotes'
+import { useStore } from '@/shared/store'
 
-export const StudioMergeList = ({ items }: { items: IStudioMergeItems[] }) => {
+export const StudioMergeList = () => {
+  const items = useStore('studio', (s) => s.mergingItems)
+
   return (
     <div className="flex w-full flex-col gap-2">
       <div>

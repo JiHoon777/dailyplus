@@ -20,7 +20,6 @@
   "parser": "@typescript-eslint/parser",
   "plugins": [
     "react-refresh",
-    "sort-keys-fix",
     "simple-import-sort",
     "import",
     "jsx-a11y",
@@ -83,7 +82,6 @@
         "groups": [["^.*\\u0000$"], ["^\\u0000"], ["^@?\\w"], ["^"], ["^\\."]]
       }
     ],
-    "sort-keys-fix/sort-keys-fix": 2,
     "jsx-a11y/label-has-associated-control": "off"
   },
   "settings": {

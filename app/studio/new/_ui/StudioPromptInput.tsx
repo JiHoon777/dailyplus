@@ -1,27 +1,20 @@
 import type { ChangeEvent } from 'react'
 
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 
+import { useStore } from '@/shared/store'
 import { Textarea } from '@/shared/ui'
 
-export const StudioPromptInput = ({
-  value,
-  onChange,
-  placeholder = '',
-  className = '',
-  minHeight = 100,
-  maxHeight = 400,
-}: {
-  value: string
-  onChange: (value: string) => void
-  placeholder?: string
-  className?: string
-  minHeight?: number
-  maxHeight?: number
-}) => {
+const MIN_HEIGHT = 100
+const MAX_HEIGHT = 400
+
+export const StudioPromptInput = () => {
+  const userPrompt = useStore('studio', (s) => s.userPrompt)
+  const setUserPrompt = useStore('studio').getState().setUserPropmpt
+
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
-  const adjustHeight = () => {
+  const adjustHeight = useCallback(() => {
     const textarea = textareaRef.current
     if (!textarea) return
 
@@ -30,31 +23,30 @@ export const StudioPromptInput = ({
 
     // Calculate new height
     const newHeight = Math.min(
-      Math.max(textarea.scrollHeight, minHeight),
-      maxHeight,
+      Math.max(textarea.scrollHeight, MIN_HEIGHT),
+      MAX_HEIGHT,
     )
     textarea.style.height = `${newHeight}px`
-  }
+  }, [])
 
-  // Adjust height when value changes
   useEffect(() => {
     adjustHeight()
-  }, [value, minHeight, maxHeight])
+  }, [adjustHeight, userPrompt])
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    onChange(e.target.value)
+    setUserPrompt(e.target.value)
   }
 
   return (
     <Textarea
       ref={textareaRef}
-      value={value}
+      value={userPrompt}
       onChange={handleChange}
-      placeholder={placeholder}
-      className={`w-full resize-none overflow-y-auto ${className}`}
+      placeholder={'Write your Prompt'}
+      className={`w-full resize-none overflow-y-auto`}
       style={{
-        maxHeight: `${maxHeight}px`,
-        minHeight: `${minHeight}px`,
+        maxHeight: `${MAX_HEIGHT}px`,
+        minHeight: `${MIN_HEIGHT}px`,
       }}
     />
   )
