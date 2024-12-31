@@ -9,6 +9,9 @@ import { z } from 'zod'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import {
   Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
   Form,
   FormControl,
   FormField,
@@ -16,7 +19,6 @@ import {
   FormLabel,
   FormMessage,
   Input,
-  ModalOverlay,
 } from '@/shared/ui'
 
 const formSchema = z.object({
@@ -47,55 +49,51 @@ export const CreateQuotePeopleOverlay = ({ isOpen, close }: OverlayProps) => {
   }
 
   return (
-    <ModalOverlay
-      isOpen={isOpen}
-      onClose={close}
-      className="flex flex-col gap-6 p-4"
-    >
-      <header>
-        <h3 className="text-lg font-semibold">Create Quote People</h3>
-      </header>
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4"
-        >
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Input placeholder="description" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="flex justify-end gap-4">
-            <Button variant={'ghost'} disabled={isPending} onClick={close}>
-              {isPending ? 'Creating...' : 'Cancel'}
-            </Button>
-            <Button type="submit" disabled={isPending}>
-              {isPending ? 'Creating...' : 'Create'}
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </ModalOverlay>
+    <Dialog open={isOpen} onOpenChange={close}>
+      <DialogContent className="flex flex-col gap-6 p-4">
+        <DialogTitle>Create Quote People</DialogTitle>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-4"
+          >
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Input placeholder="description" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex justify-end gap-4">
+              <Button variant={'ghost'} disabled={isPending} onClick={close}>
+                {isPending ? 'Creating...' : 'Cancel'}
+              </Button>
+              <Button type="submit" disabled={isPending}>
+                {isPending ? 'Creating...' : 'Create'}
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   )
 }

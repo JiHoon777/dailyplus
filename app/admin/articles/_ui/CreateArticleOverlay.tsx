@@ -12,6 +12,9 @@ import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { showToast } from '@/shared/lib/utils'
 import {
   Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
   Form,
   FormControl,
   FormField,
@@ -19,7 +22,6 @@ import {
   FormLabel,
   FormMessage,
   Input,
-  ModalOverlay,
   Select,
   SelectContent,
   SelectItem,
@@ -85,141 +87,137 @@ export const CreateArticleOverlay = ({ isOpen, close }: OverlayProps) => {
   }
 
   return (
-    <ModalOverlay
-      isOpen={isOpen}
-      onClose={close}
-      className="flex flex-col gap-6 p-4"
-    >
-      <header>
-        <h3 className="text-lg font-semibold">Create Article</h3>
-      </header>
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4"
-        >
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Title</FormLabel>
-                <FormControl>
-                  <Input placeholder="Title" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="summary"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Summary</FormLabel>
-                <FormControl>
-                  <Textarea placeholder="Summary" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="type"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Type</FormLabel>
-                <Select
-                  defaultValue={field.value}
-                  onValueChange={field.onChange}
-                >
+    <Dialog open={isOpen} onOpenChange={close}>
+      <DialogContent className="flex flex-col gap-6 p-4">
+        <DialogTitle>Create Article</DialogTitle>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-4"
+          >
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Title</FormLabel>
                   <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select type" />
-                    </SelectTrigger>
+                    <Input placeholder="Title" {...field} />
                   </FormControl>
-                  <SelectContent>
-                    {ARTICLE_TYPE_OPTIONS.map((type) => (
-                      <SelectItem key={type} value={type}>
-                        {type}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name="reference_name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Reference Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Reference name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name="summary"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Summary</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="Summary" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name="reference_url"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Reference URL</FormLabel>
-                <FormControl>
-                  <Input placeholder="https://..." {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name="type"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Type</FormLabel>
+                  <Select
+                    defaultValue={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select type" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {ARTICLE_TYPE_OPTIONS.map((type) => (
+                        <SelectItem key={type} value={type}>
+                          {type}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name="published_at"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Published Date</FormLabel>
-                <FormControl>
-                  <Input type="date" {...field} value={field.value || ''} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name="reference_name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Reference Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Reference name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name="unique_id"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Unique ID</FormLabel>
-                <FormControl>
-                  <Input placeholder="Unique ID" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name="reference_url"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Reference URL</FormLabel>
+                  <FormControl>
+                    <Input placeholder="https://..." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <div className="flex justify-end gap-4">
-            <Button variant={'ghost'} disabled={isPending} onClick={close}>
-              {isPending ? 'Creating...' : 'Cancel'}
-            </Button>
-            <Button type="submit" disabled={isPending}>
-              {isPending ? 'Creating...' : 'Create'}
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </ModalOverlay>
+            <FormField
+              control={form.control}
+              name="published_at"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Published Date</FormLabel>
+                  <FormControl>
+                    <Input type="date" {...field} value={field.value || ''} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="unique_id"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Unique ID</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Unique ID" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <div className="flex justify-end gap-4">
+              <Button variant={'ghost'} disabled={isPending} onClick={close}>
+                {isPending ? 'Creating...' : 'Cancel'}
+              </Button>
+              <Button type="submit" disabled={isPending}>
+                {isPending ? 'Creating...' : 'Create'}
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   )
 }
