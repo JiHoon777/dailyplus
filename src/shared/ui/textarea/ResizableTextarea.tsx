@@ -30,6 +30,10 @@ export const ResizableTextarea = forwardRef<
       Math.max(textarea.scrollHeight, minHeight),
       maxHeight,
     )
+
+    console.log(newHeight, maxHeight)
+    textarea.style.overflowY = newHeight < maxHeight ? 'hidden' : 'scroll'
+
     textarea.style.height = `${newHeight}px`
   }, [])
 

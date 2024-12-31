@@ -16,7 +16,7 @@ export const StudioPromptInput = () => {
       value={userPrompt}
       onChange={handleChange}
       placeholder={'Write your Prompt'}
-      className={`w-full resize-none overflow-y-auto`}
+      className={`resize-none`}
     />
   )
 }
