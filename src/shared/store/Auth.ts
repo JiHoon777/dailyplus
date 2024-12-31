@@ -1,6 +1,6 @@
 import type { IUsers } from '../types'
 
-import { createStore } from './createStore'
+import { createStore } from './utils/createStore'
 
 export interface IAuthStore {
   me: IUsers | null
