@@ -1,12 +1,15 @@
-import type { StudioMergeItems } from './Studio.types'
 import type { IAiStories, IQuotes } from '../types'
+import type { StudioMergeItems } from './Studio.types'
 
 import { createStore } from './utils/createStore'
 
+type AppendableItem =
+  | { type: 'quote'; data: IQuotes }
+  | { type: 'ai_story'; data: IAiStories }
+
 export interface IStudioStore {
   mergingItems: StudioMergeItems[]
-  addQuote: (quote: IQuotes) => void
-  addAiStory: (story: IAiStories) => void
+  append: (item: AppendableItem) => void
   removeItem: (item: StudioMergeItems) => void
   clearItems: () => void
 }
@@ -14,40 +17,27 @@ export interface IStudioStore {
 export const StudioStore = createStore<IStudioStore>(
   (set) => ({
     mergingItems: [],
-    addQuote: (quote) => {
+
+    append: (item) => {
       set((state) => {
         const existingIndex = state.mergingItems.findIndex(
-          (item) => item.type === 'quote' && item.data.id === quote.id
+          (existing) => 
+            existing.type === item.type && 
+            existing.data.id === item.data.id,
         )
 
         if (existingIndex === -1) {
-          state.mergingItems.push({
-            type: 'quote',
-            data: quote,
-          })
+          state.mergingItems.push(item)
         }
       })
     },
-    addAiStory: (story) => {
-      set((state) => {
-        const existingIndex = state.mergingItems.findIndex(
-          (item) => item.type === 'ai_story' && item.data.id === story.id
-        )
 
-        if (existingIndex === -1) {
-          state.mergingItems.push({
-            type: 'ai_story',
-            data: story,
-          })
-        }
-      })
-    },
     removeItem: (item) => {
       set((state) => {
         const index = state.mergingItems.findIndex(
           (existing) =>
-            existing.type === item.type &&
-            existing.data.id === item.data.id
+            existing.type === item.type && 
+            existing.data.id === item.data.id,
         )
 
         if (index !== -1) {
@@ -55,11 +45,12 @@ export const StudioStore = createStore<IStudioStore>(
         }
       })
     },
+
     clearItems: () => {
       set((state) => {
         state.mergingItems = []
       })
     },
   }),
-  'Studio Store'
+  'Studio Store',
 )
