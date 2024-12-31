@@ -33,7 +33,8 @@ export const StudioStore = createStore<IStudioStore>(
           return
         }
 
-        state.mergingItems.push(item)
+        // Spread 안 하면 타입 오류가 발생했다 안했다, 이머 타입 체크 버그같은데...
+        state.mergingItems.push({ ...item })
       }),
     removeItem: (item) =>
       set((state) => {
