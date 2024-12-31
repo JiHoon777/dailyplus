@@ -57,3 +57,4 @@ export type ExtractMethodParameters<T, M extends keyof T> = T[M] extends (
 ) => any
   ? P[0]
   : never
+export type SupportedLanguagesType = 'ko' | 'en'
