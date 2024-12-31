@@ -30,6 +30,7 @@ export const StudioStore = createStore<IStudioStore>(
         )
 
         if (existingIndex === -1) {
+          state.mergingItems.push(item)
         }
       })
     },
