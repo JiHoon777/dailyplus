@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation'
 
-import { useDPStore } from '@/shared/store'
+import { useStore } from '@/shared/store'
 import { SidebarInset } from '@/shared/ui'
 
 import { StudioSidebar } from './_ui'
@@ -12,7 +12,7 @@ export default function StudioLayout({
 }: {
   children: React.ReactNode
 }) {
-  const me = useDPStore((state) => state.auth.me)
+  const me = useStore('auth', (state) => state.me)
 
   if (!me) {
     redirect('/')

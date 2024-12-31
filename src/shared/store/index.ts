@@ -1,14 +1,30 @@
-import type { AuthSlice } from './authSlice'
+import type { IAuthStore } from './Auth'
 
-import { create } from 'zustand'
-import { immer } from 'zustand/middleware/immer'
+import { useMemo } from 'react'
 
-import { createAuthSlice } from './authSlice'
+import { AuthStore } from './Auth'
 
-type StoreState = AuthSlice
+type StoreMap = {
+  auth: typeof AuthStore
+}
 
-export const useDPStore = create<StoreState>()(
-  immer((...args) => ({
-    ...createAuthSlice(...args),
-  })),
-)
+type StoreNames = keyof StoreMap
+
+/**
+ * * 스토어로의 접근은 `useStore` 함수를 사용해야 합니다.
+ */
+export const useStore = <
+  T extends StoreNames,
+  R = T extends 'auth' ? IAuthStore : never,
+>(
+  storeName: T,
+  selector?: T extends 'auth' ? (state: IAuthStore) => R : never,
+) => {
+  const store = useMemo(() => {
+    return {
+      auth: AuthStore,
+    }[storeName]
+  }, [storeName])
+
+  return (selector ? store(selector) : store((state) => state)) as R
+}

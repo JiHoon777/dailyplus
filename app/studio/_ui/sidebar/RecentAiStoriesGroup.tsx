@@ -7,7 +7,7 @@ import { DpQueryKeys } from '@/shared/api'
 import { DPLinks } from '@/shared/config'
 import { PagedListableQueryLoader } from '@/shared/lib/loader'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
-import { useDPStore } from '@/shared/store'
+import { useStore } from '@/shared/store'
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -18,7 +18,7 @@ import {
 } from '@/shared/ui'
 
 export const RecentAiStoriesGroup = () => {
-  const meId = useDPStore((s) => s.auth.me?.id)
+  const meId = useStore('auth', (s) => s.me?.id)
   const loadList = (input: IAiStoriesListableInput) =>
     ApiClientCSR.aiStories.getListWithIdTitle(input)
 

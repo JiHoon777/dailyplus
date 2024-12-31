@@ -1,7 +1,7 @@
-import { useDPStore } from '@/shared/store'
+import { useStore } from '@/shared/store'
 
 export const useAiPromptAccess = () => {
-  const hasAiPromptAccess = useDPStore((s) => s.auth.hasAiPromptAccess)
+  const hasAiPromptAccess = useStore('auth', (s) => s.hasAiPromptAccess)
 
   // Todo: Login or AI Prompt Access Alert
   return {

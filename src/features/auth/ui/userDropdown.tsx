@@ -8,7 +8,7 @@ import { useState } from 'react'
 import { DpQueryKeys } from '@/shared/api'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { getUsernameFromEmail } from '@/shared/lib/utils'
-import { useDPStore } from '@/shared/store'
+import { useStore } from '@/shared/store'
 import { Avatar, AvatarFallback, Button } from '@/shared/ui'
 import {
   DropdownMenu,
@@ -20,7 +20,7 @@ import {
 
 export function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false)
-  const me = useDPStore((state) => state.auth.me)
+  const me = useStore('auth', (state) => state.me)
   const router = useRouter()
   const pathname = usePathname()
   const queryClient = useQueryClient()

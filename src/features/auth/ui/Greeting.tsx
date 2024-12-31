@@ -2,10 +2,10 @@
 import { memo } from 'react'
 
 import { getGreetingByTime, getUsernameFromEmail } from '@/shared/lib/utils'
-import { useDPStore } from '@/shared/store'
+import { useStore } from '@/shared/store'
 
 export const Greeting = memo(() => {
-  const user = useDPStore((state) => state.auth.me)
+  const user = useStore('auth', (state) => state.me)
 
   return (
     <div className={'w-full'}>

@@ -13,7 +13,7 @@ import { useState } from 'react'
 import { useAiPromptAccess } from '@/shared/hooks'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { cn, showToast } from '@/shared/lib/utils'
-import { useDPStore } from '@/shared/store'
+import { useStore } from '@/shared/store'
 import { Button, Skeleton } from '@/shared/ui'
 
 export type IQuoteInterpretationProps = {
@@ -27,7 +27,7 @@ export const QuoteInterpretation = ({
   quote,
   getQuoteInterpretationQueryKey,
 }: IQuoteInterpretationProps) => {
-  const userId = useDPStore((s) => s.auth.me?.id)
+  const userId = useStore('auth', (s) => s.me?.id)
   const { hasAiPromptAccess } = useAiPromptAccess()
   const [createdInterpretation, setCreatedInterpretation] =
     useState<IQuoteAiInterpretations | null>(null)
