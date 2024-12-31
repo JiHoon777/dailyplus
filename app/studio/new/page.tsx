@@ -14,7 +14,6 @@ export default function StudioNewPage() {
       <StudioQuoteOverlay isOpen={isOpen} close={close} />
     ))
   }
-  console.log('hi')
 
   return (
     <DPStudioPage className="gap-6 pt-[6rem]">
