@@ -1,28 +1,34 @@
 import type { ApiClient } from '../ApiClient'
 
+type ApiClientFetchRequestOptions = {
+  url: string
+  header?: Record<string, string>
+}
+
+type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
+
 export class ApiClientFetch {
   constructor(private readonly apiClient: ApiClient) {}
 
-  async post<TResult = unknown, TBody = unknown>({
+  async request<TResult>({
+    method,
     url,
     header = {},
     body,
-  }: {
-    url: string
-    header?: Record<string, string>
-    body: TBody
+  }: ApiClientFetchRequestOptions & {
+    method: HttpMethod
+    body?: unknown
   }): Promise<TResult> {
     const response = await fetch(url, {
-      body: JSON.stringify(body),
+      method,
       headers: {
-        'Content-Type': 'application/json',
         ...header,
       },
-      method: 'POST',
+      ...(typeof body === 'object' && { body: JSON.stringify(body) }),
     })
 
     if (!response.ok) {
-      throw new Error('Failed to fetch data')
+      throw new Error('API call failed')
     }
 
     return response.json()

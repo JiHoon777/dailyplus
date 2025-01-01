@@ -6,7 +6,7 @@ import { createStore } from './utils/createStore'
 export type IStudioStore = {
   userPrompt: string
   mergingItems: StudioMergeItems[]
-  maxMergingItems: number
+  MAX_MERGING_ITEMS: number
 
   setUserPropmpt: (prompt: string) => void
   appendItem: (item: StudioMergeItems) => void
@@ -29,12 +29,12 @@ export const StudioStore = createStore<IStudioStore>((set, get) => {
     )
 
   return {
-    userPrompt: '',
-    mergingItems: [],
-
-    get maxMergingItems() {
+    get MAX_MERGING_ITEMS() {
       return 3
     },
+
+    userPrompt: '',
+    mergingItems: [],
 
     setUserPropmpt: (prompt) => {
       set((state) => {
@@ -43,13 +43,15 @@ export const StudioStore = createStore<IStudioStore>((set, get) => {
     },
     appendItem: (item) =>
       set((state) => {
-        const existingItem = $findMergingItem(item)
-
-        if (existingItem) {
+        if (state.mergingItems.length >= state.MAX_MERGING_ITEMS) {
           return
         }
 
-        state.mergingItems.push(item as WritableDraft<StudioMergeItems>)
+        const existingItem = $findMergingItem(item)
+
+        if (!existingItem) {
+          state.mergingItems.push(item as WritableDraft<StudioMergeItems>)
+        }
       }),
     removeItem: (item) =>
       set((state) => {

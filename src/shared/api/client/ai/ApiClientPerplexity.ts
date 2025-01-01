@@ -21,13 +21,16 @@ export class ApiClientPerplexity implements IApiClientAiBase {
   }
 
   private async createChatCompletions({ model, messages }: IPerplexityInput) {
-    const completion = await this._apiClient.fetch.post<IPerplexityResponse>({
-      body: {
-        messages,
-        model,
+    const completion = await this._apiClient.fetch.request<IPerplexityResponse>(
+      {
+        body: {
+          messages,
+          model,
+        },
+        url: '/api/ai/perplexity/chat-completions-create',
+        method: 'POST',
       },
-      url: '/api/ai/perplexity/chat-completions-create',
-    })
+    )
 
     const content = completion.choices?.[0]?.message?.content
 
