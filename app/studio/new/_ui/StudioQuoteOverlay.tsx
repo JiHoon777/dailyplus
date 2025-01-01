@@ -1,4 +1,5 @@
 import type { OverlayProps } from '@/shared/lib/overlay'
+import type { IQuotes } from '@/shared/types'
 
 import { QuoteList } from '@/entities/quotes'
 import { DpQueryKeys } from '@/shared/api'
@@ -8,6 +9,12 @@ import { Sheet, SheetContent, SheetTitle } from '@/shared/ui'
 export const StudioQuoteOverlay = ({ isOpen, close }: OverlayProps) => {
   const append = useStore('studio').getState().appendItem
 
+  const handleSelectQuote = (quote: IQuotes) =>
+    append({
+      type: 'quote',
+      data: quote,
+    })
+
   return (
     <Sheet open={isOpen} onOpenChange={close}>
       <SheetContent className="p-0">
@@ -16,12 +23,7 @@ export const StudioQuoteOverlay = ({ isOpen, close }: OverlayProps) => {
         <div className="h-full w-full">
           <QuoteList
             direction="col"
-            onSelectQuote={(q) =>
-              append({
-                type: 'quote',
-                data: q,
-              })
-            }
+            onSelectQuote={handleSelectQuote}
             getQuoteListQueryKey={DpQueryKeys.studio.new.quoteList}
           />
         </div>

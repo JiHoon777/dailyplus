@@ -62,12 +62,12 @@ export const QuoteList = ({
                 <QuoteListCard quote={quote} onClick={onSelectQuote} />
               </div>
             ))}
+            <IntersectionTrigger
+              onIntersect={fetchNextPage}
+              hasNextPage={hasNextPage}
+              isLoading={isFetchingNextPage || isLoading}
+            />
           </div>
-          <IntersectionTrigger
-            onIntersect={fetchNextPage}
-            hasNextPage={hasNextPage}
-            isLoading={isFetchingNextPage || isLoading}
-          />
           <ScrollBar
             orientation={direction === 'row' ? 'horizontal' : 'vertical'}
           />

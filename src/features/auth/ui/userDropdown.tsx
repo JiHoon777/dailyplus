@@ -9,14 +9,16 @@ import { DpQueryKeys } from '@/shared/api'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { getUsernameFromEmail } from '@/shared/lib/utils'
 import { useStore } from '@/shared/store'
-import { Avatar, AvatarFallback, Button } from '@/shared/ui'
 import {
+  Avatar,
+  AvatarFallback,
+  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/shared/ui/dropdown-menu'
+} from '@/shared/ui'
 
 export function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false)
