@@ -1,17 +1,12 @@
 import type { IAiStories, IQuotes } from '../types'
 
-export enum StudioMergeItemType {
-  Quote = 'quote',
-  AiStory = 'ai_story',
-}
-
 type IStudioMergeQuote = {
-  type: StudioMergeItemType.Quote
+  type: 'quote'
   data: IQuotes
 }
 
 type IStudioMergeAiStory = {
-  type: StudioMergeItemType.AiStory
+  type: 'ai_story'
   data: IAiStories
 }
 

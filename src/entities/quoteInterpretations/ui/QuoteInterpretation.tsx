@@ -8,7 +8,7 @@ import type { QueryKey } from '@tanstack/react-query'
 
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { ChevronRight, Sparkles } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useAiPromptAccess } from '@/shared/hooks'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
@@ -52,7 +52,7 @@ export const QuoteInterpretation = ({
 
       return data
     },
-    queryKey: getQuoteInterpretationQueryKey(),
+    queryKey: getQuoteInterpretationQueryKey({ quote_id: quote.id }),
   })
 
   const {
@@ -99,6 +99,10 @@ export const QuoteInterpretation = ({
       handleCreate()
     }
   }
+
+  useEffect(() => {
+    setCreatedInterpretation(null)
+  }, [quote])
 
   const interpretation = createdInterpretation || data?.[0]
   const hasError = getError || createError

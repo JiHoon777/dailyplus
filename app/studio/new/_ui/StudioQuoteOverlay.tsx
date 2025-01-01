@@ -10,17 +10,21 @@ export const StudioQuoteOverlay = ({ isOpen, close }: OverlayProps) => {
 
   return (
     <Sheet open={isOpen} onOpenChange={close}>
-      <SheetContent>
-        <SheetTitle>Quotes</SheetTitle>
-        <QuoteList
-          onSelectQuote={(q) =>
-            append({
-              type: 'quote',
-              data: q,
-            })
-          }
-          getQuoteListQueryKey={DpQueryKeys.studio.new.quoteList}
-        />
+      <SheetContent className="p-0">
+        <SheetTitle className="p-4">Quotes</SheetTitle>
+
+        <div className="h-full w-full">
+          <QuoteList
+            direction="col"
+            onSelectQuote={(q) =>
+              append({
+                type: 'quote',
+                data: q,
+              })
+            }
+            getQuoteListQueryKey={DpQueryKeys.studio.new.quoteList}
+          />
+        </div>
       </SheetContent>
     </Sheet>
   )

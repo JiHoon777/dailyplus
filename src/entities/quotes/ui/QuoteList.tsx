@@ -6,6 +6,7 @@ import {
   IntersectionTrigger,
 } from '@/shared/lib/loader'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
+import { cn } from '@/shared/lib/utils'
 
 export type IQuoteListProps = {
   onSelectQuote: (quote: IQuotes) => void
@@ -13,12 +14,14 @@ export type IQuoteListProps = {
     input: Omit<IQuotesListableInput, 'page' | 'limit'>,
   ) => QueryKey
   quotePeopleName?: string
+  direction?: 'row' | 'col'
 }
 
 export const QuoteList = ({
   onSelectQuote,
   getQuoteListQueryKey,
   quotePeopleName,
+  direction = 'row',
 }: IQuoteListProps) => {
   const getQuoteList = (input: IQuotesListableInput) =>
     ApiClientCSR.quotes.getList(input)
@@ -39,13 +42,23 @@ export const QuoteList = ({
         hasNextPage,
         fetchNextPage,
       }) => (
-        <div className="overflow-x-auto whitespace-nowrap pb-4">
+        <div
+          className={cn(
+            'flex w-full gap-4 whitespace-nowrap p-4 pb-[10rem]',
+            direction === 'row' && 'flex-row overflow-x-auto',
+            direction === 'col' && 'h-full flex-col overflow-y-auto',
+          )}
+        >
           {list.map((quote) => (
-            <QuoteListCard
-              quote={quote}
+            <div
               key={quote.id}
-              onClick={onSelectQuote}
-            />
+              className={cn(
+                'w-full shrink-0',
+                direction === 'row' && 'max-w-[15rem]',
+              )}
+            >
+              <QuoteListCard quote={quote} onClick={onSelectQuote} />
+            </div>
           ))}
           {/* {(isLoading || isFetchingNextPage) &&
               Array.from({ length: 10 }).map((_, index) => (
@@ -74,10 +87,10 @@ export const QuoteListCard = ({
 }) => {
   return (
     <div
-      className="inline-block w-64 cursor-pointer rounded-lg bg-white p-4 shadow hover:bg-gray-50"
+      className="w-full shrink-0 cursor-pointer rounded-lg bg-white p-4 shadow hover:bg-gray-50"
       onClick={() => onClick(quote)}
     >
-      <h3 className="mb-2 break-all text-lg font-bold">
+      <h3 className="mb-2 whitespace-pre-line break-all text-lg font-bold">
         {quote.original_text}
       </h3>
       <p className="whitespace-pre-line break-all text-sm text-gray-600">

@@ -75,7 +75,6 @@
     "react/display-name": "off",
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
-    "simple-import-sort/exports": 2,
     "simple-import-sort/imports": [
       2,
       {
