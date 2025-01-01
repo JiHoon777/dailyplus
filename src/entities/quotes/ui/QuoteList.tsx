@@ -7,6 +7,7 @@ import {
 } from '@/shared/lib/loader'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { cn } from '@/shared/lib/utils'
+import { ScrollArea, ScrollBar } from '@/shared/ui'
 
 export type IQuoteListProps = {
   onSelectQuote: (quote: IQuotes) => void
@@ -42,37 +43,35 @@ export const QuoteList = ({
         hasNextPage,
         fetchNextPage,
       }) => (
-        <div
-          className={cn(
-            'flex w-full gap-4 whitespace-nowrap p-4 pb-[10rem]',
-            direction === 'row' && 'flex-row overflow-x-auto',
-            direction === 'col' && 'h-full flex-col overflow-y-auto',
-          )}
-        >
-          {list.map((quote) => (
-            <div
-              key={quote.id}
-              className={cn(
-                'w-full shrink-0',
-                direction === 'row' && 'max-w-[15rem]',
-              )}
-            >
-              <QuoteListCard quote={quote} onClick={onSelectQuote} />
-            </div>
-          ))}
-          {/* {(isLoading || isFetchingNextPage) &&
-              Array.from({ length: 10 }).map((_, index) => (
-                <ArticleCardSkeleton
-                  key={index}
-                  className={'mb-4 break-inside-avoid'}
-                />
-              ))} */}
+        <ScrollArea className={cn(direction === 'col' && 'h-full')}>
+          <div
+            className={cn(
+              'flex w-full gap-4 whitespace-nowrap p-4',
+              direction === 'row' && 'flex-row',
+              direction === 'col' && 'h-full flex-col pb-[10rem]',
+            )}
+          >
+            {list.map((quote) => (
+              <div
+                key={quote.id}
+                className={cn(
+                  'w-full shrink-0',
+                  direction === 'row' && 'max-w-[15rem]',
+                )}
+              >
+                <QuoteListCard quote={quote} onClick={onSelectQuote} />
+              </div>
+            ))}
+          </div>
           <IntersectionTrigger
             onIntersect={fetchNextPage}
             hasNextPage={hasNextPage}
             isLoading={isFetchingNextPage || isLoading}
           />
-        </div>
+          <ScrollBar
+            orientation={direction === 'row' ? 'horizontal' : 'vertical'}
+          />
+        </ScrollArea>
       )}
     </InfiniteListableQueryLoader>
   )
