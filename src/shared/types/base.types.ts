@@ -58,3 +58,17 @@ export type ExtractMethodParameters<T, M extends keyof T> = T[M] extends (
   ? P[0]
   : never
 export type SupportedLanguagesType = 'ko' | 'en'
+
+export type IServerResponseBase<T> = {
+  success: boolean
+  data: T
+  errorCode: string
+  errorMessage: string
+}
+
+export enum ApiErrorCode {
+  AUTH_UNAUTHORIZED = 'AUTH.UNAUTHORIZED',
+  AUTH_TOKEN_EXPIRED = 'AUTH.TOKEN_EXPIRED',
+  AUTH_REFRESH_TOKEN_EXPIRED = 'AUTH.REFRESH_TOKEN_EXPIRED',
+  INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR',
+}

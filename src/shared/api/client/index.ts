@@ -7,4 +7,6 @@ export type {
   IApiClientQuoteAiInterpretationsResponse,
   IApiClientQuotesParams,
   IApiClientQuotesResponse,
+  IApiClientAuthParams,
+  IApiClientAuthResponse,
 } from './entity'

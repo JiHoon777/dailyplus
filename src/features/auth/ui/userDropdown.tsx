@@ -9,6 +9,7 @@ import { DpQueryKeys } from '@/shared/api'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { getUsernameFromEmail } from '@/shared/lib/utils'
 import { useStore } from '@/shared/store'
+import { UserRole } from '@/shared/types'
 import {
   Avatar,
   AvatarFallback,
@@ -28,11 +29,7 @@ export function UserDropdown() {
   const queryClient = useQueryClient()
   const logout = useMutation({
     mutationFn: async () => {
-      const { error } = await ApiClientCSR.auth.logout()
-
-      if (error) {
-        throw error
-      }
+      await ApiClientCSR.auth.signout()
     },
   })
 
@@ -68,7 +65,7 @@ export function UserDropdown() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        {me.role === 'admin' && (
+        {me.role >= UserRole.ADMIN && (
           <>
             {isAdminPage ? (
               <DropdownMenuItem onClick={handlePushHome}>
