@@ -1,6 +1,6 @@
 import type {
   IAiStoriesListableInput,
-  IArticlesListableInput,
+  IArticleListRequest,
   IQuoteAiInterpretationsListableInput,
   IQuotePeopleListableInput,
   IQuotesListableInput,
@@ -28,7 +28,7 @@ const createQueryKey = <T extends Record<string, unknown>>(
 const adminQueryKeys = {
   articles: {
     /** 관리자용 게시글 목록 조회 */
-    list: (input?: IArticlesListableInput) =>
+    list: (input?: IArticleListRequest) =>
       createQueryKey(['admin', 'articles', 'list'], input),
   },
   quoteAiInterpretations: {
@@ -52,7 +52,7 @@ const adminQueryKeys = {
 const appQueryKeys = {
   articles: {
     /** 일반 사용자용 게시글 목록 조회 (/app/articles) */
-    list: (input?: Omit<IArticlesListableInput, 'page' | 'limit'>) =>
+    list: (input?: Omit<IArticleListRequest, 'page' | 'size'>) =>
       createQueryKey(['app', 'articles', 'list'], input),
   },
   home: {

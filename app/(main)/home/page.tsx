@@ -1,11 +1,10 @@
-import type { SearchParamsType } from '@/shared/types'
-
 import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
 
 import { verifyArticleType } from '@/entities/articles'
 import { Greeting } from '@/features/auth'
 import { DPLinks } from '@/shared/config'
+import { ArticleType, type SearchParamsType } from '@/shared/types'
 import { DPage } from '@/shared/ui'
 
 import {
@@ -39,7 +38,9 @@ function verifyArticleTypeParam(searchParams: SearchParamsType) {
   const verified = verifyArticleType(articleType)
 
   if (!verified) {
-    return redirect(DPLinks.app.home({ articleType: 'trendAndLifestyle' }))
+    return redirect(
+      DPLinks.app.home({ articleType: ArticleType.TREND_AND_LIFESTYLE }),
+    )
   }
 
   return articleType

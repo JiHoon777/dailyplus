@@ -1,4 +1,4 @@
-import type { ArticlesType } from '@/shared/types'
+import type { ArticleType } from '@/shared/types'
 
 import Link from 'next/link'
 import { Fragment } from 'react'
@@ -13,7 +13,7 @@ export const ArticleTypeCategory = ({
   showAll,
 }: {
   pathName: string
-  currentArticleType: ArticlesType | 'all'
+  currentArticleType: ArticleType | 'all'
   showAll?: boolean
 }) => {
   const baseOptions = ARTICLE_TYPE_OPTIONS.map((type) => ({

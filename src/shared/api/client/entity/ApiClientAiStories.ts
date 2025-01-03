@@ -6,7 +6,7 @@ import type {
   IAiStoriesCreationInput,
   IAiStoriesListableInput,
   IAiStoriesUpdateInput,
-  IListableResponse,
+  IServerListResponse,
 } from '@/shared/types'
 
 import { ApiClientEntityBase } from '../base/apiClientEntityBase'
@@ -35,7 +35,7 @@ export class ApiClientAiStories extends ApiClientEntityBase<
 
   async getListWithIdTitle(
     input: IAiStoriesListableInput,
-  ): Promise<IListableResponse<Pick<IAiStories, 'id' | 'title'>>> {
+  ): Promise<IServerListResponse<Pick<IAiStories, 'id' | 'title'>>> {
     const {
       page = 1, //
       limit = 10,

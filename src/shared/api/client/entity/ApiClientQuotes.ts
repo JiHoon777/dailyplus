@@ -2,7 +2,7 @@ import type { ApiClient } from '..'
 import type {
   ExtractMethodParameters,
   ExtractMethodReturn,
-  IListableResponse,
+  IServerListResponse,
   IQuotePeople,
   IQuotes,
   IQuotesCreationInput,
@@ -35,7 +35,7 @@ export class ApiClientQuotes extends ApiClientEntityBase<
   async getList(
     input: IQuotesListableInput,
   ): Promise<
-    IListableResponse<
+    IServerListResponse<
       IQuotes & { quote_people: Pick<IQuotePeople, 'id' | 'name'> | null }
     >
   > {

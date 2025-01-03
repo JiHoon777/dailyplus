@@ -1,5 +1,5 @@
 'use client'
-import type { ArticlesType, IArticlesListableInput } from '@/shared/types'
+import type { ArticleType, IArticleListRequest } from '@/shared/types'
 
 import { redirect, useSearchParams } from 'next/navigation'
 
@@ -21,7 +21,7 @@ import { DPage } from '@/shared/ui'
 export default function ArticlesPage() {
   const searchParams = useSearchParams()
   const articleType = verifyArticleTypeParam(searchParams.get('articleType'))
-  const getArticles = (input: IArticlesListableInput) =>
+  const getArticles = (input: IArticleListRequest) =>
     ApiClientCSR.articles.getList(input)
 
   return (
@@ -34,8 +34,7 @@ export default function ArticlesPage() {
       <InfiniteListableQueryLoader
         fetchData={getArticles}
         params={{
-          limit: 10,
-          orderBy: 'published_at',
+          size: 10,
           type: articleType === 'all' ? undefined : articleType,
         }}
         queryKey={DpQueryKeys.app.articles.list}
@@ -74,7 +73,7 @@ export default function ArticlesPage() {
 
 function verifyArticleTypeParam(
   articleTypeParam: string | null,
-): 'all' | ArticlesType {
+): 'all' | ArticleType {
   const verified =
     verifyArticleType(articleTypeParam) || articleTypeParam === 'all'
 

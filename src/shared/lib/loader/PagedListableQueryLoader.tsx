@@ -1,8 +1,6 @@
 'use client'
-import type {
-  IListableParams,
-  IListableResponse,
-} from '@/shared/types/base.types'
+import type { IServerListRequest } from '@/shared/types/server/common'
+import type { IServerListResponse } from '@/shared/types/server/common'
 import type { QueryKey } from '@tanstack/react-query'
 
 import { useQuery } from '@tanstack/react-query'
@@ -33,10 +31,10 @@ export const PagedListableQueryLoader = <
   children,
 }: {
   fetchData: (
-    options: IListableParams<TParams>,
-  ) => Promise<IListableResponse<TData>>
-  params: Omit<IListableParams<TParams>, 'page'>
-  queryKey: (options: IListableParams<TParams>) => QueryKey
+    options: IServerListRequest<TParams>,
+  ) => Promise<IServerListResponse<TData>>
+  params: Omit<IServerListRequest<TParams>, 'page'>
+  queryKey: (options: IServerListRequest<TParams>) => QueryKey
   children: (input: {
     list: TData[]
     isLoading: boolean
@@ -58,7 +56,7 @@ export const PagedListableQueryLoader = <
   const queryParams = {
     page,
     ...cachedParams,
-  } as IListableParams<TParams>
+  } as IServerListRequest<TParams>
   const { data, isLoading, error } = useQuery({
     queryFn: () => fetchData(queryParams),
     queryKey: queryKey(queryParams),

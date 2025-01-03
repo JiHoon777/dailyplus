@@ -1,6 +1,6 @@
 import type { ApiClient } from '..'
 import type {
-  IListableResponse,
+  IServerListResponse,
   IQuotePeople,
   IQuotePeopleCreationInput,
   IQuotePeopleListableInput,
@@ -23,7 +23,7 @@ export class ApiClientQuotePeople extends ApiClientEntityBase<
 
   async getList(
     input: IQuotePeopleListableInput,
-  ): Promise<IListableResponse<IQuotePeople>> {
+  ): Promise<IServerListResponse<IQuotePeople>> {
     const { page = 1, limit = 10, orderBy = 'created_at' } = input
 
     const { from, to } = getPaginationRange(page, limit)

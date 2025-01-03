@@ -1,6 +1,6 @@
 'use client'
 import type { OverlayProps } from '@/shared/lib/overlay'
-import type { ArticlesType, SupportedLanguagesType } from '@/shared/types'
+import type { SupportedLanguagesType } from '@/shared/types'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
@@ -9,12 +9,14 @@ import { DpQueryKeys, type IApiClientArticlesParams } from '@/shared/api'
 import { ARTICLE_TYPE_OPTIONS, SUPPORTED_LANGUAGES } from '@/shared/config'
 import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { showToast } from '@/shared/lib/utils'
+import { ArticleType } from '@/shared/types'
 import { Button, Dialog, DialogContent, DialogTitle, Label } from '@/shared/ui'
 import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group'
 
 export const CreateArticleWithAiOverlay = ({ isOpen, close }: OverlayProps) => {
-  const [articleType, setArticleType] =
-    useState<ArticlesType>('trendAndLifestyle')
+  const [articleType, setArticleType] = useState<ArticleType>(
+    ArticleType.TREND_AND_LIFESTYLE,
+  )
   const [language, setLanguage] = useState<SupportedLanguagesType>('ko')
   const queryClient = useQueryClient()
   const { mutate, isPending } = useMutation({
@@ -45,7 +47,7 @@ export const CreateArticleWithAiOverlay = ({ isOpen, close }: OverlayProps) => {
             <RadioGroup
               defaultValue={articleType}
               className="flex flex-wrap gap-4"
-              onValueChange={(value: ArticlesType) => setArticleType(value)}
+              onValueChange={(value: ArticleType) => setArticleType(value)}
             >
               {ARTICLE_TYPE_OPTIONS.map((type) => (
                 <div key={type} className="flex items-center space-x-2">

@@ -1,5 +1,5 @@
 import type {
-  ArticlesType,
+  ArticleType,
   ExtractMethodParameters,
   ExtractMethodReturn,
   SupportedLanguagesType,
@@ -7,7 +7,7 @@ import type {
 
 export type IApiClientAiBase = {
   getArticles(input: {
-    type: ArticlesType
+    type: ArticleType
     language: SupportedLanguagesType
   }): Promise<string>
 

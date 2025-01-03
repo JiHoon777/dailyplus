@@ -1,52 +1,5 @@
-import type { IListableParams } from '.'
+import type { IServerListRequest } from '.'
 import type { Database } from 'database.types'
-
-//==============================================================================
-// * User Entity
-//==============================================================================
-
-export type IUsers = {
-  id: number
-  email: string
-  name: string | null
-  role: UserRole
-  createdAt: Date
-  updatedAt: Date
-  refreshToken: string | null
-}
-
-export enum UserRole {
-  USER = 5,
-  ADMIN = 10,
-}
-
-//==============================================================================
-// * Articles Entity
-//==============================================================================
-
-export type IArticles = Database['public']['Tables']['articles']['Row']
-
-/**
- * * Articles CRUD Input
- */
-export type IArticlesCreationInput = Pick<
-  IArticles,
-  | 'title'
-  | 'summary'
-  | 'published_at'
-  | 'reference_name'
-  | 'reference_url'
-  | 'type'
-  | 'unique_id'
->
-export type IArticlesListableInput = IListableParams<{
-  orderBy?: 'created_at' | 'published_at'
-  type?: ArticlesType
-}>
-export type IArticlesUpdateInput = Partial<IArticlesCreationInput>
-export type IArticlesDeletionInput = Pick<IArticles, 'id'>
-
-export type ArticlesType = Database['public']['Enums']['article_type']
 
 //==============================================================================
 // * Quotes Entity
@@ -61,7 +14,7 @@ export type IQuotesCreationInput = Pick<
   IQuotes,
   'original_text' | 'korean_text' | 'quote_person_id'
 >
-export type IQuotesListableInput = IListableParams<{
+export type IQuotesListableInput = IServerListRequest<{
   orderBy?: 'created_at'
   quotePeopleName?: string
 }>
@@ -81,7 +34,7 @@ export type IQuotePeopleCreationInput = Pick<
   IQuotePeople,
   'name' | 'description'
 >
-export type IQuotePeopleListableInput = IListableParams<{
+export type IQuotePeopleListableInput = IServerListRequest<{
   orderBy?: 'created_at'
 }>
 export type IQuotePeopleUpdateInput = IQuotePeopleCreationInput
@@ -100,7 +53,7 @@ export type IAiStoriesCreationInput = Pick<
   IAiStories,
   'title' | 'content' | 'model_version' | 'prompt' | 'user_id'
 >
-export type IAiStoriesListableInput = IListableParams<{
+export type IAiStoriesListableInput = IServerListRequest<{
   orderBy?: 'created_at'
   user_id?: string
 }>
@@ -121,7 +74,7 @@ export type IQuoteAiInterpretationsCreationInput = Pick<
   IQuoteAiInterpretations,
   'content' | 'model_version' | 'quote_id' | 'prompt' | 'user_id'
 >
-export type IQuoteAiInterpretationsListableInput = IListableParams<{
+export type IQuoteAiInterpretationsListableInput = IServerListRequest<{
   orderBy?: 'created_at'
   quote_id?: number
 }>

@@ -2,7 +2,7 @@ import type { ApiClient, IApiClientAiBaseParams } from '..'
 import type {
   ExtractMethodParameters,
   ExtractMethodReturn,
-  IListableResponse,
+  IServerListResponse,
   IQuoteAiInterpretations,
   IQuoteAiInterpretationsCreationInput,
   IQuoteAiInterpretationsListableInput,
@@ -36,7 +36,7 @@ export class ApiClientQuoteAiInterpretations extends ApiClientEntityBase<
 
   async getList(
     input: IQuoteAiInterpretationsListableInput,
-  ): Promise<IListableResponse<IQuoteAiInterpretations>> {
+  ): Promise<IServerListResponse<IQuoteAiInterpretations>> {
     const { page = 1, limit = 10, orderBy = 'created_at', quote_id } = input
 
     const { from, to } = getPaginationRange(page, limit)

@@ -4,10 +4,9 @@ import type {
   ExtractMethodReturn,
   IAiGeneratedArticleBase,
   IArticles,
-  IArticlesCreationInput,
-  IArticlesListableInput,
-  IArticlesUpdateInput,
-  IListableResponse,
+  IArticleCreateRequest,
+  IArticleListRequest,
+  IServerListResponse,
 } from '@/shared/types'
 
 import { z } from 'zod'
@@ -16,9 +15,6 @@ import {
   extractJsonArrayFromText,
   formatToHyphenYyyyMMddDate,
 } from '@/shared/lib/utils'
-
-import { ApiClientEntityBase } from '../base/apiClientEntityBase'
-import { createListableResponse, getPaginationRange } from '../lib'
 
 type IApiClientArticles = typeof ApiClientArticles.prototype
 
@@ -40,64 +36,46 @@ const AiGeneratedArticleValidationSchema = z.object({
   title: z.string().min(1),
 })
 
-export class ApiClientArticles extends ApiClientEntityBase<
-  'articles',
-  IArticles,
-  IArticlesCreationInput,
-  IArticlesUpdateInput,
-  IArticlesListableInput
-> {
-  constructor(apiClient: ApiClient) {
-    super(apiClient, 'articles')
-  }
+export class ApiClientArticles {
+  constructor(private readonly apiClient: ApiClient) {}
 
   get supabaseClient() {
-    return this._apiClient.supabaseClient
-  }
-
-  // Todo: refactor
-  async createBulk(articles: IArticlesCreationInput[]) {
-    const results = await Promise.allSettled(
-      articles.map((article) =>
-        this.supabaseClient.from('articles').insert([article]),
-      ),
-    )
-
-    const succeeded = results.filter(
-      (result): result is PromiseFulfilledResult<any> =>
-        result.status === 'fulfilled',
-    ).length
-
-    const failed = results.filter(
-      (result): result is PromiseRejectedResult => result.status === 'rejected',
-    ).length
-
-    return {
-      data: { failed, succeeded },
-      error: failed > 0 ? `Failed to insert ${failed} articles` : null,
-    }
+    return this.apiClient.supabaseClient
   }
 
   async getList(
-    input: IArticlesListableInput,
-  ): Promise<IListableResponse<IArticles>> {
-    const { page = 1, limit = 10, orderBy = 'created_at', type } = input
+    input: IArticleListRequest,
+  ): Promise<IServerListResponse<IArticles>> {
+    const { page = 1, size = 10, type } = input
 
-    const { from, to } = getPaginationRange(page, limit)
+    return this.apiClient.fetch.get<IServerListResponse<IArticles>>({
+      url: `articles/list`,
+      queryParams: { page, size, type },
+    })
+  }
 
-    const query = this.supabaseClient
-      .from(this._tableName)
-      .select('*', { count: 'exact' })
-      .range(from, to)
+  // Todo: refactor
+  async createBulk(_articles: IArticleCreateRequest[]) {
+    throw new Error('Method not implemented.')
+    // const results = await Promise.allSettled(
+    //   articles.map((article) =>
+    //     this.supabaseClient.from('articles').insert([article]),
+    //   ),
+    // )
 
-    query.order(orderBy, { ascending: false })
-    query.not('published_at', 'is', null)
+    // const succeeded = results.filter(
+    //   (result): result is PromiseFulfilledResult<any> =>
+    //     result.status === 'fulfilled',
+    // ).length
 
-    if (type) {
-      query.eq('type', type)
-    }
+    // const failed = results.filter(
+    //   (result): result is PromiseRejectedResult => result.status === 'rejected',
+    // ).length
 
-    return createListableResponse(await query)
+    // return {
+    //   data: { failed, succeeded },
+    //   error: failed > 0 ? `Failed to insert ${failed} articles` : null,
+    // }
   }
 
   //
@@ -123,7 +101,7 @@ export class ApiClientArticles extends ApiClientEntityBase<
   private async generateBulkFromAi(
     input: IApiClientAiBaseParams<'getArticles'>,
   ) {
-    const res = await this._apiClient.perplexity.getArticles(input)
+    const res = await this.apiClient.perplexity.getArticles(input)
 
     if (!res) {
       throw new Error('No response from AI')
@@ -137,22 +115,23 @@ export class ApiClientArticles extends ApiClientEntityBase<
   }
 
   async generateAndSaveArticlesWithAi(
-    input: IApiClientAiBaseParams<'getArticles'>,
+    _input: IApiClientAiBaseParams<'getArticles'>,
   ) {
-    const generatedArticles = await this.generateBulkFromAi(input)
+    throw new Error('Method not implemented.')
+    // const generatedArticles = await this.generateBulkFromAi(input)
 
-    const { error } = await this.createBulk(
-      generatedArticles.map((item) => ({
-        ...item,
-        type: input.type,
-        unique_id: `${item.title}-${item.reference_url}`,
-      })),
-    )
+    // const { error } = await this.createBulk(
+    //   generatedArticles.map((item) => ({
+    //     ...item,
+    //     type: input.type,
+    //     unique_id: `${item.title}-${item.reference_url}`,
+    //   })),
+    // )
 
-    if (error) {
-      throw error
-    }
+    // if (error) {
+    //   throw error
+    // }
 
-    return generatedArticles
+    // return generatedArticles
   }
 }

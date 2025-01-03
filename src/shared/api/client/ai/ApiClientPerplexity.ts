@@ -1,7 +1,7 @@
 import type { ApiClient } from '../ApiClient'
 import type { IApiClientAiBase } from './types'
 import type {
-  ArticlesType,
+  ArticleType,
   IPerplexityInput,
   IPerplexityResponse,
   SupportedLanguagesType,
@@ -45,7 +45,7 @@ export class ApiClientPerplexity implements IApiClientAiBase {
    * @description Perplexity AI로 기사 생성
    *
    * @param {object} params
-   * @param {ArticlesType} params.type - 기사 타입
+   * @param {ArticleType} params.type - 기사 타입
    * @param {SupportedLanguagesType} params.language - 지원 언어
    * @returns {Promise<IPerplexityResponse>} Perplexity AI 응답
    *
@@ -59,7 +59,7 @@ export class ApiClientPerplexity implements IApiClientAiBase {
     type,
     language,
   }: {
-    type: ArticlesType
+    type: ArticleType
     language: SupportedLanguagesType
   }): Promise<IPerplexityResponse['choices'][number]['message']['content']> {
     const dateRangeText = getDateRangeText()

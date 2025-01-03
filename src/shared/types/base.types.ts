@@ -5,31 +5,6 @@
 export type SearchParamsType = { [key: string]: string | string[] | undefined }
 
 /**
- * 페이지네이션이 가능한 데이터의 파라미터 타입
- * @template TParams - 추가 파라미터 타입
- * @property page - 현재 페이지 번호
- * @property limit - 한 페이지당 보여줄 아이템 수
- */
-// eslint-disable-next-line @typescript-eslint/ban-types
-export type IListableParams<TParams extends Record<string, unknown> = {}> = {
-  page: number
-  limit: number
-} & TParams
-
-/**
- * 페이지네이션이 적용된 응답 데이터의 타입
- * @template TData - 실제 데이터 타입
- * @property data - 실제 데이터 배열
- * @property totalCount - 전체 데이터 개수
- * @property error - 에러 발생 시 에러 객체, 없으면 null
- */
-export type IListableResponse<TData> = {
-  data: TData[]
-  totalCount: number
-  error: Error | null
-}
-
-/**
  * 객체의 메서드 응답 타입을 추출하는 유틸리티 타입
  * @template TObject - 대상 객체 타입
  * @template TMethod - 객체의 메서드 이름
@@ -58,17 +33,3 @@ export type ExtractMethodParameters<T, M extends keyof T> = T[M] extends (
   ? P[0]
   : never
 export type SupportedLanguagesType = 'ko' | 'en'
-
-export type IServerResponseBase<T> = {
-  success: boolean
-  data: T
-  errorCode: string
-  errorMessage: string
-}
-
-export enum ApiErrorCode {
-  AUTH_UNAUTHORIZED = 'AUTH.UNAUTHORIZED',
-  AUTH_TOKEN_EXPIRED = 'AUTH.TOKEN_EXPIRED',
-  AUTH_REFRESH_TOKEN_EXPIRED = 'AUTH.REFRESH_TOKEN_EXPIRED',
-  INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR',
-}

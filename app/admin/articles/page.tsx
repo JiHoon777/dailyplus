@@ -1,6 +1,6 @@
 'use client'
 
-import type { IArticlesListableInput } from '@/shared/types'
+import type { IArticleListRequest } from '@/shared/types'
 
 import { DpQueryKeys } from '@/shared/api'
 import { PagedListableQueryLoader } from '@/shared/lib/loader'
@@ -16,7 +16,7 @@ import {
 
 export default function ArticlesPage() {
   const { open } = useOverlay()
-  const loadList = (input: IArticlesListableInput) =>
+  const loadList = (input: IArticleListRequest) =>
     ApiClientCSR.articles.getList(input)
 
   const handleCreateArticleWithAi = () => {

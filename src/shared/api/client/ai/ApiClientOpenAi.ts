@@ -1,6 +1,6 @@
 import type { ApiClient } from '../ApiClient'
 import type { IApiClientAiBase } from './types'
-import type { ArticlesType, SupportedLanguagesType } from '@/shared/types'
+import type { ArticleType, SupportedLanguagesType } from '@/shared/types'
 import type OpenAI from 'openai'
 
 export class ApiClientOpenAi implements IApiClientAiBase {
@@ -36,7 +36,7 @@ export class ApiClientOpenAi implements IApiClientAiBase {
   }
 
   getArticles(_input: {
-    type: ArticlesType
+    type: ArticleType
     language: SupportedLanguagesType
   }): Promise<string> {
     throw new Error('Method not implemented.')

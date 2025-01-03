@@ -1,5 +1,5 @@
 import type { IListableParams } from '.'
-import type { IListableResponse } from '@/shared/types/base.types'
+import type { IServerListResponse } from '@/shared/types/server/common'
 
 import { type QueryKey, useInfiniteQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
@@ -17,7 +17,7 @@ export const InfiniteListableQueryLoader = <
 }: {
   fetchData: (
     options: IListableParams<TParams>,
-  ) => Promise<IListableResponse<TData>>
+  ) => Promise<IServerListResponse<TData>>
   params: Omit<IListableParams<TParams>, 'page'>
   queryKey: (options: Omit<IListableParams<TParams>, 'page'>) => QueryKey
   children: ({
@@ -41,7 +41,7 @@ export const InfiniteListableQueryLoader = <
     hasNextPage,
     fetchNextPage,
     error,
-  } = useInfiniteQuery<IListableResponse<TData>, Error>({
+  } = useInfiniteQuery<IServerListResponse<TData>, Error>({
     getNextPageParam: (lastPage, allPages) => {
       const totalPages = Math.ceil(lastPage.totalCount / params.limit)
       const nextPage = allPages.length + 1

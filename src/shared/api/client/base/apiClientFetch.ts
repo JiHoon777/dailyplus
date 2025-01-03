@@ -9,6 +9,7 @@ export type FetchBaseRequestOptions<TBody> = {
   credentials?: RequestCredentials
   method?: HttpMethod
   body?: TBody
+  queryParams?: Record<string, any>
 }
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
@@ -33,7 +34,9 @@ export class ApiClientFetch {
         ...(typeof body === 'object' && { body: JSON.stringify(body) }),
       })
 
+      console.log(37, url)
       const json = await response.json()
+      console.log(38, json, response.ok)
       if (!json && !response.ok) {
         throw new Error('API call failed')
       }
@@ -59,9 +62,13 @@ export class ApiClientFetch {
 
   // 호출하는 메서드에서 타입을 맞춰주고 있으므로 간단하게 any 이용
   private mapToBaseOptions(options: FetchBaseRequestOptions<unknown>) {
-    const { url, header, body } = options
+    const { url: _url, header, body, queryParams } = options
+
+    let url = this.getUrl(_url)
+    url += makeQueryParams(queryParams) || ''
+
     return {
-      url: this.getUrl(url),
+      url,
       credentials: 'include' as RequestCredentials,
       header: {
         ...this.baseHeaders,
@@ -131,4 +138,23 @@ export class ApiClientFetch {
       method: 'DELETE',
     })
   }
+}
+
+function makeQueryParams(params?: Record<string, any>): string | null {
+  if (!params) {
+    return null
+  }
+
+  const validParams = Object.entries(params).filter(
+    ([_, value]) => value !== undefined && value !== null,
+  )
+
+  if (validParams.length === 0) return null
+
+  return (
+    '?' +
+    validParams
+      .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+      .join('&')
+  )
 }
