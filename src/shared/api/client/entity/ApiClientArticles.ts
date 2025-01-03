@@ -42,7 +42,7 @@ export class ApiClientArticles {
   ): Promise<IServerListResponse<IArticle>> {
     const { page = 1, size = 10, type } = input
 
-    return this.apiClient.fetch.get<IServerListResponse<IArticle>>({
+    return this.apiClient.fetch.get({
       url: { segments: ['articles', 'list'], query: { page, size, type } },
     })
   }

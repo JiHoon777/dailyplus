@@ -2,16 +2,15 @@ import type { ApiClient } from '..'
 import type {
   ExtractMethodParameters,
   ExtractMethodReturn,
-  IServerListResponse,
+  IQuote,
+  IQuoteCreateRequest,
+  IQuoteListRequest,
   IQuotePerson,
-  IQuotes,
-  IQuotesCreationInput,
-  IQuotesListableInput,
-  IQuotesUpdateInput,
+  IQuoteUpdateRequest,
+  IServerListResponse,
 } from '@/shared/types'
 
 import { ApiClientEntityBase } from '../base/apiClientEntityBase'
-import { createListableResponse, getPaginationRange } from '../lib'
 
 type IApiClientQuotes = typeof ApiClientQuotes.prototype
 
@@ -22,49 +21,29 @@ export type IApiClientQuotesParams<TMethod extends keyof IApiClientQuotes> =
   ExtractMethodParameters<IApiClientQuotes, TMethod>
 
 export class ApiClientQuotes extends ApiClientEntityBase<
-  'quotes',
-  IQuotes,
-  IQuotesCreationInput,
-  IQuotesUpdateInput,
-  IQuotesListableInput
+  IQuote,
+  IQuoteCreateRequest,
+  IQuoteUpdateRequest,
+  IQuoteListRequest
 > {
   constructor(apiClient: ApiClient) {
     super(apiClient, 'quotes')
   }
 
   async getList(
-    input: IQuotesListableInput,
+    input: IQuoteListRequest,
   ): Promise<
     IServerListResponse<
-      IQuotes & { quote_people: Pick<IQuotePerson, 'id' | 'name'> | null }
+      IQuote & { quote_people: Pick<IQuotePerson, 'id' | 'name'> | null }
     >
   > {
-    const {
-      page = 1,
-      limit = 10,
-      orderBy = 'created_at',
-      quotePeopleName,
-    } = input
+    const { page = 1, size = 10, quotePersonName } = input
 
-    const { from, to } = getPaginationRange(page, limit)
-
-    const query = this.supabaseClient
-      .from(this._tableName)
-      .select(
-        `
-        *,
-        quote_people(id, name)
-        `,
-        { count: 'exact' },
-      )
-      .range(from, to)
-
-    query.order(orderBy, { ascending: false })
-
-    if (quotePeopleName) {
-      query.eq('quote_people.name', quotePeopleName)
-    }
-
-    return createListableResponse(await query)
+    return this._apiClient.fetch.get({
+      url: {
+        segments: ['quotes', 'list'],
+        query: { page, size, quotePersonName },
+      },
+    })
   }
 }
