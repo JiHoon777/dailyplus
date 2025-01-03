@@ -1,80 +1,40 @@
 import type { ApiClient } from '../ApiClient'
-import type { Database } from 'database.types'
+import type { IServerEntityBase } from '@/shared/types'
 
-// Todo: Entity 공용 CRUD 타입 맞추기 빡세다.
-// Todo: 일단 type error ignore 하고 시간될 때 연구해보자.
 export abstract class ApiClientEntityBase<
-  TableName extends keyof Database['public']['Tables'],
-  TEntity extends Database['public']['Tables'][TableName]['Row'],
-  TCreateInput extends Database['public']['Tables'][TableName]['Insert'],
-  TUpdateInput extends Database['public']['Tables'][TableName]['Update'],
+  TEntity extends IServerEntityBase,
+  TCreateInput,
+  TUpdateInput,
   _IListableInput,
 > {
   constructor(
     protected readonly _apiClient: ApiClient,
-    protected readonly _tableName: TableName,
+    protected readonly basePath: string,
   ) {}
 
-  protected get supabaseClient() {
-    return this._apiClient.supabaseClient
-  }
-
   async getById(id: number): Promise<TEntity> {
-    const { data, error } = await this.supabaseClient
-      .from(this._tableName)
-      .select('*')
-      .eq('id', id)
-      .single()
-
-    if (error) {
-      throw error
-    }
-
-    // @ts-ignore
-    return data
+    return this._apiClient.fetch.get({
+      url: { segments: [this.basePath, id] },
+    })
   }
 
-  async create(input: TCreateInput): Promise<TEntity> {
-    const { data, error } = await this.supabaseClient
-      .from(this._tableName)
-      // @ts-ignore
-      .insert([input])
-      .select('*')
-      .single()
-
-    if (error) {
-      throw error
-    }
-
-    // @ts-ignore
-    return data
+  async create(body: TCreateInput): Promise<TEntity> {
+    return this._apiClient.fetch.post({
+      url: { segments: [this.basePath] },
+      body,
+    })
   }
 
-  async update(id: number, input: TUpdateInput): Promise<TEntity> {
-    const { data, error } = await this.supabaseClient
-      .from(this._tableName)
-      // @ts-ignore
-      .update(input)
-      .eq('id', id)
-      .select('*')
-      .single()
-
-    if (error) {
-      throw error
-    }
-
-    // @ts-ignore
-    return data
+  async update(id: number, body: TUpdateInput): Promise<void> {
+    return this._apiClient.fetch.patch({
+      url: { segments: [this.basePath, id] },
+      body,
+    })
   }
 
   async delete(id: number): Promise<void> {
-    const { error } = await this.supabaseClient
-      .from(this._tableName)
-      .delete()
-      .eq('id', id)
-
-    if (error) {
-      throw error
-    }
+    return this._apiClient.fetch.delete({
+      url: { segments: [this.basePath, id] },
+    })
   }
 }

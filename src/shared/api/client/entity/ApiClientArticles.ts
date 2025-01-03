@@ -11,10 +11,7 @@ import type {
 
 import { z } from 'zod'
 
-import {
-  extractJsonArrayFromText,
-  formatToHyphenYyyyMMddDate,
-} from '@/shared/lib/utils'
+import { extractJsonArrayFromText } from '@/shared/lib/utils'
 
 type IApiClientArticles = typeof ApiClientArticles.prototype
 
@@ -26,12 +23,9 @@ export type IApiClientArticlesParams<TMethod extends keyof IApiClientArticles> =
   ExtractMethodParameters<IApiClientArticles, TMethod>
 
 const AiGeneratedArticleValidationSchema = z.object({
-  published_at: z
-    .string()
-    .nullable()
-    .transform((val) => formatToHyphenYyyyMMddDate(val)),
-  reference_name: z.string().min(1),
-  reference_url: z.string().url(),
+  publishedAt: z.date(),
+  referenceName: z.string().min(1),
+  referenceUrl: z.string().url(),
   summary: z.string().min(1),
   title: z.string().min(1),
 })
@@ -49,8 +43,7 @@ export class ApiClientArticles {
     const { page = 1, size = 10, type } = input
 
     return this.apiClient.fetch.get<IServerListResponse<IArticle>>({
-      url: `articles/list`,
-      queryParams: { page, size, type },
+      url: { segments: ['articles', 'list'], query: { page, size, type } },
     })
   }
 

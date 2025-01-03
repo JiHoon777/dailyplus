@@ -5,7 +5,7 @@ export type IArticle = {
   title: string
   summary: string
   type: ArticleType
-  publishedAt: Date
+  publishedAt: Date | null
   referenceUrl: string
   referenceName: string
   createdAt: Date
