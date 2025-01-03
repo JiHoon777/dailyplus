@@ -1,5 +1,5 @@
 import type { OverlayProps } from '@/shared/lib/overlay'
-import type { IQuotePeopleCreationInput } from '@/shared/types'
+import type { IQuotePersonCreateRequest } from '@/shared/types'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
@@ -40,7 +40,7 @@ export const CreateQuotePeopleOverlay = ({ isOpen, close }: OverlayProps) => {
     resolver: zodResolver(formSchema),
   })
   const { mutate, isPending } = useMutation({
-    mutationFn: async (input: IQuotePeopleCreationInput) => {
+    mutationFn: async (input: IQuotePersonCreateRequest) => {
       ApiClientCSR.quotePeople.create(input)
     },
   })

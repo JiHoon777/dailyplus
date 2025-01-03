@@ -1,4 +1,4 @@
-import type { IArticleCreateRequest } from './server/entities/articles/article-request.types'
+import type { IArticleCreateRequest } from './server/entities/article/request.types'
 
 /**
  * AI로 생성된 아티클의 기본 구조를 정의합니다.

@@ -3,9 +3,9 @@ import type {
   ExtractMethodParameters,
   ExtractMethodReturn,
   IAiStories,
-  IAiStoriesCreationInput,
-  IAiStoriesListableInput,
-  IAiStoriesUpdateInput,
+  IAiStoryCreateRequest,
+  IAiStoryListRequest,
+  IAiStoryUpdateRequest,
   IServerListResponse,
 } from '@/shared/types'
 
@@ -25,16 +25,16 @@ export type IApiClientAiStoriesParams<
 export class ApiClientAiStories extends ApiClientEntityBase<
   'ai_stories',
   IAiStories,
-  IAiStoriesCreationInput,
-  IAiStoriesUpdateInput,
-  IAiStoriesListableInput
+  IAiStoryCreateRequest,
+  IAiStoryUpdateRequest,
+  IAiStoryListRequest
 > {
   constructor(apiClient: ApiClient) {
     super(apiClient, 'ai_stories')
   }
 
   async getListWithIdTitle(
-    input: IAiStoriesListableInput,
+    input: IAiStoryListRequest,
   ): Promise<IServerListResponse<Pick<IAiStories, 'id' | 'title'>>> {
     const {
       page = 1, //

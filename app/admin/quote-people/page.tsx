@@ -1,6 +1,6 @@
 'use client'
 
-import type { IQuotePeopleListableInput } from '@/shared/types'
+import type { IQuotePersonListRequest } from '@/shared/types'
 
 import { DpQueryKeys } from '@/shared/api'
 import { PagedListableQueryLoader } from '@/shared/lib/loader'
@@ -12,7 +12,7 @@ import { CreateQuotePeopleOverlay, QuotePeopleColumns } from './_ui'
 
 export default function QuotepeoplePage() {
   const { open } = useOverlay()
-  const loadList = (input: IQuotePeopleListableInput) =>
+  const loadList = (input: IQuotePersonListRequest) =>
     ApiClientCSR.quotePeople.getList(input)
 
   const handleCreateArticle = () => {

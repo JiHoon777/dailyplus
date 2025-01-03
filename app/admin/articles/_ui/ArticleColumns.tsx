@@ -1,7 +1,7 @@
-import type { IArticles } from '@/shared/types'
+import type { IArticle } from '@/shared/types'
 import type { ColumnDef } from '@tanstack/react-table'
 
-export const ArticleColumns: ColumnDef<IArticles>[] = [
+export const ArticleColumns: ColumnDef<IArticle>[] = [
   {
     accessorKey: 'id',
     header: 'ID',

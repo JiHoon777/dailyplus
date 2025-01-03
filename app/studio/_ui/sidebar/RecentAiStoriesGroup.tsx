@@ -1,4 +1,4 @@
-import type { IAiStoriesListableInput } from '@/shared/types'
+import type { IAiStoryListRequest } from '@/shared/types'
 
 import { BookText } from 'lucide-react'
 import Link from 'next/link'
@@ -19,7 +19,7 @@ import {
 
 export const RecentAiStoriesGroup = () => {
   const meId = useStore('auth', (s) => s.me?.id)
-  const loadList = (input: IAiStoriesListableInput) =>
+  const loadList = (input: IAiStoryListRequest) =>
     ApiClientCSR.aiStories.getListWithIdTitle(input)
 
   return (

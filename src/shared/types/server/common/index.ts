@@ -30,3 +30,9 @@ export type IServerListResponse<TData> = {
   size: number
   data: TData[]
 }
+
+export type IServerEntityBase = {
+  id: number
+  createdAt: Date
+  updatedAt: Date
+}

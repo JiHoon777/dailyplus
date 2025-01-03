@@ -1,7 +1,7 @@
-import type { IQuotePeople } from '@/shared/types'
+import type { IQuotePerson } from '@/shared/types'
 import type { ColumnDef } from '@tanstack/react-table'
 
-export const QuotePeopleColumns: ColumnDef<IQuotePeople>[] = [
+export const QuotePeopleColumns: ColumnDef<IQuotePerson>[] = [
   {
     accessorKey: 'id',
     header: 'ID',

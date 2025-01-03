@@ -1,10 +1,10 @@
 import type { ApiClient } from '..'
 import type {
   IServerListResponse,
-  IQuotePeople,
-  IQuotePeopleCreationInput,
-  IQuotePeopleListableInput,
-  IQuotePeopleUpdateInput,
+  IQuotePerson,
+  IQuotePersonCreateRequest,
+  IQuotePersonListRequest,
+  IQuotePersonUpdateRequest,
 } from '@/shared/types'
 
 import { ApiClientEntityBase } from '../base/apiClientEntityBase'
@@ -12,18 +12,18 @@ import { createListableResponse, getPaginationRange } from '../lib'
 
 export class ApiClientQuotePeople extends ApiClientEntityBase<
   'quote_people',
-  IQuotePeople,
-  IQuotePeopleCreationInput,
-  IQuotePeopleUpdateInput,
-  IQuotePeopleListableInput
+  IQuotePerson,
+  IQuotePersonCreateRequest,
+  IQuotePersonUpdateRequest,
+  IQuotePersonListRequest
 > {
   constructor(apiClient: ApiClient) {
     super(apiClient, 'quote_people')
   }
 
   async getList(
-    input: IQuotePeopleListableInput,
-  ): Promise<IServerListResponse<IQuotePeople>> {
+    input: IQuotePersonListRequest,
+  ): Promise<IServerListResponse<IQuotePerson>> {
     const { page = 1, limit = 10, orderBy = 'created_at' } = input
 
     const { from, to } = getPaginationRange(page, limit)

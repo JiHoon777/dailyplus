@@ -5,8 +5,8 @@ import type {
   IServerListResponse,
   IQuoteAiInterpretations,
   IQuoteAiInterpretationsCreationInput,
-  IQuoteAiInterpretationsListableInput,
-  IQuoteAiInterpretationsUpdateInput,
+  IQuoteAiInterpretationListRequest,
+  IQuoteAiInterpretationUpdateRequest,
 } from '@/shared/types'
 
 import { ApiClientEntityBase } from '../base/apiClientEntityBase'
@@ -27,15 +27,15 @@ export class ApiClientQuoteAiInterpretations extends ApiClientEntityBase<
   'quote_ai_interpretations',
   IQuoteAiInterpretations,
   IQuoteAiInterpretationsCreationInput,
-  IQuoteAiInterpretationsUpdateInput,
-  IQuoteAiInterpretationsListableInput
+  IQuoteAiInterpretationUpdateRequest,
+  IQuoteAiInterpretationListRequest
 > {
   constructor(apiClient: ApiClient) {
     super(apiClient, 'quote_ai_interpretations')
   }
 
   async getList(
-    input: IQuoteAiInterpretationsListableInput,
+    input: IQuoteAiInterpretationListRequest,
   ): Promise<IServerListResponse<IQuoteAiInterpretations>> {
     const { page = 1, limit = 10, orderBy = 'created_at', quote_id } = input
 

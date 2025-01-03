@@ -1,11 +1,11 @@
-import type { IArticles } from '@/shared/types'
+import type { IArticle } from '@/shared/types'
 
 import { format } from 'date-fns'
 
 import { cn } from '@/shared/lib/utils'
 import { Card, CardContent, CardHeader, Label, Skeleton } from '@/shared/ui'
 
-export const ArticleCard = ({ article }: { article: IArticles }) => {
+export const ArticleCard = ({ article }: { article: IArticle }) => {
   return (
     <Card className="h-fit w-full shrink-0">
       <CardHeader>

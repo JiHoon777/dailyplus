@@ -3,7 +3,7 @@ import type {
   ExtractMethodParameters,
   ExtractMethodReturn,
   IAiGeneratedArticleBase,
-  IArticles,
+  IArticle,
   IArticleCreateRequest,
   IArticleListRequest,
   IServerListResponse,
@@ -45,10 +45,10 @@ export class ApiClientArticles {
 
   async getList(
     input: IArticleListRequest,
-  ): Promise<IServerListResponse<IArticles>> {
+  ): Promise<IServerListResponse<IArticle>> {
     const { page = 1, size = 10, type } = input
 
-    return this.apiClient.fetch.get<IServerListResponse<IArticles>>({
+    return this.apiClient.fetch.get<IServerListResponse<IArticle>>({
       url: `articles/list`,
       queryParams: { page, size, type },
     })

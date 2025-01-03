@@ -1,12 +1,12 @@
-import type { IUsers } from '../types'
+import type { IUser } from '../types'
 
 import { createStore } from './utils/createStore'
 
 export interface IAuthStore {
-  me: IUsers | null
+  me: IUser | null
 
   hasAiPromptAccess: boolean
-  setMe: (user: IUsers | null) => void
+  setMe: (user: IUser | null) => void
 }
 
 export const AuthStore = createStore<IAuthStore>(

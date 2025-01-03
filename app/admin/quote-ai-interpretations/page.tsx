@@ -1,6 +1,6 @@
 'use client'
 
-import type { IQuoteAiInterpretationsListableInput } from '@/shared/types'
+import type { IQuoteAiInterpretationListRequest } from '@/shared/types'
 
 import { DpQueryKeys } from '@/shared/api'
 import { PagedListableQueryLoader } from '@/shared/lib/loader'
@@ -10,7 +10,7 @@ import { DataTableRenderer, DPage, Pagination } from '@/shared/ui'
 import { QuoteAiInterpretationsColumns } from './_ui'
 
 export default function QuoteAiInterpretationsPage() {
-  const loadList = (input: IQuoteAiInterpretationsListableInput) =>
+  const loadList = (input: IQuoteAiInterpretationListRequest) =>
     ApiClientCSR.quoteAiInterpretations.getList(input)
 
   return (

@@ -1,7 +1,7 @@
 import type { IApiClientQuoteAiInterpretationsParams } from '@/shared/api'
 import type {
   IQuoteAiInterpretations,
-  IQuoteAiInterpretationsListableInput,
+  IQuoteAiInterpretationListRequest,
   IQuotes,
 } from '@/shared/types'
 import type { QueryKey } from '@tanstack/react-query'
@@ -19,7 +19,7 @@ import { Button, Skeleton } from '@/shared/ui'
 export type IQuoteInterpretationProps = {
   quote: IQuotes
   getQuoteInterpretationQueryKey: (
-    input?: Omit<IQuoteAiInterpretationsListableInput, 'page' | 'limit'>,
+    input?: Omit<IQuoteAiInterpretationListRequest, 'page' | 'limit'>,
   ) => QueryKey
 }
 

@@ -1,6 +1,6 @@
 'use client'
 
-import type { IArticles } from '@/shared/types'
+import type { IArticle } from '@/shared/types'
 
 import { ArticleCard } from '@/entities/articles'
 import { AutoPlayCarousel } from '@/shared/ui/carousel'
@@ -8,11 +8,11 @@ import { AutoPlayCarousel } from '@/shared/ui/carousel'
 export const HomeArticlesCarousel = ({
   articles,
 }: {
-  articles: IArticles[]
+  articles: IArticle[]
 }) => {
   return (
     <AutoPlayCarousel slides={articles}>
-      {(item: IArticles) => <ArticleCard article={item} />}
+      {(item: IArticle) => <ArticleCard article={item} />}
     </AutoPlayCarousel>
   )
 }

@@ -1,7 +1,7 @@
-import type { ArticleType, IArticles, IServerListRequest } from '@/shared/types'
+import type { ArticleType, IArticle, IServerListRequest } from '@/shared/types'
 
 export type IArticleCreateRequest = Pick<
-  IArticles,
+  IArticle,
   | 'title'
   | 'summary'
   | 'publishedAt'
@@ -12,5 +12,5 @@ export type IArticleCreateRequest = Pick<
 export type IArticleListRequest = IServerListRequest<{
   type?: ArticleType
 }>
-export type IArticleUpdateInput = Partial<IArticleCreateRequest>
-export type IArticleDeleteInput = Pick<IArticles, 'id'>
+export type IArticleUpdateRequest = Partial<IArticleCreateRequest>
+export type IArticleDeleteRequest = Pick<IArticle, 'id'>

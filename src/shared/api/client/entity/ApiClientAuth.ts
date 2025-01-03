@@ -2,7 +2,7 @@ import type { ApiClient } from '../ApiClient'
 import type {
   ExtractMethodParameters,
   ExtractMethodReturn,
-  IUsers,
+  IUser,
 } from '@/shared/types'
 
 type IApiClientAuth = typeof ApiClientAuth.prototype
@@ -24,13 +24,13 @@ export class ApiClientAuth {
     return this._apiClient.fetch
   }
 
-  getAuthUser(): Promise<IUsers> {
+  getAuthUser(): Promise<IUser> {
     return this.fetch.get({
       url: 'auth/profile',
     })
   }
 
-  signup(email: string, password: string): Promise<IUsers> {
+  signup(email: string, password: string): Promise<IUser> {
     return this.fetch.post({
       url: 'auth/signup',
       body: {
@@ -40,7 +40,7 @@ export class ApiClientAuth {
     })
   }
 
-  signin(email: string, password: string): Promise<IUsers> {
+  signin(email: string, password: string): Promise<IUser> {
     return this.fetch.post({
       url: 'auth/signin',
       body: {
@@ -50,7 +50,7 @@ export class ApiClientAuth {
     })
   }
 
-  refreshToken(): Promise<IUsers> {
+  refreshToken(): Promise<IUser> {
     return this.fetch.post({
       url: 'auth/refresh-token',
     })

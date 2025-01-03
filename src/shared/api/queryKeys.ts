@@ -1,8 +1,8 @@
 import type {
-  IAiStoriesListableInput,
+  IAiStoryListRequest,
   IArticleListRequest,
-  IQuoteAiInterpretationsListableInput,
-  IQuotePeopleListableInput,
+  IQuoteAiInterpretationListRequest,
+  IQuotePersonListRequest,
   IQuotesListableInput,
 } from '../types'
 
@@ -33,12 +33,12 @@ const adminQueryKeys = {
   },
   quoteAiInterpretations: {
     /** 관리자용 명언 해석 조회  */
-    list: (input?: IQuoteAiInterpretationsListableInput) =>
+    list: (input?: IQuoteAiInterpretationListRequest) =>
       createQueryKey(['admin', 'quote-ai-interpretations', 'list'], input),
   },
   quotePeople: {
     /** 관리자용 명언 인물 조회  */
-    list: (input?: IQuotePeopleListableInput) =>
+    list: (input?: IQuotePersonListRequest) =>
       createQueryKey(['admin', 'quote-people', 'list'], input),
   },
   quotes: {
@@ -57,7 +57,7 @@ const appQueryKeys = {
   },
   home: {
     quoteInterpretation: (
-      input?: Omit<IQuoteAiInterpretationsListableInput, 'page' | 'limit'>,
+      input?: Omit<IQuoteAiInterpretationListRequest, 'page' | 'limit'>,
     ) => createQueryKey(['app', 'home', 'quote-ai-interpretation'], input),
     quoteList: (input?: Omit<IQuotesListableInput, 'page' | 'limit'>) =>
       createQueryKey(['app', 'home', 'quotes', 'list'], input),
@@ -70,9 +70,8 @@ const studioQueryKeys = {
     quoteList: (input?: Omit<IQuotesListableInput, 'page' | 'limit'>) =>
       createQueryKey(['studio', 'new', 'quotes', 'list'], input),
   },
-  recentAiStoryList: (
-    input?: Omit<IAiStoriesListableInput, 'page' | 'limit'>,
-  ) => createQueryKey(['studio', 'recent-ai-stories', 'list'], input),
+  recentAiStoryList: (input?: Omit<IAiStoryListRequest, 'page' | 'limit'>) =>
+    createQueryKey(['studio', 'recent-ai-stories', 'list'], input),
 } as const
 
 /** 인증 관련 쿼리키 */
