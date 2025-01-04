@@ -16,10 +16,6 @@ export type IApiClientAuthParams<TMethod extends keyof IApiClientAuth> =
 export class ApiClientAuth {
   constructor(private readonly _apiClient: ApiClient) {}
 
-  get supabaseClient() {
-    return this._apiClient.supabaseClient
-  }
-
   get fetch() {
     return this._apiClient.fetch
   }

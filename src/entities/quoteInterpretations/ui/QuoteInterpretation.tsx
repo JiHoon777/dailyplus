@@ -85,8 +85,8 @@ export const QuoteInterpretation = ({
 
     mutate({
       quoteText: `${quote.original_text}, ${quote.korean_text}`,
-      quote_id: quote.id,
-      user_id: userId,
+      quoteId: quote.id,
+      userId: userId,
     })
   }
 

@@ -2,7 +2,7 @@ import type { ApiClient } from '..'
 import type {
   ExtractMethodParameters,
   ExtractMethodReturn,
-  IAiStories,
+  IAiStory,
   IAiStoryCreateRequest,
   IAiStoryListRequest,
   IAiStoryUpdateRequest,
@@ -10,7 +10,6 @@ import type {
 } from '@/shared/types'
 
 import { ApiClientEntityBase } from '../base/apiClientEntityBase'
-import { createListableResponse, getPaginationRange } from '../lib'
 
 type IApiClientAiStories = typeof ApiClientAiStories.prototype
 
@@ -23,8 +22,7 @@ export type IApiClientAiStoriesParams<
 > = ExtractMethodParameters<IApiClientAiStories, TMethod>
 
 export class ApiClientAiStories extends ApiClientEntityBase<
-  'ai_stories',
-  IAiStories,
+  IAiStory,
   IAiStoryCreateRequest,
   IAiStoryUpdateRequest,
   IAiStoryListRequest
@@ -35,27 +33,14 @@ export class ApiClientAiStories extends ApiClientEntityBase<
 
   async getListWithIdTitle(
     input: IAiStoryListRequest,
-  ): Promise<IServerListResponse<Pick<IAiStories, 'id' | 'title'>>> {
-    const {
-      page = 1, //
-      limit = 10,
-      orderBy = 'created_at',
-      user_id,
-    } = input
+  ): Promise<IServerListResponse<Pick<IAiStory, 'id' | 'title'>>> {
+    const { page = 1, size = 10, userId } = input
 
-    const { from, to } = getPaginationRange(page, limit)
-
-    const query = this.supabaseClient
-      .from(this._tableName)
-      .select('id, title', { count: 'exact' })
-      .range(from, to)
-
-    query.order(orderBy, { ascending: false })
-
-    if (user_id) {
-      query.eq('user_id', user_id)
-    }
-
-    return createListableResponse(await query)
+    return this.fetch.get({
+      url: {
+        segments: [this.segmentPrefix, 'list'],
+        query: { page, size, userId },
+      },
+    })
   }
 }

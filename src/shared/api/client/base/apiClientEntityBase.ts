@@ -12,6 +12,10 @@ export abstract class ApiClientEntityBase<
     protected readonly segmentPrefix: string,
   ) {}
 
+  get fetch() {
+    return this._apiClient.fetch
+  }
+
   async getById(id: number): Promise<TEntity> {
     return this._apiClient.fetch.get({
       url: { segments: [this.segmentPrefix, id] },

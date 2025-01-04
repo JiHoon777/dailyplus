@@ -6,12 +6,15 @@ import type {
   IArticle,
   IArticleCreateRequest,
   IArticleListRequest,
+  IArticleUpdateRequest,
   IServerListResponse,
 } from '@/shared/types'
 
 import { z } from 'zod'
 
 import { extractJsonArrayFromText } from '@/shared/lib/utils'
+
+import { ApiClientEntityBase } from '../base/apiClientEntityBase'
 
 type IApiClientArticles = typeof ApiClientArticles.prototype
 
@@ -30,11 +33,14 @@ const AiGeneratedArticleValidationSchema = z.object({
   title: z.string().min(1),
 })
 
-export class ApiClientArticles {
-  constructor(private readonly apiClient: ApiClient) {}
-
-  get supabaseClient() {
-    return this.apiClient.supabaseClient
+export class ApiClientArticles extends ApiClientEntityBase<
+  IArticle,
+  IArticleCreateRequest,
+  IArticleUpdateRequest,
+  IArticleListRequest
+> {
+  constructor(apiClient: ApiClient) {
+    super(apiClient, 'articles')
   }
 
   async getList(
@@ -42,8 +48,11 @@ export class ApiClientArticles {
   ): Promise<IServerListResponse<IArticle>> {
     const { page = 1, size = 10, type } = input
 
-    return this.apiClient.fetch.get({
-      url: { segments: ['articles', 'list'], query: { page, size, type } },
+    return this.fetch.get({
+      url: {
+        segments: [this.segmentPrefix, 'list'],
+        query: { page, size, type },
+      },
     })
   }
 
@@ -94,7 +103,7 @@ export class ApiClientArticles {
   private async generateBulkFromAi(
     input: IApiClientAiBaseParams<'getArticles'>,
   ) {
-    const res = await this.apiClient.perplexity.getArticles(input)
+    const res = await this._apiClient.perplexity.getArticles(input)
 
     if (!res) {
       throw new Error('No response from AI')

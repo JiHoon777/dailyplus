@@ -2,15 +2,14 @@ import type { ApiClient, IApiClientAiBaseParams } from '..'
 import type {
   ExtractMethodParameters,
   ExtractMethodReturn,
-  IServerListResponse,
-  IQuoteAiInterpretations,
-  IQuoteAiInterpretationsCreationInput,
+  IQuoteAiInterpretation,
+  IQuoteAiInterpretationCreateRequest,
   IQuoteAiInterpretationListRequest,
   IQuoteAiInterpretationUpdateRequest,
+  IServerListResponse,
 } from '@/shared/types'
 
 import { ApiClientEntityBase } from '../base/apiClientEntityBase'
-import { createListableResponse, getPaginationRange } from '../lib'
 
 type IApiClientQuoteAiInterpretations =
   typeof ApiClientQuoteAiInterpretations.prototype
@@ -24,52 +23,43 @@ export type IApiClientQuoteAiInterpretationsParams<
 > = ExtractMethodParameters<IApiClientQuoteAiInterpretations, TMethod>
 
 export class ApiClientQuoteAiInterpretations extends ApiClientEntityBase<
-  'quote_ai_interpretations',
-  IQuoteAiInterpretations,
-  IQuoteAiInterpretationsCreationInput,
+  IQuoteAiInterpretation,
+  IQuoteAiInterpretationCreateRequest,
   IQuoteAiInterpretationUpdateRequest,
   IQuoteAiInterpretationListRequest
 > {
   constructor(apiClient: ApiClient) {
-    super(apiClient, 'quote_ai_interpretations')
+    super(apiClient, 'quote-ai-interpretations')
   }
 
   async getList(
     input: IQuoteAiInterpretationListRequest,
-  ): Promise<IServerListResponse<IQuoteAiInterpretations>> {
-    const { page = 1, limit = 10, orderBy = 'created_at', quote_id } = input
+  ): Promise<IServerListResponse<IQuoteAiInterpretation>> {
+    const { page = 1, size = 10, quoteId } = input
 
-    const { from, to } = getPaginationRange(page, limit)
-
-    const query = this.supabaseClient
-      .from(this._tableName)
-      .select('*', { count: 'exact' })
-      .range(from, to)
-
-    query.order(orderBy, { ascending: false })
-
-    if (quote_id) {
-      query.eq('quote_id', quote_id)
-    }
-
-    return createListableResponse(await query)
+    return this.fetch.get({
+      url: {
+        segments: [this.segmentPrefix, 'list'],
+        query: { page, size, quoteId },
+      },
+    })
   }
 
   async generateAndSaveQuoteInterpretationWithAi(
     input: IApiClientAiBaseParams<'getQuoteInterpretation'> & {
-      quote_id: number
-      user_id: string
+      quoteId: number
+      userId: number
     },
   ) {
-    const { customPrompt, quote_id, user_id } = input
+    const { customPrompt, quoteId, userId } = input
     const res = await this._apiClient.openai.getQuoteInterpretation(input)
 
     const interpretation = await this.create({
       content: res,
-      model_version: 'gpt-4o-mini',
+      modelVersion: 'gpt-4o-mini',
       prompt: customPrompt ?? null,
-      quote_id,
-      user_id,
+      quoteId,
+      userId,
     })
 
     return interpretation

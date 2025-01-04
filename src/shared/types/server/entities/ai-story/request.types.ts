@@ -5,7 +5,9 @@ export type IAiStoryCreateRequest = {
   userId?: number | null
 } & Pick<IAiStory, 'title' | 'content' | 'modelVersion'>
 
-export type IAiStoryListRequest = IServerListRequest
+export type IAiStoryListRequest = IServerListRequest<{
+  userId?: number
+}>
 
 export type IAiStoryUpdateRequest = Partial<IAiStoryCreateRequest>
 
