@@ -4,7 +4,7 @@
  */
 import type { IApiClientAiBase } from './ai/types'
 
-import { ApiClientOpenAi, ApiClientPerplexity } from './ai'
+import { ApiClientOpenAi } from './ai'
 import { ApiClientFetch } from './base/ApiClientFetch'
 import {
   ApiClientAiStories,
@@ -18,7 +18,6 @@ import {
 export class ApiClientRoot {
   readonly fetch = new ApiClientFetch(this)
 
-  readonly perplexity: IApiClientAiBase = new ApiClientPerplexity(this)
   readonly openai: IApiClientAiBase = new ApiClientOpenAi(this)
 
   readonly auth = new ApiClientAuth(this)

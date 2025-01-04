@@ -4,7 +4,6 @@ type LogLevel = 'info' | 'warn' | 'error' | 'debug'
 
 export class Logger {
   private showLog: boolean
-  private groupLevel: number = 0
 
   constructor(private readonly name: string) {
     this.showLog = DPEnvs.appEnv !== 'prod'
@@ -13,7 +12,7 @@ export class Logger {
   private formatMessage(level: LogLevel, message: unknown): void {
     if (!this.showLog) return
 
-    const indent = '  '.repeat(this.groupLevel)
+    const indent = '  '
     console.log(`${indent}${this.name}`, `[${level.toUpperCase()}]`, message)
   }
 
@@ -40,12 +39,10 @@ export class Logger {
     } else {
       console.group()
     }
-    this.groupLevel++
   }
 
   public groupEnd(): void {
     if (!this.showLog) return
     console.groupEnd()
-    this.groupLevel = Math.max(0, this.groupLevel - 1)
   }
 }
