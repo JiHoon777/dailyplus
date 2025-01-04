@@ -50,10 +50,8 @@ export class ApiClientArticles extends ApiClientEntityBase<
     const { page = 1, size = 10, type } = input
 
     return this.fetch.get({
-      url: {
-        segments: [this.segmentPrefix, 'list'],
-        query: { page, size, type },
-      },
+      segments: [this.segmentPrefix, 'list'],
+      query: { page, size, type },
     })
   }
 

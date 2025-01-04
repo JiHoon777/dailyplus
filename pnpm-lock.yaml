@@ -77,6 +77,9 @@ importers:
       immer:
         specifier: ^10.1.1
         version: 10.1.1
+      ky:
+        specifier: ^1.7.4
+        version: 1.7.4
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -1989,6 +1992,10 @@ packages:
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
+
+  ky@1.7.4:
+    resolution: {integrity: sha512-zYEr/gh7uLW2l4su11bmQ2M9xLgQLjyvx58UyNM/6nuqyWFHPX5ktMjvpev3F8QWdjSsHUpnWew4PBCswBNuMQ==}
+    engines: {node: '>=18'}
 
   language-subtag-registry@0.3.23:
     resolution: {integrity: sha512-0K65Lea881pHotoGEa5gDlMxt3pctLi2RplBb7Ezh4rRdLEOtgi7n4EwK9lamnUCkKBqaeKRVebTq6BAxSkpXQ==}
@@ -4756,6 +4763,8 @@ snapshots:
   keyv@4.5.4:
     dependencies:
       json-buffer: 3.0.1
+
+  ky@1.7.4: {}
 
   language-subtag-registry@0.3.23: {}
 

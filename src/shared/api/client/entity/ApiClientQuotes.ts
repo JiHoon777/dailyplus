@@ -40,10 +40,8 @@ export class ApiClientQuotes extends ApiClientEntityBase<
     const { page = 1, size = 10, quotePersonName } = input
 
     return this.fetch.get({
-      url: {
-        segments: [this.segmentPrefix, 'list'],
-        query: { page, size, quotePersonName },
-      },
+      segments: [this.segmentPrefix, 'list'],
+      query: { page, size, quotePersonName },
     })
   }
 }

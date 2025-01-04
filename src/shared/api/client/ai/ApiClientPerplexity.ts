@@ -7,6 +7,8 @@ import type {
   SupportedLanguagesType,
 } from '@/shared/types'
 
+import ky from 'ky'
+
 import {
   getDateRangeText,
   getSystemContentByLanguage,
@@ -17,16 +19,14 @@ export class ApiClientPerplexity implements IApiClientAiBase {
   constructor(private readonly _apiClient: ApiClientRoot) {}
 
   private async createChatCompletions({ model, messages }: IPerplexityInput) {
-    const completion = await this._apiClient.fetch.request<IPerplexityResponse>(
-      {
-        body: {
+    const completion: IPerplexityResponse = await ky
+      .post('/api/ai/perplexity/chat-completions-create', {
+        json: {
           messages,
           model,
         },
-        url: '/api/ai/perplexity/chat-completions-create',
-        method: 'POST',
-      },
-    )
+      })
+      .json()
 
     const content = completion.choices?.[0]?.message?.content
 

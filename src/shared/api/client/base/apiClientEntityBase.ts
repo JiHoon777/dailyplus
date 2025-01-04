@@ -17,28 +17,30 @@ export abstract class ApiClientEntityBase<
   }
 
   async getById(id: number): Promise<TEntity> {
-    return this._apiClient.fetch.get({
-      url: { segments: [this.segmentPrefix, id] },
-    })
+    return this._apiClient.fetch.get({ segments: [this.segmentPrefix, id] })
   }
 
-  async create(body: TCreateInput): Promise<TEntity> {
-    return this._apiClient.fetch.post({
-      url: { segments: [this.segmentPrefix] },
-      body,
-    })
+  async create(json: TCreateInput): Promise<TEntity> {
+    return this._apiClient.fetch.post(
+      { segments: [this.segmentPrefix] },
+      {
+        json,
+      },
+    )
   }
 
-  async update(id: number, body: TUpdateInput): Promise<void> {
-    return this._apiClient.fetch.patch({
-      url: { segments: [this.segmentPrefix, id] },
-      body,
-    })
+  async update(id: number, json: TUpdateInput): Promise<void> {
+    return this._apiClient.fetch.patch(
+      { segments: [this.segmentPrefix, id] },
+      {
+        json,
+      },
+    )
   }
 
   async delete(id: number): Promise<void> {
     return this._apiClient.fetch.delete({
-      url: { segments: [this.segmentPrefix, id] },
+      segments: [this.segmentPrefix, id],
     })
   }
 }

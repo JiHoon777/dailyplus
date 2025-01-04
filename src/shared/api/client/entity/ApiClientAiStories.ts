@@ -37,10 +37,8 @@ export class ApiClientAiStories extends ApiClientEntityBase<
     const { page = 1, size = 10, userId } = input
 
     return this.fetch.get({
-      url: {
-        segments: [this.segmentPrefix, 'list'],
-        query: { page, size, userId },
-      },
+      segments: [this.segmentPrefix, 'list'],
+      query: { page, size, userId },
     })
   }
 }

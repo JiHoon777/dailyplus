@@ -1,20 +1,20 @@
+import ky from 'ky'
 import { NextResponse } from 'next/server'
 
-import { ApiClient } from '@/shared/api'
 import { DPEnvs } from '@/shared/config'
 
 export async function POST(req: Request) {
   try {
     const body = await req.json()
 
-    const data = await ApiClient.fetch.request({
-      body,
-      header: {
-        Authorization: `Bearer ${DPEnvs.PERPLEXITY_API_KEY}`,
-      },
-      url: 'https://api.perplexity.ai/chat/completions',
-      method: 'POST',
-    })
+    const data = await ky
+      .post('https://api.perplexity.ai/chat/completions', {
+        headers: {
+          Authorization: `Bearer ${DPEnvs.PERPLEXITY_API_KEY}`,
+        },
+        json: body,
+      })
+      .json()
 
     return NextResponse.json(data)
   } catch (error) {

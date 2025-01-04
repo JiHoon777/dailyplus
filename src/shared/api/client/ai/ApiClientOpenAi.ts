@@ -3,6 +3,8 @@ import type { IApiClientAiBase } from './types'
 import type { ArticleType, SupportedLanguagesType } from '@/shared/types'
 import type OpenAI from 'openai'
 
+import ky from 'ky'
+
 export class ApiClientOpenAi implements IApiClientAiBase {
   constructor(private readonly _apiClient: ApiClientRoot) {}
 
@@ -13,14 +15,17 @@ export class ApiClientOpenAi implements IApiClientAiBase {
     model: OpenAI.Chat.ChatModel
     messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[]
   }): Promise<string> {
-    const completion =
-      await this._apiClient.fetch.post<OpenAI.Chat.Completions.ChatCompletion>({
-        body: {
-          messages,
-          model,
+    const completion = await ky
+      .post<OpenAI.Chat.Completions.ChatCompletion>(
+        '/api/ai/openai/chat-completions-create',
+        {
+          json: {
+            messages,
+            model,
+          },
         },
-        url: '/api/ai/openai/chat-completions-create',
-      })
+      )
+      .json()
 
     const content = completion.choices?.[0]?.message?.content
 

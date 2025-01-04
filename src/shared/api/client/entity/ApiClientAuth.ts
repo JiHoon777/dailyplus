@@ -21,15 +21,12 @@ export class ApiClientAuth {
   }
 
   getAuthUser(): Promise<IUser> {
-    return this.fetch.get({
-      url: 'auth/profile',
-    })
+    return this.fetch.get('auth/profile')
   }
 
   signup(email: string, password: string): Promise<IUser> {
-    return this.fetch.post({
-      url: 'auth/signup',
-      body: {
+    return this.fetch.post('auth/signup', {
+      json: {
         email,
         password,
       },
@@ -37,9 +34,8 @@ export class ApiClientAuth {
   }
 
   signin(email: string, password: string): Promise<IUser> {
-    return this.fetch.post({
-      url: 'auth/signin',
-      body: {
+    return this.fetch.post('auth/signin', {
+      json: {
         email,
         password,
       },
@@ -47,15 +43,11 @@ export class ApiClientAuth {
   }
 
   refreshToken(): Promise<IUser> {
-    return this.fetch.post({
-      url: 'auth/refresh-token',
-    })
+    return this.fetch.post('auth/refresh-token')
   }
 
   signout(): Promise<null> {
-    return this.fetch.post({
-      url: 'auth/signout',
-    })
+    return this.fetch.post('auth/signout')
   }
 }
 
