@@ -7,6 +7,11 @@ export const showToast = {
       return
     }
 
+    if (error instanceof Error) {
+      toast.error(error.message)
+      return
+    }
+
     toast.error(JSON.stringify(error))
   },
   info: (message: string) => {

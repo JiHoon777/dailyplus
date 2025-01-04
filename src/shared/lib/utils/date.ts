@@ -21,7 +21,7 @@ export const formatDate = (date: string | Date) => {
  * formatToHyphenYyyyMMddDate('invalid') // returns null
  */
 export const formatToHyphenYyyyMMddDate = (
-  date: string | null | undefined,
+  date: Date | string | null | undefined,
 ): string | null => {
   if (!date) return null
 

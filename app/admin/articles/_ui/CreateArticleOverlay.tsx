@@ -31,7 +31,9 @@ import {
 } from '@/shared/ui'
 
 const formSchema = z.object({
-  publishedAt: z.date(),
+  publishedAt: z.date().transform((date) => {
+    return new Date(date)
+  }),
   referenceName: z.string().min(2, {
     message: 'Reference name must be at least 2 characters.',
   }),
@@ -179,14 +181,19 @@ export const CreateArticleOverlay = ({ isOpen, close }: OverlayProps) => {
             <FormField
               control={form.control}
               name="publishedAt"
-              render={({ field }) => (
+              render={({ field: { value, onChange, ...field } }) => (
                 <FormItem>
                   <FormLabel>Published Date</FormLabel>
                   <FormControl>
                     <Input
                       type="date"
                       {...field}
-                      value={field.value.toISOString()}
+                      value={
+                        value instanceof Date
+                          ? value.toISOString().split('T')[0]
+                          : ''
+                      }
+                      onChange={(e) => onChange(new Date(e.target.value))}
                     />
                   </FormControl>
                   <FormMessage />

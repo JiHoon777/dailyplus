@@ -28,7 +28,7 @@ export class ApiClientAiStories extends ApiClientEntityBase<
   IAiStoryListRequest
 > {
   constructor(apiClient: ApiClientRoot) {
-    super(apiClient, 'ai_stories')
+    super(apiClient, 'ai-stories')
   }
 
   async getListWithIdTitle(

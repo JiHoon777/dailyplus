@@ -16,7 +16,7 @@ export class ApiClientQuotePeople extends ApiClientEntityBase<
   IQuotePersonListRequest
 > {
   constructor(apiClient: ApiClientRoot) {
-    super(apiClient, 'quote_persons')
+    super(apiClient, 'quote-persons')
   }
 
   async getList(

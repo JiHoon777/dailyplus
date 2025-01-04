@@ -17,11 +17,11 @@ export const ArticleColumns: ColumnDef<IArticle>[] = [
     minSize: 1000,
   },
   {
-    accessorKey: 'reference_name',
+    accessorKey: 'referenceName',
     header: 'Reference Name',
   },
   {
-    accessorKey: 'reference_url',
+    accessorKey: 'referenceUrl',
     header: 'Reference Url',
     meta: {
       valueType: 'link',
@@ -32,7 +32,7 @@ export const ArticleColumns: ColumnDef<IArticle>[] = [
     header: 'Type',
   },
   {
-    accessorKey: 'published_at',
+    accessorKey: 'publishedAt',
     header: 'Published At',
     meta: {
       valueType: 'date',
