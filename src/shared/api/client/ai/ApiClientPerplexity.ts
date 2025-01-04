@@ -1,4 +1,4 @@
-import type { ApiClient } from '../ApiClient'
+import type { ApiClientRoot } from '../ApiClient'
 import type { IApiClientAiBase } from './types'
 import type {
   ArticleType,
@@ -14,11 +14,7 @@ import {
 } from '../prompt/articles'
 
 export class ApiClientPerplexity implements IApiClientAiBase {
-  constructor(private readonly _apiClient: ApiClient) {}
-
-  get supabaseClient() {
-    return this._apiClient.supabaseClient
-  }
+  constructor(private readonly _apiClient: ApiClientRoot) {}
 
   private async createChatCompletions({ model, messages }: IPerplexityInput) {
     const completion = await this._apiClient.fetch.request<IPerplexityResponse>(

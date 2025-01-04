@@ -1,10 +1,9 @@
 import { redirect } from 'next/navigation'
 
-import { createApiClientSSR } from '@/shared/lib/supabase-ssr'
+import { ApiClient } from '@/shared/api'
 
 export default async function SignoutPage() {
-  const apiClient = await createApiClientSSR()
-  await apiClient.auth.signout()
+  await ApiClient.auth.signout()
 
   redirect('/auth/signin')
 }

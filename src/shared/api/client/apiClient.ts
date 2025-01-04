@@ -3,8 +3,6 @@
  * 관리자용과 일반 사용자용 작업에 대한 접근을 제공
  */
 import type { IApiClientAiBase } from './ai/types'
-import type { SupabaseClient } from '@supabase/supabase-js'
-import type { Database } from 'database.types'
 
 import { ApiClientOpenAi, ApiClientPerplexity } from './ai'
 import { ApiClientFetch } from './base/ApiClientFetch'
@@ -17,7 +15,7 @@ import {
   ApiClientQuotes,
 } from './entity'
 
-export class ApiClient {
+export class ApiClientRoot {
   readonly fetch = new ApiClientFetch(this)
 
   readonly perplexity: IApiClientAiBase = new ApiClientPerplexity(this)
@@ -30,9 +28,5 @@ export class ApiClient {
   readonly quoteAiInterpretations = new ApiClientQuoteAiInterpretations(this)
   readonly aiStories = new ApiClientAiStories(this)
 
-  constructor(private readonly _supabaseClient: SupabaseClient<Database>) {}
-
-  get supabaseClient() {
-    return this._supabaseClient
-  }
+  constructor() {}
 }

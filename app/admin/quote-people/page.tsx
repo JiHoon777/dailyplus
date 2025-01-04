@@ -2,10 +2,9 @@
 
 import type { IQuotePersonListRequest } from '@/shared/types'
 
-import { DpQueryKeys } from '@/shared/api'
+import { ApiClient, DpQueryKeys } from '@/shared/api'
 import { PagedListableQueryLoader } from '@/shared/lib/loader'
 import { useOverlay } from '@/shared/lib/overlay'
-import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { Button, DataTableRenderer, DPage, Pagination } from '@/shared/ui'
 
 import { CreateQuotePeopleOverlay, QuotePeopleColumns } from './_ui'
@@ -13,7 +12,7 @@ import { CreateQuotePeopleOverlay, QuotePeopleColumns } from './_ui'
 export default function QuotepeoplePage() {
   const { open } = useOverlay()
   const loadList = (input: IQuotePersonListRequest) =>
-    ApiClientCSR.quotePeople.getList(input)
+    ApiClient.quotePeople.getList(input)
 
   const handleCreateArticle = () => {
     open(({ isOpen, close }) => (
@@ -31,7 +30,7 @@ export default function QuotepeoplePage() {
       <PagedListableQueryLoader
         fetchData={loadList}
         queryKey={DpQueryKeys.admin.quotePeople.list}
-        params={{ limit: 10 }}
+        params={{ size: 10 }}
       >
         {({ list, totalPages, currentPage, onPageChange }) => (
           <div className="flex flex-col gap-4">

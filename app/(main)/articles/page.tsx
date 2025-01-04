@@ -9,20 +9,19 @@ import {
   ArticleTypeCategory,
   verifyArticleType,
 } from '@/entities/articles'
-import { DpQueryKeys } from '@/shared/api'
+import { ApiClient, DpQueryKeys } from '@/shared/api'
 import { DPLinks } from '@/shared/config'
 import {
   InfiniteListableQueryLoader,
   IntersectionTrigger,
 } from '@/shared/lib/loader'
-import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { DPage } from '@/shared/ui'
 
 export default function ArticlesPage() {
   const searchParams = useSearchParams()
   const articleType = verifyArticleTypeParam(searchParams.get('articleType'))
   const getArticles = (input: IArticleListRequest) =>
-    ApiClientCSR.articles.getList(input)
+    ApiClient.articles.getList(input)
 
   return (
     <DPage className={'gap-6'}>

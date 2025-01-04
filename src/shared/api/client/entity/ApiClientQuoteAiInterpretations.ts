@@ -1,4 +1,5 @@
-import type { ApiClient, IApiClientAiBaseParams } from '..'
+import type { IApiClientAiBaseParams } from '..'
+import type { ApiClientRoot } from '../ApiClient'
 import type {
   ExtractMethodParameters,
   ExtractMethodReturn,
@@ -28,7 +29,7 @@ export class ApiClientQuoteAiInterpretations extends ApiClientEntityBase<
   IQuoteAiInterpretationUpdateRequest,
   IQuoteAiInterpretationListRequest
 > {
-  constructor(apiClient: ApiClient) {
+  constructor(apiClient: ApiClientRoot) {
     super(apiClient, 'quote-ai-interpretations')
   }
 

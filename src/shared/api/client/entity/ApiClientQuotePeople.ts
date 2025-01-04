@@ -1,4 +1,4 @@
-import type { ApiClient } from '..'
+import type { ApiClientRoot } from '../ApiClient'
 import type {
   IQuotePerson,
   IQuotePersonCreateRequest,
@@ -15,7 +15,7 @@ export class ApiClientQuotePeople extends ApiClientEntityBase<
   IQuotePersonUpdateRequest,
   IQuotePersonListRequest
 > {
-  constructor(apiClient: ApiClient) {
+  constructor(apiClient: ApiClientRoot) {
     super(apiClient, 'quote_persons')
   }
 

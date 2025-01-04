@@ -2,10 +2,9 @@
 
 import type { IArticleListRequest } from '@/shared/types'
 
-import { DpQueryKeys } from '@/shared/api'
+import { ApiClient, DpQueryKeys } from '@/shared/api'
 import { PagedListableQueryLoader } from '@/shared/lib/loader'
 import { useOverlay } from '@/shared/lib/overlay'
-import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { Button, DataTableRenderer, DPage, Pagination } from '@/shared/ui'
 
 import {
@@ -17,7 +16,7 @@ import {
 export default function ArticlesPage() {
   const { open } = useOverlay()
   const loadList = (input: IArticleListRequest) =>
-    ApiClientCSR.articles.getList(input)
+    ApiClient.articles.getList(input)
 
   const handleCreateArticleWithAi = () => {
     open(({ isOpen, close }) => (
@@ -45,7 +44,7 @@ export default function ArticlesPage() {
       <PagedListableQueryLoader
         fetchData={loadList}
         queryKey={DpQueryKeys.admin.articles.list}
-        params={{ limit: 5 }}
+        params={{ size: 5 }}
       >
         {({ list, totalPages, currentPage, onPageChange }) => (
           <div className="flex flex-col gap-4">

@@ -1,4 +1,5 @@
-import type { ApiClient, IApiClientAiBaseParams } from '..'
+import type { IApiClientAiBaseParams } from '..'
+import type { ApiClientRoot } from '../ApiClient'
 import type {
   ExtractMethodParameters,
   ExtractMethodReturn,
@@ -39,7 +40,7 @@ export class ApiClientArticles extends ApiClientEntityBase<
   IArticleUpdateRequest,
   IArticleListRequest
 > {
-  constructor(apiClient: ApiClient) {
+  constructor(apiClient: ApiClientRoot) {
     super(apiClient, 'articles')
   }
 

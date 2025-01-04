@@ -1,7 +1,5 @@
 'use client' // Error boundaries must be Client Components
 
-import type { PostgrestError } from '@supabase/supabase-js'
-
 import Link from 'next/link'
 import { useEffect } from 'react'
 
@@ -41,21 +39,19 @@ export default function Error({
   )
 }
 
-function isPostgrestError(error: Error): error is PostgrestError {
+function isError(error: Error): error is Error {
   return 'hint' in error && 'details' in error && 'code' in error
 }
 
 function errorToTexts(error: Error) {
-  if (isPostgrestError(error)) {
+  if (isError(error)) {
     return (
       <>
         <p>message: {error.message}</p>
-        <p>hint: {error.hint}</p>
-        <p>details: {error.details}</p>
-        <p>code: {error.code}</p>
+        <p>hint: {error.cause as string}</p>
       </>
     )
   }
 
-  return error.message ?? ''
+  return error ?? ''
 }

@@ -4,7 +4,12 @@ export type IArticleCreateRequest = {
   publishedAt?: Date | null
 } & Pick<
   IArticle,
-  'title' | 'summary' | 'referenceName' | 'referenceUrl' | 'type'
+  | 'title'
+  | 'summary'
+  | 'referenceName'
+  | 'referenceUrl'
+  | 'type'
+  | 'publishedAt'
 >
 export type IArticleListRequest = IServerListRequest<{
   type?: ArticleType

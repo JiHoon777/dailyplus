@@ -6,7 +6,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { ApiClientCSR } from '@/shared/lib/supabase-csr'
+import { ApiClient } from '@/shared/api'
 import {
   Button,
   Dialog,
@@ -41,7 +41,7 @@ export const CreateQuotePeopleOverlay = ({ isOpen, close }: OverlayProps) => {
   })
   const { mutate, isPending } = useMutation({
     mutationFn: async (input: IQuotePersonCreateRequest) => {
-      ApiClientCSR.quotePeople.create(input)
+      ApiClient.quotePeople.create(input)
     },
   })
   const onSubmit = async (values: z.infer<typeof formSchema>) => {

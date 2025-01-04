@@ -1,4 +1,4 @@
-import type { ApiClient } from '../ApiClient'
+import type { ApiClientRoot } from '../ApiClient'
 import type { IServerEntityBase } from '@/shared/types'
 
 export abstract class ApiClientEntityBase<
@@ -8,7 +8,7 @@ export abstract class ApiClientEntityBase<
   _IListableInput,
 > {
   constructor(
-    protected readonly _apiClient: ApiClient,
+    protected readonly _apiClient: ApiClientRoot,
     protected readonly segmentPrefix: string,
   ) {}
 

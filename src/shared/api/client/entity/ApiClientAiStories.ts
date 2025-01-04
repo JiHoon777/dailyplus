@@ -1,4 +1,4 @@
-import type { ApiClient } from '..'
+import type { ApiClientRoot } from '../ApiClient'
 import type {
   ExtractMethodParameters,
   ExtractMethodReturn,
@@ -27,7 +27,7 @@ export class ApiClientAiStories extends ApiClientEntityBase<
   IAiStoryUpdateRequest,
   IAiStoryListRequest
 > {
-  constructor(apiClient: ApiClient) {
+  constructor(apiClient: ApiClientRoot) {
     super(apiClient, 'ai_stories')
   }
 

@@ -1,4 +1,4 @@
-import type { ApiClient } from '../ApiClient'
+import type { ApiClientRoot } from '../ApiClient'
 import type { IServerResponseBase } from '@/shared/types'
 
 import {
@@ -18,7 +18,7 @@ export type FetchBaseRequestOptions<TBody> = {
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
 
 export class ApiClientFetch {
-  constructor(private readonly _apiClient: ApiClient) {}
+  constructor(private readonly _apiClient: ApiClientRoot) {}
 
   async request<TResult>({
     method,

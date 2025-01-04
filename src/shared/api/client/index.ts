@@ -1,5 +1,4 @@
 export * from './ai/types'
-export * from './ApiClient'
 export type {
   IApiClientArticlesParams,
   IApiClientArticlesResponse,

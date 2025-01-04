@@ -2,7 +2,7 @@
 import type { ArticleType } from '@/shared/types'
 
 import { ArticleCardSkeleton } from '@/entities/articles'
-import { createApiClientSSR } from '@/shared/lib/supabase-ssr'
+import { ApiClient } from '@/shared/api'
 
 import { HomeArticlesCarousel } from './HomeArticlesCarousel'
 import { HomeArticlesHeader } from './HomeArticlesHeader'
@@ -16,8 +16,7 @@ export const HomeArticlesSSR = async ({
 }: {
   currentArticleType: ArticleType
 }) => {
-  const apiClient = await createApiClientSSR()
-  const { data } = await apiClient.articles.getList({
+  const { data } = await ApiClient.articles.getList({
     size: 10,
     page: 1,
     type: currentArticleType,

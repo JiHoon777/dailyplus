@@ -3,10 +3,9 @@ import type { IAiStoryListRequest } from '@/shared/types'
 import { BookText } from 'lucide-react'
 import Link from 'next/link'
 
-import { DpQueryKeys } from '@/shared/api'
+import { ApiClient, DpQueryKeys } from '@/shared/api'
 import { DPLinks } from '@/shared/config'
 import { PagedListableQueryLoader } from '@/shared/lib/loader'
-import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { useStore } from '@/shared/store'
 import {
   SidebarGroup,
@@ -20,7 +19,7 @@ import {
 export const RecentAiStoriesGroup = () => {
   const meId = useStore('auth', (s) => s.me?.id)
   const loadList = (input: IAiStoryListRequest) =>
-    ApiClientCSR.aiStories.getListWithIdTitle(input)
+    ApiClient.aiStories.getListWithIdTitle(input)
 
   return (
     <SidebarGroup>
@@ -30,7 +29,7 @@ export const RecentAiStoriesGroup = () => {
           <PagedListableQueryLoader
             fetchData={loadList}
             queryKey={DpQueryKeys.studio.recentAiStoryList}
-            params={{ limit: 10, user_id: meId }}
+            params={{ size: 10, userId: meId }}
           >
             {({ list }) =>
               list.map((item) => {

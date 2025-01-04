@@ -1,18 +1,18 @@
-import type { IQuotes, IQuotesListableInput } from '@/shared/types'
+import type { IQuote, IQuoteListRequest } from '@/shared/types'
 import type { QueryKey } from '@tanstack/react-query'
 
+import { ApiClient } from '@/shared/api'
 import {
   InfiniteListableQueryLoader,
   IntersectionTrigger,
 } from '@/shared/lib/loader'
-import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { cn } from '@/shared/lib/utils'
 import { ScrollArea, ScrollBar } from '@/shared/ui'
 
 export type IQuoteListProps = {
-  onSelectQuote: (quote: IQuotes) => void
+  onSelectQuote: (quote: IQuote) => void
   getQuoteListQueryKey: (
-    input: Omit<IQuotesListableInput, 'page' | 'limit'>,
+    input: Omit<IQuoteListRequest, 'page' | 'size'>,
   ) => QueryKey
   quotePeopleName?: string
   direction?: 'row' | 'col'
@@ -24,8 +24,8 @@ export const QuoteList = ({
   quotePeopleName,
   direction = 'row',
 }: IQuoteListProps) => {
-  const getQuoteList = (input: IQuotesListableInput) =>
-    ApiClientCSR.quotes.getList(input)
+  const getQuoteList = (input: IQuoteListRequest) =>
+    ApiClient.quotes.getList(input)
 
   return (
     <InfiniteListableQueryLoader
@@ -81,8 +81,8 @@ export const QuoteListCard = ({
   quote,
   onClick,
 }: {
-  quote: IQuotes
-  onClick: (quote: IQuotes) => void
+  quote: IQuote
+  onClick: (quote: IQuote) => void
 }) => {
   return (
     <div
@@ -90,10 +90,10 @@ export const QuoteListCard = ({
       onClick={() => onClick(quote)}
     >
       <h3 className="mb-2 whitespace-pre-line break-all text-lg font-bold">
-        {quote.original_text}
+        {quote.originalText}
       </h3>
       <p className="whitespace-pre-line break-all text-sm text-gray-600">
-        {quote.korean_text}
+        {quote.koreanText}
       </p>
     </div>
   )

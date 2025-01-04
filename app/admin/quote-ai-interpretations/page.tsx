@@ -2,16 +2,15 @@
 
 import type { IQuoteAiInterpretationListRequest } from '@/shared/types'
 
-import { DpQueryKeys } from '@/shared/api'
+import { ApiClient, DpQueryKeys } from '@/shared/api'
 import { PagedListableQueryLoader } from '@/shared/lib/loader'
-import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { DataTableRenderer, DPage, Pagination } from '@/shared/ui'
 
 import { QuoteAiInterpretationsColumns } from './_ui'
 
 export default function QuoteAiInterpretationsPage() {
   const loadList = (input: IQuoteAiInterpretationListRequest) =>
-    ApiClientCSR.quoteAiInterpretations.getList(input)
+    ApiClient.quoteAiInterpretations.getList(input)
 
   return (
     <DPage>
@@ -22,7 +21,7 @@ export default function QuoteAiInterpretationsPage() {
       <PagedListableQueryLoader
         fetchData={loadList}
         queryKey={DpQueryKeys.admin.quoteAiInterpretations.list}
-        params={{ limit: 10 }}
+        params={{ size: 10 }}
       >
         {({ list, totalPages, currentPage, onPageChange }) => (
           <div className="flex flex-col gap-4">

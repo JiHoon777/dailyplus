@@ -5,9 +5,12 @@ import type { SupportedLanguagesType } from '@/shared/types'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 
-import { DpQueryKeys, type IApiClientArticlesParams } from '@/shared/api'
+import {
+  ApiClient,
+  DpQueryKeys,
+  type IApiClientArticlesParams,
+} from '@/shared/api'
 import { ARTICLE_TYPE_OPTIONS, SUPPORTED_LANGUAGES } from '@/shared/config'
-import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { showToast } from '@/shared/lib/utils'
 import { ArticleType } from '@/shared/types'
 import { Button, Dialog, DialogContent, DialogTitle, Label } from '@/shared/ui'
@@ -23,7 +26,7 @@ export const CreateArticleWithAiOverlay = ({ isOpen, close }: OverlayProps) => {
     mutationFn: async (
       inputs: IApiClientArticlesParams<'generateAndSaveArticlesWithAi'>,
     ) => {
-      return ApiClientCSR.articles.generateAndSaveArticlesWithAi(inputs)
+      return ApiClient.articles.generateAndSaveArticlesWithAi(inputs)
     },
     onSuccess: () => {
       queryClient.invalidateQueries({

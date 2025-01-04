@@ -1,4 +1,4 @@
-import type { ApiClient } from '../ApiClient'
+import type { ApiClientRoot } from '../ApiClient'
 import type {
   ExtractMethodParameters,
   ExtractMethodReturn,
@@ -14,7 +14,7 @@ export type IApiClientAuthParams<TMethod extends keyof IApiClientAuth> =
   ExtractMethodParameters<IApiClientAuth, TMethod>
 
 export class ApiClientAuth {
-  constructor(private readonly _apiClient: ApiClient) {}
+  constructor(private readonly _apiClient: ApiClientRoot) {}
 
   get fetch() {
     return this._apiClient.fetch

@@ -3,6 +3,7 @@
 import { redirect } from 'next/navigation'
 
 import { useStore } from '@/shared/store'
+import { UserRole } from '@/shared/types'
 import { SidebarInset } from '@/shared/ui'
 
 import { AdminHeader, AdminSidebar } from './_ui'
@@ -14,7 +15,8 @@ export default function AdminLayout({
 }) {
   const me = useStore('auth', (s) => s.me)
 
-  if (!me || me.role !== 'admin') {
+  console.log(18888, me)
+  if (!me || me.role < UserRole.ADMIN) {
     redirect('/')
     return null
   }

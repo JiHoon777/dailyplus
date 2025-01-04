@@ -1,8 +1,7 @@
-import type { IApiClientQuoteAiInterpretationsParams } from '@/shared/api'
 import type {
-  IQuoteAiInterpretations,
+  IQuote,
+  IQuoteAiInterpretation,
   IQuoteAiInterpretationListRequest,
-  IQuotes,
 } from '@/shared/types'
 import type { QueryKey } from '@tanstack/react-query'
 
@@ -10,16 +9,19 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { ChevronRight, Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
+import {
+  ApiClient,
+  type IApiClientQuoteAiInterpretationsParams,
+} from '@/shared/api'
 import { useAiPromptAccess } from '@/shared/hooks'
-import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { cn, showToast } from '@/shared/lib/utils'
 import { useStore } from '@/shared/store'
 import { Button, Skeleton } from '@/shared/ui'
 
 export type IQuoteInterpretationProps = {
-  quote: IQuotes
+  quote: IQuote
   getQuoteInterpretationQueryKey: (
-    input?: Omit<IQuoteAiInterpretationListRequest, 'page' | 'limit'>,
+    input?: Omit<IQuoteAiInterpretationListRequest, 'page' | 'size'>,
   ) => QueryKey
 }
 
@@ -30,7 +32,7 @@ export const QuoteInterpretation = ({
   const userId = useStore('auth', (s) => s.me?.id)
   const { hasAiPromptAccess } = useAiPromptAccess()
   const [createdInterpretation, setCreatedInterpretation] =
-    useState<IQuoteAiInterpretations | null>(null)
+    useState<IQuoteAiInterpretation | null>(null)
 
   const {
     data,
@@ -39,20 +41,19 @@ export const QuoteInterpretation = ({
     refetch,
   } = useQuery({
     queryFn: async () => {
-      const { data, error: getError } =
-        await ApiClientCSR.quoteAiInterpretations.getList({
-          limit: 1,
-          page: 1,
-          quote_id: quote.id,
-        })
+      const res = await ApiClient.quoteAiInterpretations.getList({
+        size: 1,
+        page: 1,
+        quoteId: quote.id,
+      })
 
       if (getError) {
         throw getError
       }
 
-      return data
+      return res.data[0] ?? null
     },
-    queryKey: getQuoteInterpretationQueryKey({ quote_id: quote.id }),
+    queryKey: getQuoteInterpretationQueryKey({ quoteId: quote.id }),
   })
 
   const {
@@ -64,7 +65,7 @@ export const QuoteInterpretation = ({
       input: IApiClientQuoteAiInterpretationsParams<'generateAndSaveQuoteInterpretationWithAi'>,
     ) => {
       const interpretation =
-        await ApiClientCSR.quoteAiInterpretations.generateAndSaveQuoteInterpretationWithAi(
+        await ApiClient.quoteAiInterpretations.generateAndSaveQuoteInterpretationWithAi(
           input,
         )
 
@@ -84,7 +85,7 @@ export const QuoteInterpretation = ({
     }
 
     mutate({
-      quoteText: `${quote.original_text}, ${quote.korean_text}`,
+      quoteText: `${quote.originalText}, ${quote.koreanText}`,
       quoteId: quote.id,
       userId: userId,
     })
@@ -104,7 +105,7 @@ export const QuoteInterpretation = ({
     setCreatedInterpretation(null)
   }, [quote])
 
-  const interpretation = createdInterpretation || data?.[0]
+  const interpretation = createdInterpretation || data
   const hasError = getError || createError
   const showRetry = !interpretation && hasError && !isLoading
   const showContent = interpretation && !isLoading

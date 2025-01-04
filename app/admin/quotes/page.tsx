@@ -1,19 +1,17 @@
 'use client'
 
-import type { IQuotesListableInput } from '@/shared/types'
+import type { IQuoteListRequest } from '@/shared/types'
 
-import { DpQueryKeys } from '@/shared/api'
+import { ApiClient, DpQueryKeys } from '@/shared/api'
 import { PagedListableQueryLoader } from '@/shared/lib/loader'
 import { useOverlay } from '@/shared/lib/overlay'
-import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { Button, DataTableRenderer, DPage, Pagination } from '@/shared/ui'
 
 import { CreateQuotesOverlay, QuotesColumns } from './_ui'
 
 export default function QuotesPage() {
   const { open } = useOverlay()
-  const loadList = (input: IQuotesListableInput) =>
-    ApiClientCSR.quotes.getList(input)
+  const loadList = (input: IQuoteListRequest) => ApiClient.quotes.getList(input)
 
   const handleCreateArticle = () => {
     open(({ isOpen, close }) => (
@@ -31,7 +29,7 @@ export default function QuotesPage() {
       <PagedListableQueryLoader
         fetchData={loadList}
         queryKey={DpQueryKeys.admin.quotes.list}
-        params={{ limit: 10 }}
+        params={{ size: 10 }}
       >
         {({ list, totalPages, currentPage, onPageChange }) => (
           <div className="flex flex-col gap-4">

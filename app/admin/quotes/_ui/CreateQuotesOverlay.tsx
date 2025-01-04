@@ -1,13 +1,12 @@
 import type { OverlayProps } from '@/shared/lib/overlay'
-import type { IQuotesCreationInput } from '@/shared/types'
+import type { IQuoteCreateRequest } from '@/shared/types'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { DpQueryKeys } from '@/shared/api'
-import { ApiClientCSR } from '@/shared/lib/supabase-csr'
+import { ApiClient, DpQueryKeys } from '@/shared/api'
 import { showToast } from '@/shared/lib/utils'
 import {
   Button,
@@ -29,13 +28,13 @@ import {
 } from '@/shared/ui'
 
 const formSchema = z.object({
-  korean_text: z.string().min(2, {
+  koreanText: z.string().min(2, {
     message: 'Korean text must be at least 2 characters.',
   }),
-  original_text: z.string().min(2, {
+  originalText: z.string().min(2, {
     message: 'Original text must be at least 2 characters.',
   }),
-  quote_person_id: z.number().min(1, {
+  quotePersonId: z.number().min(1, {
     message: 'Quote person id must be at least 1.',
   }),
 })
@@ -44,17 +43,17 @@ const formSchema = z.object({
 export const CreateQuotesOverlay = ({ isOpen, close }: OverlayProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
-      korean_text: '',
-      original_text: '',
-      quote_person_id: undefined,
+      koreanText: '',
+      originalText: '',
+      quotePersonId: undefined,
     },
     resolver: zodResolver(formSchema),
   })
 
   const queryClient = useQueryClient()
   const { mutate, isPending } = useMutation({
-    mutationFn: async (input: IQuotesCreationInput) => {
-      ApiClientCSR.quotes.create(input)
+    mutationFn: async (input: IQuoteCreateRequest) => {
+      ApiClient.quotes.create(input)
     },
     onSuccess: () => {
       showToast.success('Quote created successfully!')
@@ -80,7 +79,7 @@ export const CreateQuotesOverlay = ({ isOpen, close }: OverlayProps) => {
           >
             <FormField
               control={form.control}
-              name="original_text"
+              name="originalText"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Original Text</FormLabel>
@@ -93,7 +92,7 @@ export const CreateQuotesOverlay = ({ isOpen, close }: OverlayProps) => {
             />
             <FormField
               control={form.control}
-              name="korean_text"
+              name="koreanText"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Korean Text</FormLabel>
@@ -107,7 +106,7 @@ export const CreateQuotesOverlay = ({ isOpen, close }: OverlayProps) => {
             {/* Todo: List Api, 현재는 공자 위주로 할 거기때문에 스킵 */}
             <FormField
               control={form.control}
-              name="quote_person_id"
+              name="quotePersonId"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Quote Person Id</FormLabel>

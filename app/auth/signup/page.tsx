@@ -1,12 +1,10 @@
 'use client'
 
-import type { IApiClientAuthResponse } from '@/shared/api'
-import type { AuthError } from '@supabase/supabase-js'
 import type { FormEvent } from 'react'
 
 import { useMutation } from '@tanstack/react-query'
 
-import { ApiClientCSR } from '@/shared/lib/supabase-csr'
+import { ApiClient, type IApiClientAuthResponse } from '@/shared/api'
 import { Button, DPLogoText, Input, Label, Spinner } from '@/shared/ui'
 
 export default function SignInPage() {
@@ -17,7 +15,7 @@ export default function SignInPage() {
           email: formData.get('email') as string,
           password: formData.get('password') as string,
         }
-        const res = await ApiClientCSR.auth.signup(input.email, input.password)
+        const res = await ApiClient.auth.signup(input.email, input.password)
         console.log(43, res)
 
         return res

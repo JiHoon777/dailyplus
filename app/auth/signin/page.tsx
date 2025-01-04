@@ -1,14 +1,11 @@
 'use client'
 
-import type { IApiClientAuthResponse } from '@/shared/api'
-import type { AuthError } from '@supabase/supabase-js'
-
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { type FormEvent, useEffect } from 'react'
 
+import { ApiClient, type IApiClientAuthResponse } from '@/shared/api'
 import { DPLinks } from '@/shared/config'
-import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { useStore } from '@/shared/store'
 import { Button, DPLogoText, Input, Label, Spinner } from '@/shared/ui'
 
@@ -23,21 +20,19 @@ export default function SignInPage() {
     }
   }, [me, router])
 
-  const signin = useMutation<
-    IApiClientAuthResponse<'signin'>,
-    AuthError,
-    FormData
-  >({
-    mutationFn: async (formData) => {
-      const input = {
-        email: formData.get('email') as string,
-        password: formData.get('password') as string,
-      }
-      const res = await ApiClientCSR.auth.signin(input.email, input.password)
+  const signin = useMutation<IApiClientAuthResponse<'signin'>, Error, FormData>(
+    {
+      mutationFn: async (formData) => {
+        const input = {
+          email: formData.get('email') as string,
+          password: formData.get('password') as string,
+        }
+        const res = await ApiClient.auth.signin(input.email, input.password)
 
-      return res
+        return res
+      },
     },
-  })
+  )
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()

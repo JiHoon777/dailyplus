@@ -3,8 +3,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 
-import { DpQueryKeys } from '@/shared/api'
-import { ApiClientCSR } from '@/shared/lib/supabase-csr'
+import { ApiClient, DpQueryKeys } from '@/shared/api'
 import { useStore } from '@/shared/store'
 import { ScreenLoading } from '@/shared/ui'
 
@@ -13,7 +12,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoaded, setIsLoaded] = useState(false)
 
   const { data, isLoading, error } = useQuery({
-    queryFn: async () => ApiClientCSR.auth.getAuthUser(),
+    queryFn: async () => ApiClient.auth.getAuthUser(),
     queryKey: DpQueryKeys.auth.getAuthUser(),
   })
 

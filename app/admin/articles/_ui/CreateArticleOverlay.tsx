@@ -6,10 +6,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { DpQueryKeys } from '@/shared/api'
+import { ApiClient, DpQueryKeys } from '@/shared/api'
 import { ARTICLE_TYPE_OPTIONS } from '@/shared/config'
-import { ApiClientCSR } from '@/shared/lib/supabase-csr'
 import { showToast } from '@/shared/lib/utils'
+import { ArticleType } from '@/shared/types'
 import {
   Button,
   Dialog,
@@ -31,13 +31,11 @@ import {
 } from '@/shared/ui'
 
 const formSchema = z.object({
-  published_at: z.string().min(4, {
-    message: 'Published at must be at least 2 characters.',
-  }),
-  reference_name: z.string().min(2, {
+  publishedAt: z.date(),
+  referenceName: z.string().min(2, {
     message: 'Reference name must be at least 2 characters.',
   }),
-  reference_url: z.string().min(2, {
+  referenceUrl: z.string().min(2, {
     message: 'Reference URL must be at least 2 characters.',
   }),
   summary: z.string().min(2, {
@@ -46,32 +44,31 @@ const formSchema = z.object({
   title: z.string().min(2, {
     message: 'Title must be at least 2 characters.',
   }),
-  type: z.enum(['trendAndLifestyle', 'ai', 'frontend'], {
-    message: 'Type is required.',
-  }),
-  unique_id: z.string().min(2, {
-    message: 'Unique ID must be at least 2 characters.',
-  }),
+  type: z.enum(
+    [ArticleType.AI, ArticleType.FRONTEND, ArticleType.TREND_AND_LIFESTYLE],
+    {
+      message: 'Type is required.',
+    },
+  ),
 })
 
 export const CreateArticleOverlay = ({ isOpen, close }: OverlayProps) => {
   const queryClient = useQueryClient()
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
-      published_at: '',
-      reference_name: '',
-      reference_url: '',
+      publishedAt: new Date(),
+      referenceName: '',
+      referenceUrl: '',
       summary: '',
       title: '',
-      type: 'ai',
-      unique_id: '',
+      type: ArticleType.TREND_AND_LIFESTYLE,
     },
     resolver: zodResolver(formSchema),
   })
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (inputs: IApiClientArticlesParams<'create'>) => {
-      return ApiClientCSR.articles.create(inputs)
+      return ApiClient.articles.create(inputs)
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -153,7 +150,7 @@ export const CreateArticleOverlay = ({ isOpen, close }: OverlayProps) => {
 
             <FormField
               control={form.control}
-              name="reference_name"
+              name="referenceName"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Reference Name</FormLabel>
@@ -167,7 +164,7 @@ export const CreateArticleOverlay = ({ isOpen, close }: OverlayProps) => {
 
             <FormField
               control={form.control}
-              name="reference_url"
+              name="referenceUrl"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Reference URL</FormLabel>
@@ -181,26 +178,16 @@ export const CreateArticleOverlay = ({ isOpen, close }: OverlayProps) => {
 
             <FormField
               control={form.control}
-              name="published_at"
+              name="publishedAt"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Published Date</FormLabel>
                   <FormControl>
-                    <Input type="date" {...field} value={field.value || ''} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="unique_id"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Unique ID</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Unique ID" {...field} />
+                    <Input
+                      type="date"
+                      {...field}
+                      value={field.value.toISOString()}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -5,8 +5,7 @@ import { ChevronDown, Home, LogOut, Settings, Sparkles } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-import { DpQueryKeys } from '@/shared/api'
-import { ApiClientCSR } from '@/shared/lib/supabase-csr'
+import { ApiClient, DpQueryKeys } from '@/shared/api'
 import { getUsernameFromEmail } from '@/shared/lib/utils'
 import { useStore } from '@/shared/store'
 import { UserRole } from '@/shared/types'
@@ -29,7 +28,7 @@ export function UserDropdown() {
   const queryClient = useQueryClient()
   const logout = useMutation({
     mutationFn: async () => {
-      await ApiClientCSR.auth.signout()
+      await ApiClient.auth.signout()
     },
   })
 

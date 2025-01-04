@@ -1,14 +1,10 @@
-import type { ApiClient } from '../ApiClient'
+import type { ApiClientRoot } from '../ApiClient'
 import type { IApiClientAiBase } from './types'
 import type { ArticleType, SupportedLanguagesType } from '@/shared/types'
 import type OpenAI from 'openai'
 
 export class ApiClientOpenAi implements IApiClientAiBase {
-  constructor(private readonly _apiClient: ApiClient) {}
-
-  get supabaseClient() {
-    return this._apiClient.supabaseClient
-  }
+  constructor(private readonly _apiClient: ApiClientRoot) {}
 
   private async createChatCompletions({
     model = 'gpt-4o-mini',

@@ -1,19 +1,19 @@
 import { NextResponse } from 'next/server'
 
+import { ApiClient } from '@/shared/api'
 import { DPEnvs } from '@/shared/config'
-import { createApiClientSSR } from '@/shared/lib/supabase-ssr'
 
 export async function POST(req: Request) {
   try {
     const body = await req.json()
 
-    const client = await createApiClientSSR()
-    const data = await client.fetch.post({
+    const data = await ApiClient.fetch.request({
       body,
       header: {
         Authorization: `Bearer ${DPEnvs.PERPLEXITY_API_KEY}`,
       },
       url: 'https://api.perplexity.ai/chat/completions',
+      method: 'POST',
     })
 
     return NextResponse.json(data)
