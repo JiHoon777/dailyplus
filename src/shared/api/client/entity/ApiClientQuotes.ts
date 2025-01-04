@@ -41,7 +41,7 @@ export class ApiClientQuotes extends ApiClientEntityBase<
 
     return this._apiClient.fetch.get({
       url: {
-        segments: ['quotes', 'list'],
+        segments: [this.segmentPrefix, 'list'],
         query: { page, size, quotePersonName },
       },
     })

@@ -9,32 +9,32 @@ export abstract class ApiClientEntityBase<
 > {
   constructor(
     protected readonly _apiClient: ApiClient,
-    protected readonly basePath: string,
+    protected readonly segmentPrefix: string,
   ) {}
 
   async getById(id: number): Promise<TEntity> {
     return this._apiClient.fetch.get({
-      url: { segments: [this.basePath, id] },
+      url: { segments: [this.segmentPrefix, id] },
     })
   }
 
   async create(body: TCreateInput): Promise<TEntity> {
     return this._apiClient.fetch.post({
-      url: { segments: [this.basePath] },
+      url: { segments: [this.segmentPrefix] },
       body,
     })
   }
 
   async update(id: number, body: TUpdateInput): Promise<void> {
     return this._apiClient.fetch.patch({
-      url: { segments: [this.basePath, id] },
+      url: { segments: [this.segmentPrefix, id] },
       body,
     })
   }
 
   async delete(id: number): Promise<void> {
     return this._apiClient.fetch.delete({
-      url: { segments: [this.basePath, id] },
+      url: { segments: [this.segmentPrefix, id] },
     })
   }
 }
