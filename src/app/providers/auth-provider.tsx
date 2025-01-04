@@ -17,9 +17,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   })
 
   useEffect(() => {
-    if (error) {
-      console.log('AuthProvider error: ', error)
-    }
     setMe(data ?? null)
 
     setIsLoaded(true)

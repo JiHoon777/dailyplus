@@ -1,7 +1,6 @@
 'use client' // Error boundaries must be Client Components
 
 import Link from 'next/link'
-import { useEffect } from 'react'
 
 export default function Error({
   error,
@@ -10,11 +9,6 @@ export default function Error({
   error: Error & { digest?: string }
   reset: () => void
 }) {
-  useEffect(() => {
-    // Log the error to an error reporting service
-    console.error(error)
-  }, [error])
-
   return (
     <div className="w-full rounded-lg border border-red-100 bg-red-50 p-4">
       <div className="flex flex-col items-center gap-2 text-center">
@@ -40,15 +34,16 @@ export default function Error({
 }
 
 function isError(error: Error): error is Error {
-  return 'hint' in error && 'details' in error && 'code' in error
+  return error instanceof Error || typeof error === 'object'
 }
 
 function errorToTexts(error: Error) {
   if (isError(error)) {
     return (
       <>
-        <p>message: {error.message}</p>
-        <p>hint: {error.cause as string}</p>
+        <p className="whitespace-pre-line break-all text-sm text-red-600">
+          {error.message}
+        </p>
       </>
     )
   }

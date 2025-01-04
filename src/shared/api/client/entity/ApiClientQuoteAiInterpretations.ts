@@ -1,4 +1,3 @@
-import type { IApiClientAiBaseParams } from '..'
 import type { ApiClientRoot } from '../ApiClient'
 import type {
   ExtractMethodParameters,
@@ -44,23 +43,17 @@ export class ApiClientQuoteAiInterpretations extends ApiClientEntityBase<
     })
   }
 
-  async generateAndSaveQuoteInterpretationWithAi(
-    input: IApiClientAiBaseParams<'getQuoteInterpretation'> & {
-      quoteId: number
-      userId: number
-    },
-  ) {
-    const { customPrompt, quoteId, userId } = input
-    const res = await this._apiClient.openai.getQuoteInterpretation(input)
-
-    const interpretation = await this.create({
-      content: res,
-      modelVersion: 'gpt-4o-mini',
-      prompt: customPrompt ?? null,
-      quoteId,
-      userId,
-    })
-
-    return interpretation
+  async generateAndSaveQuoteInterpretationWithAi(json: {
+    quoteId: number
+    userId: number
+  }): Promise<IQuoteAiInterpretation> {
+    return this.fetch.post(
+      {
+        segments: [this.segmentPrefix, 'generate-with-ai'],
+      },
+      {
+        json,
+      },
+    )
   }
 }

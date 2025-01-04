@@ -43,7 +43,3 @@ export const HomeArticlesSSRFallback = async () => {
     </div>
   )
 }
-
-export const HomeArticlesSSRError = async () => {
-  return <div>Something went wrong</div>
-}

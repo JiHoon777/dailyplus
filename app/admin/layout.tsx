@@ -15,7 +15,6 @@ export default function AdminLayout({
 }) {
   const me = useStore('auth', (s) => s.me)
 
-  console.log(18888, me)
   if (!me || me.role < UserRole.ADMIN) {
     redirect('/')
     return null

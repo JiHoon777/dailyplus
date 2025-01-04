@@ -86,15 +86,12 @@ export class ApiClientFetch {
             const res: IServerResponseBase<unknown> = await response
               .clone()
               .json()
-            this.logger.group(`afterResponse.res, ${request.url}`)
-            this.logger.debug(
-              `response.ok: ${response.ok}, response.status: ${response.status}`,
-            )
+            this.logger.group(`[${request.method}] ${request.url}`)
             this.logger.debug(res)
             this.logger.groupEnd()
 
             if (res.errorCode) {
-              const errorText = `Error Code: ${res.errorCode}: ${res.errorMessage}`
+              const errorText = `Error Code: ${res.errorCode}, message: ${res.errorMessage}`
 
               if (res.errorCode === ApiErrorCode.AUTH_TOKEN_EXPIRED) {
                 // Try to refresh token and retry the request
@@ -102,19 +99,11 @@ export class ApiClientFetch {
 
                 return ky(request)
               } else {
-                throw new Error(errorText, { cause: res.errorCode })
+                throw new Error(errorText)
               }
             }
 
             return response
-          },
-        ],
-        beforeError: [
-          (error) => {
-            this.logger.group(`beforeError.error, ${error.request.url}`)
-            this.logger.error(error)
-            this.logger.groupEnd()
-            return error
           },
         ],
       },
