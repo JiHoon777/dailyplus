@@ -57,9 +57,9 @@ const appQueryKeys = {
   },
   home: {
     quoteInterpretation: (
-      input?: Omit<IQuoteAiInterpretationListRequest, 'page' | 'limit'>,
+      input?: Omit<IQuoteAiInterpretationListRequest, 'page' | 'size'>,
     ) => createQueryKey(['app', 'home', 'quote-ai-interpretation'], input),
-    quoteList: (input?: Omit<IQuoteListRequest, 'page' | 'limit'>) =>
+    quoteList: (input?: Omit<IQuoteListRequest, 'page' | 'size'>) =>
       createQueryKey(['app', 'home', 'quotes', 'list'], input),
   },
 } as const
@@ -67,10 +67,10 @@ const appQueryKeys = {
 /** 스튜디오 영역 쿼리키 */
 const studioQueryKeys = {
   new: {
-    quoteList: (input?: Omit<IQuoteListRequest, 'page' | 'limit'>) =>
+    quoteList: (input?: Omit<IQuoteListRequest, 'page' | 'size'>) =>
       createQueryKey(['studio', 'new', 'quotes', 'list'], input),
   },
-  recentAiStoryList: (input?: Omit<IAiStoryListRequest, 'page' | 'limit'>) =>
+  recentAiStoryList: (input?: Omit<IAiStoryListRequest, 'page' | 'size'>) =>
     createQueryKey(['studio', 'recent-ai-stories', 'list'], input),
 } as const
 

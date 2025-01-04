@@ -31,7 +31,7 @@ export const QuoteList = ({
     <InfiniteListableQueryLoader
       fetchData={getQuoteList}
       params={{
-        limit: 10,
+        size: 10,
         quotePeopleName,
       }}
       queryKey={getQuoteListQueryKey}

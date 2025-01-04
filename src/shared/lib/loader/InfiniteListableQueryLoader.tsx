@@ -43,7 +43,7 @@ export const InfiniteListableQueryLoader = <
     error,
   } = useInfiniteQuery<IServerListResponse<TData>, Error>({
     getNextPageParam: (lastPage, allPages) => {
-      const totalPages = Math.ceil(lastPage.totalCount / params.limit)
+      const totalPages = Math.ceil(lastPage.total / params.size)
       const nextPage = allPages.length + 1
 
       return nextPage <= totalPages ? nextPage : undefined
@@ -54,10 +54,6 @@ export const InfiniteListableQueryLoader = <
         ...params,
         page: pageParam,
       } as IListableParams<TParams>)
-
-      if (result.error) {
-        throw result.error
-      }
 
       return result
     },

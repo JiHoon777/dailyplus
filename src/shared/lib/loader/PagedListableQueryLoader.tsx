@@ -70,7 +70,7 @@ export const PagedListableQueryLoader = <
     }
   }, [error])
 
-  const totalPages = Math.ceil((data?.totalCount ?? 0) / params.limit)
+  const totalPages = Math.ceil((data?.total ?? 0) / params.size)
   return (
     <>
       {children({
