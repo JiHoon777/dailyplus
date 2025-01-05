@@ -1,4 +1,4 @@
-import type { IQuotes } from '@/shared/types'
+import type { IQuote } from '@/shared/types'
 
 import { Book } from 'lucide-react'
 
@@ -14,8 +14,8 @@ export function QuoteWithContent({
   quote,
   bottomContent,
 }: {
-  quote: IQuotes | null
-  bottomContent?: (quote: IQuotes) => JSX.Element
+  quote: IQuote | null
+  bottomContent?: (quote: IQuote) => JSX.Element
 }) {
   if (!quote) {
     return (
@@ -32,10 +32,10 @@ export function QuoteWithContent({
       <CardHeader className="bg-gray-50">
         <CardTitle className="flex flex-wrap items-center text-2xl font-bold text-gray-800">
           <Book className="mr-2 text-gray-600" />
-          {quote.original_text}
+          {quote.originalText}
         </CardTitle>
         <CardDescription className="whitespace-pre-line text-lg italic text-gray-600">
-          {quote.korean_text}
+          {quote.koreanText}
         </CardDescription>
       </CardHeader>
       {bottomContent && bottomContent(quote)}

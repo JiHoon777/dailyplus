@@ -9,7 +9,7 @@ export const QuotesColumns: ColumnDef<
     header: 'ID',
   },
   {
-    accessorKey: 'quote_people.name',
+    accessorKey: 'quotePerson.name',
     header: 'Quote Person Name',
   },
   {

@@ -1,6 +1,6 @@
 import type { IQuoteInterpretationProps } from '@/entities/quoteInterpretations/ui/QuoteInterpretation'
 import type { IQuoteListProps } from '@/entities/quotes'
-import type { IQuotes } from '@/shared/types'
+import type { IQuote } from '@/shared/types'
 
 import { useState } from 'react'
 
@@ -15,7 +15,7 @@ export const QuotesInteractive = ({
   quotePeopleName,
   getQuoteListQueryKey,
 }: Props) => {
-  const [selectedQuote, setSelectedQuote] = useState<IQuotes | null>(null)
+  const [selectedQuote, setSelectedQuote] = useState<IQuote | null>(null)
 
   return (
     <div className="flex w-full flex-col gap-8">
