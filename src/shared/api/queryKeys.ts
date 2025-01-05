@@ -1,3 +1,4 @@
+// Todo: refactor
 import type {
   IAiStoryListRequest,
   IArticleListRequest,
@@ -72,6 +73,10 @@ const studioQueryKeys = {
   },
   recentAiStoryList: (input?: Omit<IAiStoryListRequest, 'page' | 'size'>) =>
     createQueryKey(['studio', 'recent-ai-stories', 'list'], input),
+  story: {
+    detail: (id: string | number) =>
+      createQueryKey(['studio', 'story', 'detail', id.toString()]),
+  },
 } as const
 
 /** 인증 관련 쿼리키 */

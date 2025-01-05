@@ -1,2 +1,2 @@
-export * from './ConfuciusQuotes'
+export * from './confuciusQuotes/ConfuciusQuotes'
 export * from './homeArticles'

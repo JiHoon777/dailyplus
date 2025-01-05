@@ -1,3 +1,3 @@
-export * from './auth-provider'
-export * from './query-provider'
-export * from './ui-provider'
+export * from './AuthProvider'
+export * from './QueryProvider'
+export * from './UiProvider'

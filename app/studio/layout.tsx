@@ -12,9 +12,9 @@ export default function StudioLayout({
 }: {
   children: React.ReactNode
 }) {
-  const me = useStore('auth', (state) => state.me)
+  const canAccess = useStore('auth', (state) => state.hasAiPromptAccess)
 
-  if (!me) {
+  if (!canAccess) {
     redirect('/')
     return null
   }

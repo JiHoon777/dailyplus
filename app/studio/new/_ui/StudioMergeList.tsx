@@ -25,7 +25,7 @@ export const StudioMergeList = () => {
         <Dropdown />
       </div>
 
-      <ScrollArea className="w-full whitespace-nowrap rounded-md border">
+      <ScrollArea className="w-full whitespace-nowrap rounded-md">
         <div className="flex w-max gap-4 p-4">
           {items.map((item) => {
             if (item.type === 'quote') {

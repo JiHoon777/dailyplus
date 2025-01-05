@@ -1,13 +1,13 @@
-import type { IAiStories, IQuotes } from '../types'
+import type { IAiStory, IQuote } from '../types'
 
 type IStudioMergeQuote = {
   type: 'quote'
-  data: IQuotes
+  data: IQuote
 }
 
 type IStudioMergeAiStory = {
   type: 'ai_story'
-  data: IAiStories
+  data: IAiStory
 }
 
 export type StudioMergeItems = IStudioMergeQuote | IStudioMergeAiStory

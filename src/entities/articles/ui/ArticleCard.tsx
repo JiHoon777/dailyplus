@@ -11,7 +11,7 @@ export const ArticleCard = ({ article }: { article: IArticle }) => {
       <CardHeader>
         <Label className="text-lg font-medium text-gray-700">
           <a
-            href={article.reference_url}
+            href={article.referenceUrl}
             target="_blank"
             rel="noreferrer noopener"
             className="text-3xl font-bold hover:text-blue-500 hover:underline"
@@ -23,9 +23,9 @@ export const ArticleCard = ({ article }: { article: IArticle }) => {
       <CardContent className={'flex flex-col gap-4'}>
         <div className={'text-xl font-medium'}>{article.summary}</div>
         <Label>
-          {article.reference_name}{' '}
-          {article.published_at &&
-            `• ${format(article.published_at, 'yyyy-MM-dd')}`}
+          {article.referenceName}{' '}
+          {article.publishedAt &&
+            `• ${format(article.publishedAt, 'yyyy-MM-dd')}`}
         </Label>
       </CardContent>
     </Card>

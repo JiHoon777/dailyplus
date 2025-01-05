@@ -1,7 +1,8 @@
 'use client'
 
-import { QuotesInteractive } from '@/features/quotesInteractive'
 import { DpQueryKeys } from '@/shared/api'
+
+import { QuotesInteractive } from './QuotesInteractive'
 
 export const ConfuciusQuotes = () => {
   return (
