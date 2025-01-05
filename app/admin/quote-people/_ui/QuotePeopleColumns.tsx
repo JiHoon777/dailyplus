@@ -15,22 +15,14 @@ export const QuotePeopleColumns: ColumnDef<IQuotePerson>[] = [
     header: 'Description',
   },
   {
-    accessorKey: 'birth_year',
-    header: 'Birth Year',
-  },
-  {
-    accessorKey: 'death_year',
-    header: 'Death Year',
-  },
-  {
-    accessorKey: 'created_at',
+    accessorKey: 'createdAt',
     header: 'Created At',
     meta: {
       valueType: 'date',
     },
   },
   {
-    accessorKey: 'updated_at',
+    accessorKey: 'updatedAt',
     header: 'Updated At',
     meta: {
       valueType: 'date',

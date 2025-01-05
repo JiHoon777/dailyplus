@@ -1,7 +1,7 @@
-import type { IQuoteAiInterpretations } from '@/shared/types'
+import type { IQuoteAiInterpretation } from '@/shared/types'
 import type { ColumnDef } from '@tanstack/react-table'
 
-export const QuoteAiInterpretationsColumns: ColumnDef<IQuoteAiInterpretations>[] =
+export const QuoteAiInterpretationsColumns: ColumnDef<IQuoteAiInterpretation>[] =
   [
     {
       accessorKey: 'id',
@@ -18,19 +18,19 @@ export const QuoteAiInterpretationsColumns: ColumnDef<IQuoteAiInterpretations>[]
       minSize: 1300,
     },
     {
-      accessorKey: 'model_version',
+      accessorKey: 'modelVersion',
       header: 'Model Version',
     },
     {
-      accessorKey: 'quote_id',
+      accessorKey: 'quoteId',
       header: 'Quote Id',
     },
     {
-      accessorKey: 'user_id',
+      accessorKey: 'userId',
       header: 'User Id',
     },
     {
-      accessorKey: 'created_at',
+      accessorKey: 'createdAt',
       header: 'Created At',
       meta: {
         valueType: 'date',

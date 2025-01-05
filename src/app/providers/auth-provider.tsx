@@ -17,6 +17,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   })
 
   useEffect(() => {
+    if (isLoading) {
+      return
+    }
+
     setMe(data ?? null)
 
     setIsLoaded(true)

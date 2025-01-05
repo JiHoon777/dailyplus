@@ -13,22 +13,22 @@ export const QuotesColumns: ColumnDef<
     header: 'Quote Person Name',
   },
   {
-    accessorKey: 'original_text',
+    accessorKey: 'originalText',
     header: 'Original Text',
   },
   {
-    accessorKey: 'korean_text',
+    accessorKey: 'koreanText',
     header: 'Korean Text',
   },
   {
-    accessorKey: 'created_at',
+    accessorKey: 'createdAt',
     header: 'Created At',
     meta: {
       valueType: 'date',
     },
   },
   {
-    accessorKey: 'updated_at',
+    accessorKey: 'updatedAt',
     header: 'Updated At',
     meta: {
       valueType: 'date',

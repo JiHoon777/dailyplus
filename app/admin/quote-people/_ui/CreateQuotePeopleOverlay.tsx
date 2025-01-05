@@ -2,11 +2,12 @@ import type { OverlayProps } from '@/shared/lib/overlay'
 import type { IQuotePersonCreateRequest } from '@/shared/types'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { ApiClient } from '@/shared/api'
+import { ApiClient, DpQueryKeys } from '@/shared/api'
+import { showToast } from '@/shared/lib/utils'
 import {
   Button,
   Dialog,
@@ -44,8 +45,18 @@ export const CreateQuotePeopleOverlay = ({ isOpen, close }: OverlayProps) => {
       ApiClient.quotePeople.create(input)
     },
   })
+  const queryClient = useQueryClient()
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    mutate(values)
+    mutate(values, {
+      onSuccess: () => {
+        showToast.success('Quote People created successfully!')
+        queryClient.invalidateQueries({
+          exact: false,
+          queryKey: DpQueryKeys.admin.quotePeople.list(),
+        })
+        close()
+      },
+    })
   }
 
   return (
@@ -84,7 +95,12 @@ export const CreateQuotePeopleOverlay = ({ isOpen, close }: OverlayProps) => {
               )}
             />
             <div className="flex justify-end gap-4">
-              <Button variant={'ghost'} disabled={isPending} onClick={close}>
+              <Button
+                type="button"
+                variant={'ghost'}
+                disabled={isPending}
+                onClick={close}
+              >
                 {isPending ? 'Creating...' : 'Cancel'}
               </Button>
               <Button type="submit" disabled={isPending}>

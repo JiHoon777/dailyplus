@@ -1,6 +1,5 @@
 'use client'
-import type { IServerListRequest } from '@/shared/types/server/common'
-import type { IServerListResponse } from '@/shared/types/server/common'
+import type { IServerListRequest, IServerListResponse } from '@/shared/types'
 import type { QueryKey } from '@tanstack/react-query'
 
 import { useQuery } from '@tanstack/react-query'
@@ -66,7 +65,6 @@ export const PagedListableQueryLoader = <
   useEffect(() => {
     if (error) {
       showToast.error(error)
-      console.error(error)
     }
   }, [error])
 

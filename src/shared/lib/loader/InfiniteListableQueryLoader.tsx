@@ -64,7 +64,6 @@ export const InfiniteListableQueryLoader = <
   useEffect(() => {
     if (error) {
       showToast.error(error)
-      console.error(error)
     }
   }, [error])
 
