@@ -1,8 +1,9 @@
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 
 import { useStore } from '@/shared/store'
 import { For, Show } from '@/shared/ui'
+import { cn } from '@/shared/lib/utils'
 
 export const StudioStoryNavigation = () => {
   const blocks = useStore('studioStoryNavigation', (s) => s.blocks)
@@ -22,6 +23,7 @@ export const StudioStoryNavigation = () => {
   )
 }
 
+// Todo: Ui design
 const NavigationItem = ({
   blockName,
   nextBlocks,
@@ -30,9 +32,18 @@ const NavigationItem = ({
   nextBlocks?: string[]
 }) => {
   const pathname = usePathname()
+  const searchParams = useSearchParams()
+
+  const currentBlockName = searchParams.get('block')
+  const isActive = blockName === currentBlockName
 
   return (
-    <div className="flex w-full flex-col gap-4 border p-2">
+    <div
+      className={cn(
+        'flex w-full flex-col gap-4 border p-2',
+        isActive && 'bg-gray-100',
+      )}
+    >
       <Link
         href={{
           pathname: pathname,

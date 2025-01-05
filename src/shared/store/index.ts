@@ -1,21 +1,21 @@
-import type { IAuthStore } from './Auth'
-import type { IStudioStore } from './Studio'
-import type { IStudioStoryNavigationStore } from './StudioStoryNavigation'
+import type { IAuthStore } from './AuthStore'
+import type { IStudioStore } from './StudioStore'
+import type { IStudioStoryNavigationStore } from './StudioStoryNavigationStore'
 import type { createStore } from './utils/createStore'
 
 import { useMemo } from 'react'
 
-import { AuthStore } from './Auth'
-import { StudioStore } from './Studio'
+import { AuthStore } from './AuthStore'
+import { StudioStore } from './StudioStore'
 import {
   type IStudioStoryEditorStore,
   StudioStoryEditorStore,
-} from './StudioStoryEditor'
-import { StudioStoryNavigationStore } from './StudioStoryNavigation'
+} from './StudioStoryEditorStore'
+import { StudioStoryNavigationStore } from './StudioStoryNavigationStore'
 import {
   type IStudioStoryPlayerStore,
   StudioStoryPlayerStore,
-} from './StudioStoryPlayer'
+} from './StudioStoryPlayerStore'
 
 type StoreMap = {
   auth: IAuthStore
