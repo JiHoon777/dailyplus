@@ -10,7 +10,7 @@ type StoryBlock = {
 export interface IStudioStoryNavigationStore {
   blocks: StoryBlock[]
 
-  initialize: (content: IStoryContent) => void
+  init: (content: IStoryContent) => void
 }
 
 export const StudioStoryNavigationStore =
@@ -19,32 +19,31 @@ export const StudioStoryNavigationStore =
       blocks: [],
 
       // Todo: Graph
-      initialize: (content: IStoryContent) => {
+      init: (content: IStoryContent) => {
         const blocks: StoryBlock[] = []
 
         // 시작 블록의 마지막 메시지 추가
         const startBlock = content.blocksMap[content.startBlockName]
-        const startBlockLastMessage = startBlock[startBlock.length - 1]
+        const startBlockLastMessage =
+          startBlock.messages[startBlock.messages.length - 1]
         blocks.push({
           name: content.startBlockName,
           nextBlocks: startBlockLastMessage.choices ?? [],
         })
 
         // 나머지 블록들의 마지막 메시지 추가
-        Object.entries(content.blocksMap).forEach(
-          ([blockName, blockMessages]) => {
-            if (blockName !== content.startBlockName) {
-              const lastMessage = blockMessages[blockMessages.length - 1]
-              blocks.push({
-                name: blockName,
-                nextBlocks: lastMessage.choices ?? [],
-              })
-            }
-          },
-        )
+        Object.entries(content.blocksMap).forEach(([blockName, block]) => {
+          if (blockName !== content.startBlockName) {
+            const lastMessage = block.messages[block.messages.length - 1]
+            blocks.push({
+              name: blockName,
+              nextBlocks: lastMessage.choices ?? [],
+            })
+          }
+        })
 
-        set({
-          blocks: blocks,
+        set((state) => {
+          state.blocks = blocks
         })
       },
     }

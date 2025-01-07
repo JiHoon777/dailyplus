@@ -11,8 +11,14 @@ export type IAiStory = {
 type BlockName = string
 export type IStoryContent = {
   startBlockName: BlockName
-  blocksMap: Record<
-    BlockName,
-    { name: string; message: string; choices?: BlockName[] }[]
-  >
+  blocksMap: Record<BlockName, IStoryBlock>
+}
+export type IStoryBlock = {
+  messages: IStoryMessage[]
+}
+
+export type IStoryMessage = {
+  chrName: string
+  message: string
+  choices?: string[]
 }
