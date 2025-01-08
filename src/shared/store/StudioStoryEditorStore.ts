@@ -1,10 +1,9 @@
-import type { IStoryContent, IStoryMessage } from '@/shared/types'
+import type { IStoryBlock, IStoryContent } from '@/shared/types'
 
 import { createStore } from './utils/createStore'
 
 export type IStudioStoryEditorStore = {
-  blockName: string
-  messages: IStoryMessage[]
+  blocks: IStoryBlock[]
 
   init: (content: IStoryContent, blockName: string) => void
 }
@@ -12,13 +11,15 @@ export type IStudioStoryEditorStore = {
 export const StudioStoryEditorStore = createStore<IStudioStoryEditorStore>(
   (set, _get) => {
     return {
-      blockName: '',
-      messages: [],
+      blocks: [],
 
       init: (content, blockName) => {
         set((state) => {
-          state.blockName = blockName
-          state.messages = content.blocksMap[blockName].messages
+          console.log(19, content.blocksMap[blockName])
+          const block = content.blocksMap[blockName]
+          if (block) {
+            state.blocks = [block]
+          }
         })
       },
     }
