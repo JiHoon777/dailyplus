@@ -1,4 +1,4 @@
-import type { IStoryContent } from '@/shared/types'
+import type { IStoryContent, IStoryMessageChoice } from '@/shared/types'
 
 import { createStore } from './utils/createStore'
 
@@ -24,8 +24,10 @@ export const StudioStoryNavigationStore =
 
         // 시작 블록의 마지막 메시지 추가
         const startBlock = content.blocksMap[content.startBlockTitle]
-        const startBlockLastMessage =
-          startBlock.messages[startBlock.messages.length - 1]
+        const startBlockLastMessage = startBlock.messages[
+          startBlock.messages.length - 1
+        ] as IStoryMessageChoice
+
         blocks.push({
           name: content.startBlockTitle,
           nextBlocks: startBlockLastMessage.choices ?? [],
@@ -34,7 +36,10 @@ export const StudioStoryNavigationStore =
         // 나머지 블록들의 마지막 메시지 추가
         Object.entries(content.blocksMap).forEach(([blockKey, block]) => {
           if (blockKey !== content.startBlockTitle) {
-            const lastMessage = block.messages[block.messages.length - 1]
+            const lastMessage = block.messages[
+              block.messages.length - 1
+            ] as IStoryMessageChoice
+
             blocks.push({
               name: blockKey,
               nextBlocks: lastMessage.choices ?? [],

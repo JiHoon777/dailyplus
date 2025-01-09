@@ -15,13 +15,30 @@ export type IStoryContent = {
 }
 export type IStoryBlock = {
   title: BlockTitle
-  messages: IStoryMessage[]
+  messages: StoryMessages[]
 }
 
-export type IStoryMessage = {
+export type StoryMessageType = 'chat' | 'script' | 'choice'
+
+export type IStoryMessageChat = {
+  type: 'chat'
   chrName: string
   // 이야기의 중심이 되는 캐릭터
   isMainChr?: boolean
   message: string
-  choices?: BlockTitle[]
 }
+
+export type IStoryMessageScript = {
+  type: 'script'
+  message: string
+}
+
+export type IStoryMessageChoice = {
+  type: 'choice'
+  choices: BlockTitle[]
+}
+
+export type StoryMessages =
+  | IStoryMessageChat
+  | IStoryMessageScript
+  | IStoryMessageChoice
