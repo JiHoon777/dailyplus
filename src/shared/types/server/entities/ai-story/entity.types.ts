@@ -13,6 +13,7 @@ export type IStoryContent = {
   startBlockTitle: BlockTitle
   blocksMap: Record<BlockTitle, IStoryBlock>
 }
+
 export type IStoryBlock = {
   title: BlockTitle
   messages: StoryMessages[]
@@ -28,11 +29,13 @@ export type IStoryMessageChat = {
   message: string
 }
 
+// 지문
 export type IStoryMessageScript = {
   type: 'script'
   message: string
 }
 
+// 선택지
 export type IStoryMessageChoice = {
   type: 'choice'
   choices: BlockTitle[]
