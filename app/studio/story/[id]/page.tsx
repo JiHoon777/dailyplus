@@ -8,10 +8,10 @@ import { useStore } from '@/shared/store'
 import { DPage } from '@/shared/ui'
 
 import { useGetBlockName } from './_hooks'
-import { StudioStoryEditor, StudioStoryNavigation } from './_ui'
+import { StudioStoryEditor } from './_ui'
 
 const mock: IStoryContent = {
-  startBlockKey: '시작',
+  startBlockTitle: '시작',
   blocksMap: {
     시작: {
       title: '시작',
@@ -233,7 +233,7 @@ export default function Post() {
 
   return (
     <DPage className="flex-row gap-6">
-      <StudioStoryNavigation />
+      {/* <StudioStoryNavigation /> */}
       <StudioStoryEditor />
     </DPage>
   )

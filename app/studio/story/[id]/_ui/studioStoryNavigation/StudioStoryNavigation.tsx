@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 
+import { cn } from '@/shared/lib/utils'
 import { useStore } from '@/shared/store'
 import { For, Show } from '@/shared/ui'
-import { cn } from '@/shared/lib/utils'
 
 export const StudioStoryNavigation = () => {
   const blocks = useStore('studioStoryNavigation', (s) => s.blocks)
