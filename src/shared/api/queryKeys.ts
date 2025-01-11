@@ -67,12 +67,14 @@ const appQueryKeys = {
 
 /** 스튜디오 영역 쿼리키 */
 const studioQueryKeys = {
+  recentAiStoryList: (input?: Omit<IAiStoryListRequest, 'page' | 'size'>) =>
+    createQueryKey(['studio', 'recent-ai-stories', 'list'], input),
+
   new: {
     quoteList: (input?: Omit<IQuoteListRequest, 'page' | 'size'>) =>
       createQueryKey(['studio', 'new', 'quotes', 'list'], input),
   },
-  recentAiStoryList: (input?: Omit<IAiStoryListRequest, 'page' | 'size'>) =>
-    createQueryKey(['studio', 'recent-ai-stories', 'list'], input),
+
   story: {
     detail: (id: string | number) =>
       createQueryKey(['studio', 'story', 'detail', id.toString()]),

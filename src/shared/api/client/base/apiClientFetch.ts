@@ -73,7 +73,7 @@ export class ApiClientFetch {
       // Todo: use env server url
       prefixUrl: 'http://localhost:4000',
       credentials: 'include',
-      timeout: 10000,
+      timeout: 30000,
       retry: 2,
       hooks: {
         beforeRequest: [
