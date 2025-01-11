@@ -41,4 +41,18 @@ export class ApiClientAiStories extends ApiClientEntityBase<
       query: { page, size, userId },
     })
   }
+
+  async generateFromQuotesWithAi(json: {
+    quoteIds: number[]
+    customPrompt?: string
+  }): Promise<IAiStory> {
+    return this.fetch.post(
+      {
+        segments: [this.segmentPrefix, 'generate-from-quotes-with-ai'],
+      },
+      {
+        json,
+      },
+    )
+  }
 }

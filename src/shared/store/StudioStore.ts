@@ -8,7 +8,7 @@ export type IStudioStore = {
   mergingItems: StudioMergeItems[]
   MAX_MERGING_ITEMS: number
 
-  setUserPropmpt: (prompt: string) => void
+  setUserPrompt: (prompt: string) => void
   appendItem: (item: StudioMergeItems) => void
   removeItem: (item: StudioMergeItems) => void
   clearItems: () => void
@@ -36,7 +36,7 @@ export const StudioStore = createStore<IStudioStore>((set, get) => {
     userPrompt: '',
     mergingItems: [],
 
-    setUserPropmpt: (prompt) => {
+    setUserPrompt: (prompt) => {
       set((state) => {
         state.userPrompt = prompt
       })

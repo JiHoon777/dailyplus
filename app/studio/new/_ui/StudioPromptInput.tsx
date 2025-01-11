@@ -5,7 +5,7 @@ import { ResizableTextarea } from '@/shared/ui'
 
 export const StudioPromptInput = () => {
   const userPrompt = useStore('studio', (s) => s.userPrompt)
-  const setUserPrompt = useStore('studio').getState().setUserPropmpt
+  const setUserPrompt = useStore('studio').getState().setUserPrompt
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setUserPrompt(e.target.value)

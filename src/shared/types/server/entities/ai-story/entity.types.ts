@@ -10,6 +10,7 @@ export type IAiStory = {
 
 type BlockTitle = string
 export type IStoryContent = {
+  storyTitle: string
   startBlockTitle: BlockTitle
   blocksMap: Record<BlockTitle, IStoryBlock>
 }
