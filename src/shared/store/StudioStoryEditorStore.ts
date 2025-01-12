@@ -24,9 +24,9 @@ export const StudioStoryEditorStore = createStore<IStudioStoryEditorStore>(
       blocks: [],
 
       init: (content, blockName) => {
-        set((state) => {
-          $state.storyContent = content
+        $state.storyContent = content
 
+        set((state) => {
           const block = content.blocksMap[blockName]
           if (block) {
             state.blocks = [block]

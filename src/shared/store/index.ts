@@ -1,6 +1,5 @@
 import type { IAuthStore } from './AuthStore'
 import type { IStudioStore } from './StudioStore'
-import type { IStudioStoryNavigationStore } from './StudioStoryNavigationStore'
 import type { createStore } from './utils/createStore'
 
 import { useMemo } from 'react'
@@ -11,7 +10,6 @@ import {
   type IStudioStoryEditorStore,
   StudioStoryEditorStore,
 } from './StudioStoryEditorStore'
-import { StudioStoryNavigationStore } from './StudioStoryNavigationStore'
 import {
   type IStudioStoryPlayerStore,
   StudioStoryPlayerStore,
@@ -21,7 +19,6 @@ type StoreMap = {
   auth: IAuthStore
 
   studio: IStudioStore
-  studioStoryNavigation: IStudioStoryNavigationStore
   studioStoryEditor: IStudioStoryEditorStore
   studioStoryPlayer: IStudioStoryPlayerStore
 }
@@ -46,7 +43,6 @@ export function useStore<T extends StoreNames, R = StoreInstance<StoreMap[T]>>(
 
       // studio
       studio: StudioStore,
-      studioStoryNavigation: StudioStoryNavigationStore,
       studioStoryPlayer: StudioStoryPlayerStore,
       studioStoryEditor: StudioStoryEditorStore,
     }

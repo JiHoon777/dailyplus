@@ -8,7 +8,7 @@ export type IAiStory = {
   userId: number | null
 } & IServerEntityBase
 
-type BlockTitle = string
+export type BlockTitle = string
 export type IStoryContent = {
   storyTitle: string
   startBlockTitle: BlockTitle
